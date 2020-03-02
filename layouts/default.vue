@@ -1,55 +1,73 @@
 <template>
-  <div>
+  <div id="app" v-cloak>
+    <!-- Menu -->
+    <div id="nav">
+      <template v-if="mobile">
+        <mobileNav />
+      </template>
+      <template v-else>
+        <computerNav />
+      </template>
+    </div>
+    <!-- Menu -->
+
+    <!-- Content -->
     <nuxt />
+    <!-- Content -->
+
+    <!-- Footer -->
+    <siteFooter />
+    <!-- Footer -->
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+// PC & Mobile Navigation Menu Components
+import mobileNav from "~/components/headers/mobileNav";
+import computerNav from "~/components/headers/computerNav";
+import siteFooter from "~/components/footer";
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
+// Import RemixIcon feature
+import 'remixicon/fonts/remixicon.css'
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
+export default {
+  data() {
+    return {
+      mobile: false
+    };
+  },
+  components: {
+    mobileNav,
+    computerNav,
+    siteFooter
+  },
+  head() {
+    return {
+      htmlAttrs: {
+        lang: 'zh-cn'
+      }
+    }
+  },
+  mounted() {
+    // Detect Mobile or PC using UserAgent
+    let flag = navigator.userAgent.match(
+      /(Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+    );
+    if (flag) {
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
+  }
+};
+</script>
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+<style lang="scss">
+[v-cloak] {
+  display: none !important;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+#nprogress .bar{
+  background: #3797fe !important;
+  z-index: 9999;
 }
 </style>

@@ -17,12 +17,24 @@
     "bootstrap-vue": "^2.0.0",
     "bootstrap": "^4.1.3",
     "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-0"
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "vue-cookie": "^1.1.4",
+    "vue-go-top-button": "^1.0.4",
+    "vue-i18n": "^8.15.3",
+    "vue-mugen-scroll": "^0.2.6",
+    "highlight.js": "^9.18.1",
+    "jquery": "^3.4.1",
+    "markdown-it-vue": "^1.0.11",
+    "nprogress": "^0.2.0",
+    "qs": "^6.9.1",
+    "remixicon": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.9",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2"
   }
 }
