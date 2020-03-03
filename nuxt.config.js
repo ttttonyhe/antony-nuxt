@@ -50,11 +50,7 @@ module.exports = {
     {
       src: '@/plugins/gotop',
       ssr: false
-    },
-    {
-      src: '@/plugins/markdown',
-      ssr: false
-    },
+    }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -68,8 +64,12 @@ module.exports = {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    '@nuxtjs/markdownit'
   ],
+  markdownit: {
+    injected: true,
+    linkify: true
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

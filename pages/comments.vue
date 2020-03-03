@@ -49,7 +49,7 @@
               >{{ post.email }}</em>
             </div>
             <router-link :to="post.page_key == '249' ? '/page/249' : '/post/'+post.page_key" style="text-decoration:none">
-              <markdown-it-vue class="md-body content-c" :content="post.content" />
+              <div class="content-c" v-html="$md.render(post.content)"></div>
             </router-link>
             <div class="archive-footer">
               <em>{{ post.date }}</em>

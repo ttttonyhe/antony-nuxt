@@ -58,6 +58,15 @@ export default {
     } else {
       this.mobile = false;
     }
+
+    // Baidu analysis
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?20265c137ab04d39313561665f1ae7a1";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
   }
 };
 </script>

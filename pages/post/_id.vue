@@ -58,118 +58,102 @@
         <!-- 阅读进度条 -->
 
         <article class="article reveal">
-          <template v-if="loading">
-            <div class="skeleton">
-              <div class="skeleton-body" style="margin: 0px;">
-                <div class="skeleton-title" style="width: 100%;"></div>
-                <div class="skeleton-content" style="width: 70%;margin-top: 30px;"></div>
-              </div>
-            </div>
-            <div class="skeleton" style="padding: 5px 10px;width: 80%;">
-              <div class="skeleton-body" style="margin: 0px;">
-                <div class="skeleton-content" style="width: 70%;margin: 0px;"></div>
-              </div>
-            </div>
-            <div class="skeleton">
-              <div class="skeleton-body" style="margin: 0px;">
-                <div class="skeleton-content" style="width: 60%;margin: 0px;"></div>
-              </div>
-            </div>
-          </template>
-          <template v-else>
-            <div id="load">
-              <!-- 文章顶部 -->
-              <div class="article-header">
-                <span class="badge badge-pill badge-danger single-badge">
-                  <nuxt-link to="/" style="text-decoration:none">
-                    <i class="ri-article-line"></i>
-                    {{ $t('lang.post.des') }}
-                  </nuxt-link>
-                </span>
-                <span class="badge badge-pill badge-danger single-badge" style="margin-left: 10px;">
-                  <a :href="cate_url" class="post-header" v-html="cate">{{ $t('lang.post.cate') }}</a>
-                </span>
+          <div id="load">
+            <!-- 文章顶部 -->
+            <div class="article-header">
+              <span class="badge badge-pill badge-danger single-badge">
+                <nuxt-link to="/" style="text-decoration:none">
+                  <i class="ri-article-line"></i>
+                  {{ $t('lang.post.des') }}
+                </nuxt-link>
+              </span>
+              <span class="badge badge-pill badge-danger single-badge" style="margin-left: 10px;">
+                <nuxt-link
+                  :to="cate_url"
+                  class="post-header"
+                  v-html="cate"
+                >{{ $t('lang.post.cate') }}</nuxt-link>
+              </span>
+              <span
+                class="badge badge-pill badge-danger single-badge"
+                style="margin-left: 10px;"
+                v-b-tooltip.hover
+                :title="$t('lang.post.estimate')"
+              >
+                <nuxt-link
+                  :to="cate_url"
+                  class="post-header"
+                  v-html="posts.post_metas.reading.time_required + ' mins'"
+                >{{ $t('lang.post.readingTime') }}</nuxt-link>
+              </span>
+              <!-- 文章标题 -->
+              <h2 class="single-h2" v-html="posts.post_metas.title"></h2>
+              <!-- 文章标题 -->
+
+              <!-- 底部信息 -->
+              <div class="article-list-footer">
+                <span class="article-list-date">{{ posts.post_date }}</span>
+                <span class="article-list-divider">/</span>
+                <span class="article-list-minutes">{{ posts.post_metas.views }}&nbsp;Views</span>
+                <span class="article-list-divider">/</span>
                 <span
-                  class="badge badge-pill badge-danger single-badge"
-                  style="margin-left: 10px;"
-                  v-b-tooltip.hover
-                  :title="$t('lang.post.estimate')"
+                  class="article-list-minutes"
+                >{{ posts.post_metas.reading.word_count}} &nbsp;Words</span>
+              </div>
+              <!-- 底部信息 -->
+
+              <div class="single-line"></div>
+            </div>
+            <!-- 文章顶部 -->
+
+            <!-- 文章内容 -->
+            <div class="article-content" v-html="posts.content.rendered"></div>
+            <!-- 文章内容 -->
+
+            <!-- 文章标签 -->
+            <div
+              style="text-align: left;margin: 60px 0px 40px 8px;border-radius: 6px;"
+              v-if="post_tags.length"
+            >
+              <ul
+                class="post_tags"
+                style="margin: 0;padding: 0px;width: 100%;padding-bottom: 15px;"
+              >
+                <li
+                  class="cat-real"
+                  style="display: inline-block;color: rgb(102, 102, 102);font-size: 1.1rem;font-weight: 600;margin: 0px;letter-spacing: 1px;"
                 >
                   <a
-                    :href="cate_url"
-                    class="post-header"
-                    v-html="posts.post_metas.reading.time_required + ' mins'"
-                  >{{ $t('lang.post.readingTime') }}</a>
-                </span>
-                <!-- 文章标题 -->
-                <h2 class="single-h2" v-html="posts.post_metas.title"></h2>
-                <!-- 文章标题 -->
-
-                <!-- 底部信息 -->
-                <div class="article-list-footer">
-                  <span class="article-list-date">{{ posts.post_date }}</span>
-                  <span class="article-list-divider">/</span>
-                  <span class="article-list-minutes">{{ posts.post_metas.views }}&nbsp;Views</span>
-                  <span class="article-list-divider">/</span>
-                  <span
-                    class="article-list-minutes"
-                  >{{ posts.post_metas.reading.word_count}} &nbsp;Words</span>
-                </div>
-                <!-- 底部信息 -->
-
-                <div class="single-line"></div>
-              </div>
-              <!-- 文章顶部 -->
-
-              <!-- 文章内容 -->
-              <div class="article-content" v-html="posts.content.rendered"></div>
-              <!-- 文章内容 -->
-
-              <!-- 文章标签 -->
-              <div
-                style="text-align: left;margin: 60px 0px 40px 8px;border-radius: 6px;"
-                v-if="post_tags.length"
-              >
-                <ul
-                  class="post_tags"
-                  style="margin: 0;padding: 0px;width: 100%;padding-bottom: 15px;"
+                    style="background-color: #e7f3ff;color: #2f94fe;padding: 1px 12px 1px;border-radius: 4px;font-size: .9rem;"
+                  >{{ $t('lang.post.tag') }}</a>
+                </li>
+                <li
+                  class="cat-real"
+                  style="display: inline-block;"
+                  v-for="(tag,index) in post_tags"
+                  :key="index"
                 >
-                  <li
-                    class="cat-real"
-                    style="display: inline-block;color: rgb(102, 102, 102);font-size: 1.1rem;font-weight: 600;margin: 0px;letter-spacing: 1px;"
-                  >
-                    <a
-                      style="background-color: #e7f3ff;color: #2f94fe;padding: 1px 12px 1px;border-radius: 4px;font-size: .9rem;"
-                    >{{ $t('lang.post.tag') }}</a>
-                  </li>
-                  <li
-                    class="cat-real"
-                    style="display: inline-block;"
-                    v-for="(tag,index) in post_tags"
-                    :key="index"
-                  >
-                    <nuxt-link
-                      :to="'/tag/' + tag.id"
-                      target="_blank"
-                      v-html="tag.name"
-                      style="font-size: .9rem;border-radius: 4px;padding: 1px 12px 1px;"
-                    ></nuxt-link>
-                  </li>
-                </ul>
-              </div>
-              <!-- 文章标签 -->
-
-              <!-- 文章评论 -->
-              <div class="article-comments" id="article-comments" style="margin-top:50px">
-                <iframe
-                  :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + this.$route.params.id"
-                  style="width: 100%;height: -webkit-fill-available;"
-                  frameborder="0"
-                ></iframe>
-              </div>
-              <!-- 文章评论 -->
+                  <nuxt-link
+                    :to="'/tag/' + tag.id"
+                    target="_blank"
+                    v-html="tag.name"
+                    style="font-size: .9rem;border-radius: 4px;padding: 1px 12px 1px;"
+                  ></nuxt-link>
+                </li>
+              </ul>
             </div>
-          </template>
+            <!-- 文章标签 -->
+
+            <!-- 文章评论 -->
+            <div class="article-comments" id="article-comments" style="margin-top:50px">
+              <iframe
+                :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + this.$route.params.id"
+                style="width: 100%;height: -webkit-fill-available;"
+                frameborder="0"
+              ></iframe>
+            </div>
+            <!-- 文章评论 -->
+          </div>
         </article>
         <!-- 文章主体 -->
       </div>
@@ -206,8 +190,24 @@ export default {
         })
     ])
 
+    // 生成头部 keywords
+    for (let i = 0; i < res[0].post_tags.length; ++i) {
+      if (i == 0) {
+        var post_tags_string = res[0].post_tags[i].name
+      } else {
+        post_tags_string += ',' + res[0].post_tags[i].name
+      }
+    }
+
+    // 返回文章信息
     return {
-      posts: res[0]
+      posts: res[0],
+      post_tags_string: post_tags_string,
+      post_title : res[0].post_metas.title,
+      cate : res[0].post_categories[0].name,
+      cate_url : '/cate/' + res[0].post_categories[0].term_id,
+      post_tags : res[0].post_tags,
+      post_prenext : res[0].post_prenext
     }
   },
   data() {
@@ -238,27 +238,28 @@ export default {
     }
   },
   mounted() {
-    this.loading = false
-    this.post_title = this.posts.post_metas.title
-    this.cate = this.posts.post_categories[0].name
-    this.cate_url = this.posts.post_categories[0].link
-    this.post_tags = this.posts.post_tags
-    this.post_prenext = this.posts.post_prenext
 
-    // 生成头部 keywords
-    for (let i = 0; i < this.post_tags.length; ++i) {
-      if (i == 0) {
-        this.post_tags_string = this.post_tags[i].name
+    // 百度主动推送
+    (function() {
+      var bp = document.createElement('script')
+      var curProtocol = window.location.protocol.split(':')[0]
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
       } else {
-        this.post_tags_string += ',' + this.post_tags[i].name
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js'
       }
-    }
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(bp, s)
+    })();
+
+    this.loading = false
 
     $('.real').css('display', 'block')
     highlightCode()
 
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
+
   },
   methods: {
     createReadingBar: () => {
