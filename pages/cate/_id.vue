@@ -207,7 +207,7 @@ export default {
         name: '分类目录',
         description: '分类目录描述'
       },
-      loading: true, //v-if判断显示占位符
+      loading: true,
       loading_cate: true,
       errored: true,
       loading_stop: false,

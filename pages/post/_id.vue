@@ -212,7 +212,7 @@ export default {
   data() {
     return {
       posts: null,
-      loading: true, //v-if判断显示占位符
+      loading: true,
       errored: true,
       cate: '分类目录',
       cate_url: '',

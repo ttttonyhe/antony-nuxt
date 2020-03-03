@@ -213,7 +213,7 @@ export default {
         name: '文章标签'
       },
       tags: null,
-      loading: true, //v-if判断显示占位符
+      loading: true,
       loading_cate: true,
       errored: true,
       loading_first: false,
