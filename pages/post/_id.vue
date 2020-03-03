@@ -135,7 +135,6 @@
                 >
                   <nuxt-link
                     :to="'/tag/' + tag.id"
-                    target="_blank"
                     v-html="tag.name"
                     style="font-size: .9rem;border-radius: 4px;padding: 1px 12px 1px;"
                   ></nuxt-link>

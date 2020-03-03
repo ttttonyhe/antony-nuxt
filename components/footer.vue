@@ -4,7 +4,7 @@
     <div
       class="goup-container footer-github"
     >
-      <a href="https://github.com/HelipengTony/tony" target="_blank" style="text-decoration:none">
+      <a href="https://github.com/HelipengTony/antony-nuxt" target="_blank" style="text-decoration:none">
         <i class="ri-github-fill footer-github-icon"></i>
       </a>
     </div>

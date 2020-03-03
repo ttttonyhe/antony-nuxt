@@ -45,7 +45,12 @@ export default {
     return {
       htmlAttrs: {
         lang: 'zh-cn'
-      }
+      },
+      meta: [
+        { hid: 'msvalidate.01', name: 'msvalidate.01', content: '4D922B4BDF9F7A9398A7ECCF7B9F0365' },
+        { hid: '360-site-verification', name: '360-site-verification', content: '5f2cc87b24f0b9eddfc0c3a750941bbc' },
+        { hid: 'google-site-verification', name: 'google-site-verification', content: '_Q8Sk4WSzRH3ZGwwe2J1V2WUTdQFP9Pg6PSKdUKQXP4' }
+      ]
     }
   },
   mounted() {
