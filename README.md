@@ -24,7 +24,7 @@
 <br/>
 
 ### See Also 关联项目
-- WordPress Theme Tony
+- [https://github.com/HelipengTony/antony](https://github.com/HelipengTony/antony)
 - [https://github.com/HelipengTony/tony](https://github.com/HelipengTony/tony)
 
 <br/>
@@ -44,7 +44,6 @@ yarn run dev
 
 #### Deployment
 ``` bash
-/* Production Mode */
 // Static site
 yarn run generate
 ```
