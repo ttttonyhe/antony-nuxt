@@ -47,12 +47,12 @@
                   v-html="'<b>' + post.post_categories[0].name + '</b>' +  ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : '技术')"
                 ></em>
                 <div v-else class="article-list-tags">
-                  <router-link
+                  <nuxt-link
                     class="list-normal-tag"
                     style="color: rgba(255, 152, 0, 0.83) !important;"
                     :to="'/cate/' + post.post_categories[0].term_id"
                     v-html="post.post_categories[0].name"
-                  ></router-link>
+                  ></nuxt-link>
                   <template v-if="!post.post_tags.length">
                     <a style="margin-left: 5px;">{{ $t('lang.index.noneTag') }}</a>
                   </template>
@@ -142,7 +142,7 @@
                     <b>{{ post.post_categories[0].name }}</b>
                     {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
                   </em>
-                  <router-link
+                  <nuxt-link
                     v-else
                     :to="'/cate/' + post.post_categories[0].term_id"
                     class="img-cate list-normal-tag"
@@ -150,7 +150,7 @@
                   >
                     <b>{{ post.post_categories[0].name }}</b>
                     {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                  </router-link>
+                  </nuxt-link>
                   <a :href="'/post/' + post.id" style="text-decoration: none;">
                     <h5
                       v-html="post.title.rendered"

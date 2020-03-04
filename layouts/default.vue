@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app">
     <!-- Menu -->
     <div id="nav">
       <template v-if="mobile">

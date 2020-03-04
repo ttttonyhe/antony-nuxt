@@ -1,6 +1,6 @@
 <template>
   <div>
-    <goToTop />
+    <goToTop></goToTop>
     <div
       class="goup-container footer-github"
     >
@@ -8,7 +8,7 @@
         <i class="ri-github-fill footer-github-icon"></i>
       </a>
     </div>
-    <footer class="footer reveal">
+    <div class="footer reveal">
       <p>
         Copyright &copy; 2018-{{ new Date().getFullYear() }} · TonyHe ·
         <a
@@ -22,7 +22,7 @@
           style="text-decoration: none;color: inherit;font-size: 14px;font-weight: 500;"
         >CC BY-NC 4.0</a>
       </p>
-    </footer>
+    </div>
   </div>
 </template>
 

@@ -7,15 +7,15 @@
           <nav class="header-nav reveal">
             <div class="cate-nav">
               <div>
-                <router-link to="/" class="top1 header-logo cate-name">{{ $t('lang.music.title') }}</router-link>
+                <nuxt-link to="/" class="top1 header-logo cate-name">{{ $t('lang.music.title') }}</nuxt-link>
               </div>
               <div>
-                <router-link to="/">
+                <nuxt-link to="/">
                   <b-button variant="primary" class="cate-back">
                     <i class="ri-arrow-left-line"></i>
                     {{ $t('lang.cate.backHome') }}
                   </b-button>
-                </router-link>
+                </nuxt-link>
               </div>
             </div>
             <p class="top2 lead archive-p">{{ $t('lang.music.des') }}</p>

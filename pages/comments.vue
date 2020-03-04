@@ -7,14 +7,14 @@
           <nav class="header-nav reveal">
             <div class="cate-nav">
               <div>
-                <router-link to="/" class="top1 header-logo cate-name">{{ $t('lang.comments.title') }}</router-link>
+                <nuxt-link to="/" class="top1 header-logo cate-name">{{ $t('lang.comments.title') }}</nuxt-link>
               </div>
               <div>
-                <router-link to="/">
+                <nuxt-link to="/">
                   <b-button variant="primary" class="cate-back">
                     <i class="ri-arrow-left-line"></i> {{ $t('lang.cate.backHome') }}
                   </b-button>
-                </router-link>
+                </nuxt-link>
               </div>
             </div>
             <p class="top2 lead archive-p">{{ $t('lang.comments.des') }}</p>
@@ -48,9 +48,9 @@
                 style="color: rgb(153, 153, 153);font-style: normal;padding: 3px 7px;border-radius: 4px;background: #f1f2f3;margin-left: 5px;"
               >{{ post.email }}</em>
             </div>
-            <router-link :to="post.page_key == '249' ? '/page/249' : '/post/'+post.page_key" style="text-decoration:none">
+            <nuxt-link :to="post.page_key == '249' ? '/page/249' : '/post/'+post.page_key" style="text-decoration:none">
               <div class="content-c" v-html="$md.render(post.content)"></div>
-            </router-link>
+            </nuxt-link>
             <div class="archive-footer">
               <em>{{ post.date }}</em>
               <em>
