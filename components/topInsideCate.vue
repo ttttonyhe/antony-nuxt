@@ -9,7 +9,7 @@
     </template>
     <template v-else>
       <li class="cat-item cat-item-4 cat-real" style="display: inline-block;">
-        <nuxt-link to="/cate/2" title="和伙伴们交换网站链接，再高兴不过的事!">
+        <nuxt-link to="/friends" title="和伙伴们交换网站链接，再高兴不过的事!">
           <div class="header-item-icon-div">
             <i class="ri-user-5-line"></i>
           </div>
