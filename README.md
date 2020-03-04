@@ -29,7 +29,7 @@
 
 <br/>
 
-### Development & Deploy 开发和部署
+### Develop & Deploy 开发和部署
 ```bash
 git clone git@github.com:HelipengTony/antony-nuxt.git
 cd antony-nuxt
