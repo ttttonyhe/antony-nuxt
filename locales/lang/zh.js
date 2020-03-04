@@ -31,7 +31,9 @@ export const lang = {
     backHome: '回到主页',
     postCount: '文章总数',
     archive: '文章归档',
-    archiveDes: '按照年月归档存放的全站文章'
+    archiveDes: '按照年月归档存放的全站文章',
+    friends: '伙伴链接',
+    friendsDes: '和伙伴们交换网站链接，再高兴不过的事!'
   },
   post: {
     index: '文章引索',

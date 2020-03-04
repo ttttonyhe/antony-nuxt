@@ -31,7 +31,9 @@ export const lang = {
     backHome: 'Back to Home',
     postCount: 'In total',
     archive: 'Archive',
-    archiveDes: 'All posts sorted by publish date'
+    archiveDes: 'All posts sorted by publish date',
+    friends: 'Friends',
+    friendsDes: 'All the lovely ones'
   },
   post: {
     index: 'Index',
