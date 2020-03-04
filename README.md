@@ -36,19 +36,21 @@ cd antony-nuxt
 yarn install
 ```
 
-#### Development
+#### Development 开发
 ``` bash
 // Development Mode
 yarn run dev
 ```
 
-#### Deployment
+#### Deployment 部署
 ``` bash
 // Static site
+// 静态站点
 yarn run generate
 ```
 ```bash
 // Server side rendering
+// 服务端渲染
 yarn run build
 yarn run start
 ```
@@ -67,7 +69,7 @@ yarn run start
 <br/>
 
 ### Donate to me 赞助与列表
-Your name will be on the list [Donation](https://www.ouorz.com/donate)
+Your name will be on the list [Donation](https://www.ouorz.com/donation)
 <br/>
 
 ![Donate](https://i.loli.net/2019/02/18/5c6a80afd1e26.png)
