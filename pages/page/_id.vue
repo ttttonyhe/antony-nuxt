@@ -15,10 +15,13 @@
             </header>
             <div class="article-content" v-html="page.content"></div>
             <div class="article-comments" id="article-comments">
+              <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
               <iframe
+                id="article-comments-iframe"
                 :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + $route.params.id"
-                style="width: 100%;min-height: 100vh;"
+                style="width: 100%;"
                 frameborder="0"
+                :scrolling="scrollAble ? 'yes' : 'no'"
               ></iframe>
             </div>
           </div>
@@ -29,6 +32,17 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
+// 与 iframe 通信获取评论列表高度
+var getCommentsHeight = function() {
+  document.domain = 'ouorz.com'
+  var iframe = document.getElementById('article-comments-iframe')
+  var iwindow = iframe.contentWindow
+  var idoc = iwindow.document
+  iframe.style.height = idoc.body.offsetHeight + 'px'
+}
+
 export default {
   name: 'Page',
   async asyncData(context) {
@@ -67,12 +81,35 @@ export default {
         content: '',
         views: '',
         date: ''
-      }
+      },
+      scrollAble: false,
+      scrollAbleHtml: '开启滑动 <i class="ri-play-line"></i>'
     }
   },
   mounted() {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/comment.html')
+    var click = 0
+    // 监听滑动，接近底部触发高度获取请求
+    $(window).scroll(function() {
+      var scrollTop = $(window).scrollTop()
+      var scrollHeight = $('div.footer.reveal').offset().top - 1500
+      if (scrollTop >= scrollHeight) {
+        if (click == 0) {
+          getCommentsHeight()
+          click++
+        }
+      }
+    })
+  },
+  methods: {
+    controlScroll: function() {
+      this.scrollAble = this.scrollAble ? false : true
+      this.scrollAbleHtml = this.scrollAble
+        ? '关闭滑动 <i class="ri-pause-line"></i>'
+        : '开启滑动 <i class="ri-play-line"></i>'
+      getCommentsHeight()
+    }
   }
 }
 </script>

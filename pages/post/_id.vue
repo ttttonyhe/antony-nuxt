@@ -142,17 +142,15 @@
               </ul>
             </div>
             <!-- 文章标签 -->
-
             <!-- 文章评论 -->
             <div class="article-comments" id="article-comments" style="margin-top:50px">
+              <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
               <iframe
                 id="article-comments-iframe"
                 :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + this.$route.params.id"
                 style="width: 100%;"
-                onload="getCommentsHeight()"
-                onmousemove="getCommentsHeight()"
                 frameborder="0"
-                scrolling="auto"
+                :scrolling="scrollAble ? 'yes' : 'no'"
               ></iframe>
             </div>
             <!-- 文章评论 -->
@@ -234,7 +232,9 @@ export default {
       post_prenext: [],
       exist_index: true,
       post_title: 'Loading...',
-      post_tags_string: null
+      post_tags_string: null,
+      scrollAble: false,
+      scrollAbleHtml: '开启滑动 <i class="ri-play-line"></i>'
     }
   },
   head() {
@@ -286,6 +286,13 @@ export default {
     })
   },
   methods: {
+    controlScroll: function() {
+      this.scrollAble = this.scrollAble ? false : true
+      this.scrollAbleHtml = this.scrollAble
+        ? '关闭滑动 <i class="ri-pause-line"></i>'
+        : '开启滑动 <i class="ri-play-line"></i>'
+      getCommentsHeight()
+    },
     createReadingBar: () => {
       //文章阅读进度条
       var content_offtop = $('.article-content').offset().top

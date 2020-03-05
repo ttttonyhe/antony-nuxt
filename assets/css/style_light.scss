@@ -3400,3 +3400,30 @@ input:focus {
     max-width: 140px !important;
   }
 }
+
+.comments-scroll {
+  background: #f9f9f9;
+  text-align: center;
+  padding: 5px 0px 0px 0px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  color: #999;
+  letter-spacing: 1px;
+  transition: all .1s;
+
+  &:hover {
+    background: #f7f8f9;
+  }
+
+  i {
+    font-size: 19px;
+    display: inline-block;
+    vertical-align: text-top;
+    margin-top: -7px;
+  }
+}
+
+.comments-scroll-a {
+  text-decoration: none;
+}
