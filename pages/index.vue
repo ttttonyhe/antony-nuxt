@@ -308,7 +308,8 @@ export default {
         this.posts = res_sticky.data
 
         //获取顶置文章 IDs 以在获取其余文章时排除
-        for (var s = 0; s < this.posts.length; ++s) {
+        let postsLength = this.posts.length
+        for (var s = 0; s < postsLength; ++s) {
           this.posts_id_sticky += ',' + this.posts[s].id
         }
 

@@ -136,7 +136,8 @@ export default {
   created() {
     var k = -1
     var i = 0
-    for (i = 0; i < this.posts.length; i++) {
+    let postsLength = this.posts.length
+    for (i = 0; i < postsLength; i++) {
       //遍历所有文章
       if (this.posts[i].date.split('T')[0].split('-')[0] !== this.last_year) {
         //当前文章发布年与上一篇不同

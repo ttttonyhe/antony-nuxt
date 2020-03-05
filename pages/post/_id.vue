@@ -146,9 +146,13 @@
             <!-- 文章评论 -->
             <div class="article-comments" id="article-comments" style="margin-top:50px">
               <iframe
+                id="article-comments-iframe"
                 :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + this.$route.params.id"
-                style="width: 100%;height: -webkit-fill-available;"
+                style="width: 100%;"
+                onload="getCommentsHeight()"
+                onmousemove="getCommentsHeight()"
                 frameborder="0"
+                scrolling="auto"
               ></iframe>
             </div>
             <!-- 文章评论 -->
@@ -174,6 +178,15 @@ const highlightCode = () => {
   })
 }
 
+// 与 iframe 通信获取评论列表高度
+var getCommentsHeight = function() {
+  document.domain = 'ouorz.com'
+  var iframe = document.getElementById('article-comments-iframe')
+  var iwindow = iframe.contentWindow
+  var idoc = iwindow.document
+  iframe.style.height = idoc.body.offsetHeight + 'px'
+}
+
 export default {
   name: 'Posts',
   async asyncData(context) {
@@ -190,7 +203,8 @@ export default {
     ])
 
     // 生成头部 keywords
-    for (let i = 0; i < res[0].post_tags.length; ++i) {
+    let tagsLength = res[0].post_tags.length
+    for (let i = 0; i < tagsLength; ++i) {
       if (i == 0) {
         var post_tags_string = res[0].post_tags[i].name
       } else {
@@ -202,11 +216,11 @@ export default {
     return {
       posts: res[0],
       post_tags_string: post_tags_string,
-      post_title : res[0].post_metas.title,
-      cate : res[0].post_categories[0].name,
-      cate_url : '/cate/' + res[0].post_categories[0].term_id,
-      post_tags : res[0].post_tags,
-      post_prenext : res[0].post_prenext
+      post_title: res[0].post_metas.title,
+      cate: res[0].post_categories[0].name,
+      cate_url: '/cate/' + res[0].post_categories[0].term_id,
+      post_tags: res[0].post_tags,
+      post_prenext: res[0].post_prenext
     }
   },
   data() {
@@ -237,9 +251,8 @@ export default {
     }
   },
   mounted() {
-
     // 百度主动推送
-    (function() {
+    ;(function() {
       var bp = document.createElement('script')
       var curProtocol = window.location.protocol.split(':')[0]
       if (curProtocol === 'https') {
@@ -249,7 +262,7 @@ export default {
       }
       var s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(bp, s)
-    })();
+    })()
 
     this.loading = false
 
@@ -259,6 +272,18 @@ export default {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
 
+    var click = 0
+    // 监听滑动，接近底部触发高度获取请求
+    $(window).scroll(function() {
+      var scrollTop = $(window).scrollTop()
+      var scrollHeight = $('div.footer.reveal').offset().top - 1500
+      if (scrollTop >= scrollHeight) {
+        if (click == 0) {
+          getCommentsHeight()
+          click++
+        }
+      }
+    })
   },
   methods: {
     createReadingBar: () => {
@@ -319,7 +344,8 @@ export default {
           .eq(0)
           .prop('tagName')
           .replace('H', '') //标签级别
-        for (i = 0; i < Math.abs(h - min); ++i) {
+        let addCount = Math.abs(h - min)
+        for (i = 0; i < addCount; ++i) {
           //偏移程度
           pf += 10
         }

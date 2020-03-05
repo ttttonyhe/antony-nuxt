@@ -68,10 +68,10 @@
         <!-- Contact Dropdown -->
       </div>
       <!-- Menu Items -->
-      <div class="search-bg-b"></div>
+      <div class="search-bg-b" v-if="searchDisplay"></div>
       <!-- Search -->
-      <div id="search_form" class="search_form_dis">
-        <div class="search-bg" id="search-div">
+      <div class="search_form_play" v-if="searchDisplay">
+        <div class="search-bg">
           <div class="search-div1">
             <h3>
               {{ $t('lang.header.searchDiv.title') }}
@@ -144,7 +144,8 @@ export default {
       search_loading: false,
       loading_ph: false,
       search_open: false,
-      lang: 'zh-CN'
+      lang: 'zh-CN',
+      searchDisplay: false
     }
   },
   mounted() {
@@ -179,9 +180,7 @@ export default {
   methods: {
     // 显示搜索区域
     openSearch: function() {
-      $('#search_form').attr('class', 'search_form_play')
-      $('.search-bg-b').attr('style', 'display:block')
-      $('#search-div').attr('style', 'display:block')
+      this.searchDisplay = true
     },
     // 请求搜索
     searchQuery: function() {
@@ -202,13 +201,11 @@ export default {
     },
     // 关闭搜索区域
     closeSearch: function() {
+      this.searchDisplay = false
       this.loading_ph = false
       this.search_content = null
       this.search_loading = false
       this.search_key = null
-      $('#search_form').attr('class', 'search_form_dis')
-      $('.search-bg-b').attr('style', 'display:none')
-      $('#search-div').attr('style', 'display:none')
     },
     // i18n 切换语言包
     switchLang: function() {

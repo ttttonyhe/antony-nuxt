@@ -53,6 +53,11 @@ export default {
       }
     }
   },
+  head() {
+    return {
+      title: 'TonyHe - ' + this.page.title
+    }
+  },
   data() {
     return {
       posts: null,

@@ -170,8 +170,7 @@ export default {
     let res1 = await Promise.all([
       context.$axios
         .get(
-          'https://blog.ouorz.com/wp-json/wp/v2/tags/' +
-            context.route.params.id
+          'https://blog.ouorz.com/wp-json/wp/v2/tags/' + context.route.params.id
         )
         .then(response => {
           return response.data
@@ -192,8 +191,8 @@ export default {
     let res3 = await Promise.all([
       context.$axios
         .get(
-        'https://blog.ouorz.com/wp-json/wp/v2/tags?orderby=count&order=desc&per_page=15'
-      )
+          'https://blog.ouorz.com/wp-json/wp/v2/tags?orderby=count&order=desc&per_page=15'
+        )
         .then(tag_posts => {
           return tag_posts.data
         })
@@ -225,7 +224,8 @@ export default {
   },
   mounted() {
     //获取顶置文章 IDs 以在获取其余文章时排除
-    for (var s = 0; s < this.posts.length; ++s) {
+    let postsLength = this.posts.length
+    for (var s = 0; s < postsLength; ++s) {
       this.posts_id_sticky += ',' + this.posts[s].id
     }
 
