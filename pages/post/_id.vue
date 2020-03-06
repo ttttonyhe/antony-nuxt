@@ -272,6 +272,7 @@ export default {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
 
+    document.domain = 'ouorz.com'
     var click = 0
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {

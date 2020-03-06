@@ -83,17 +83,19 @@ export default {
         date: ''
       },
       scrollAble: false,
-      scrollAbleHtml: '开启滑动 <i class="ri-play-line"></i>'
+      scrollAbleHtml: '加载全部评论 <i class="ri-play-line"></i>'
     }
   },
   mounted() {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/comment.html')
+
+    document.domain = 'ouorz.com'
     var click = 0
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
       var scrollTop = $(window).scrollTop()
-      var scrollHeight = $('div.footer.reveal').offset().top - 1500
+      var scrollHeight = $('div.footer.reveal').offset().top - 1000
       if (scrollTop >= scrollHeight) {
         if (click == 0) {
           getCommentsHeight()
@@ -106,8 +108,8 @@ export default {
     controlScroll: function() {
       this.scrollAble = this.scrollAble ? false : true
       this.scrollAbleHtml = this.scrollAble
-        ? '关闭滑动 <i class="ri-pause-line"></i>'
-        : '开启滑动 <i class="ri-play-line"></i>'
+        ? '关闭列表滑动 <i class="ri-pause-line"></i>'
+        : '加载全部评论 <i class="ri-play-line"></i>'
       getCommentsHeight()
     }
   }
