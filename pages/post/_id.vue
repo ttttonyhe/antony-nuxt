@@ -294,7 +294,7 @@ export default {
         : '开启滑动 <i class="ri-play-line"></i>'
       getCommentsHeight()
     },
-    createReadingBar: () => {
+    createReadingBar: function() {
       //文章阅读进度条
       var content_offtop = $('.article-content').offset().top
       var content_height = $('.article-content').innerHeight()
@@ -317,7 +317,7 @@ export default {
         $('.reading-bar').css('width', this.reading_p + '%')
       })
     },
-    createIndex: () => {
+    createIndex: function() {
       /* 文章目录 */
       var h = 0
       var pf = 23
