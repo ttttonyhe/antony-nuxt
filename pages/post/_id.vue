@@ -462,10 +462,6 @@ export default {
     this.createReadingBar()
     // 页面内容变化时执行代码渲染
     highlightCode()
-    // 加载完毕改变 title
-    if (this.posts.length) {
-      document.title = 'TonyHe - ' + this.posts.title.rendered
-    }
   },
   watch: {
     $route() {

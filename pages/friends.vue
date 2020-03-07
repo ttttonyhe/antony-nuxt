@@ -31,6 +31,17 @@
           </template>
           <!-- 顶部标题与分类区块 -->
         </div>
+
+        <ul class="article-list" style="margin-bottom:10px">
+          <!-- 友情链接交换提示 -->
+          <li
+            class="article-list-item reveal index-post-list notice-list"
+          >
+            <div>{{ $t('lang.index.friendsLink') }}</div>
+            <nuxt-link to="/page/249">{{ $t('lang.index.goFriendsLink') }}</nuxt-link>
+          </li>
+          <!-- 友情链接交换提示 -->
+        </ul>
         <ul class="article-list friends-table">
           <li
             class="article-list-item reveal index-post-list friends-li"

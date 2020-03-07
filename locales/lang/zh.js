@@ -6,7 +6,9 @@ export const lang = {
     noneTag: '无标签',
     quickView: '全文速览',
     mood: '状态',
-    noneMood: '无状态'
+    noneMood: '无状态',
+    friendsLink: '欢迎前往留言板留言以交换友情链接 :)',
+    goFriendsLink: '点击前往'
   },
   header: {
     rss: 'RSS 订阅',
@@ -55,7 +57,7 @@ export const lang = {
   },
   top: {
     friend: '伙伴',
-    rec: '推荐',
+    rec: '利器',
     product: '项目',
     bb: '琐碎',
     code: '折腾',

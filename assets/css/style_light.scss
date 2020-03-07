@@ -2372,7 +2372,52 @@ table {
 }
 
 .preview-p {
-  margin: 30px 0 !important
+  margin: 30px 0 !important;
+
+  ol,ul {
+    padding-left: 3rem;
+    display: block;
+    margin-bottom: 1.1em;
+    overflow: hidden;
+    overflow-x: auto;
+    line-height: 1.6;
+    color: #615b5b;
+    list-style-type: none;
+    counter-reset: item;
+
+    li {
+      margin-bottom: 10px;
+      margin-top: 0px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+
+      &::before {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        border-color: #999;
+        margin-top: 1px;
+        margin-bottom: -21.15px;
+        margin-left: -2.5rem;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        height: 1.2rem;
+        width: 1.9rem;
+        background-color: rgba(195, 218, 254, 0.43);
+        border-radius: 9999px;
+        color: rgba(85, 134, 210, 0.8);
+        font-size: 0.75rem;
+        font-weight: 700;
+        content: counter(item);
+        counter-increment: item;
+      }
+    }
+  }
 }
 
 .uk-modal-dialog {
@@ -2395,7 +2440,6 @@ table {
 .preview-p li {
   padding: 0px !important;
   border: none !important;
-  margin: 0px !important
 }
 
 .loading-text {

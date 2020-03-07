@@ -6,7 +6,9 @@ export const lang = {
     noneTag: 'NaN',
     quickView: 'Quick View',
     mood: 'Mood',
-    noneMood: 'Plain'
+    noneMood: 'Plain',
+    friendsLink: 'Feel free to contact me for a link exchange :)',
+    goFriendsLink: 'Get Started'
   },
   header: {
     rss: 'RSS',
@@ -33,7 +35,7 @@ export const lang = {
     archive: 'Archive',
     archiveDes: 'All posts sorted by publish date',
     friends: 'Friends',
-    friendsDes: 'All the lovely ones'
+    friendsDes: 'All the lovely ones...'
   },
   post: {
     index: 'Index',
@@ -57,7 +59,7 @@ export const lang = {
     friend: 'Friends',
     rec: 'Resources',
     product: 'Projects',
-    bb: 'Life',
+    bb: 'Daily',
     code: 'Coding',
     music: 'Music'
   },
