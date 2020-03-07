@@ -139,7 +139,7 @@ export default {
     let res = await Promise.all([
       // 获取博客文章数据
       context.$axios
-        .get('https://blog.ouorz.com/wp-content/themes/peg/donors.json')
+        .get('https://blog.ouorz.com/wp-content/themes/peg/com/data/donors.php')
         .then(response => {
           return response.data.donors
         })
