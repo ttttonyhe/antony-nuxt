@@ -128,12 +128,21 @@ export default {
     return {
       title: 'TonyHe - 文章归档',
       meta: [
-        { hid: 'description', name: 'description', content: 'TonyHe 的博客文章归档页' },
-        { hid: 'keywords', name: 'keywords', content: '贺莉朋,Tony,TonyHe,博客,个人博客,Personal Blog,blog,archive page,归档,归档页面,文章归档' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'TonyHe 的博客文章归档页'
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content:
+            '贺莉朋,Tony,TonyHe,博客,个人博客,Personal Blog,blog,archive page,归档,归档页面,文章归档'
+        }
       ]
     }
   },
-  created() {
+  mounted() {
     var k = -1
     var i = 0
     let postsLength = this.posts.length
@@ -162,13 +171,13 @@ export default {
   methods: {
     articleDisplay: (cateId, status, type) => {
       if (type) {
-        if (cateId !== (2 || 58 || 5) && !status) {
+        if (cateId !== 2 && cateId !== 58 && cateId !== 5 && !status) {
           return true
         } else {
           return false
         }
       } else {
-        if (cateId !== (2 || 58 || 5) && !status) {
+        if (cateId !== 2 && cateId !== 58 && cateId !== 5 && !status) {
           return false
         } else {
           return true
