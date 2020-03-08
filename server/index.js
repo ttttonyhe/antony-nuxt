@@ -45,10 +45,10 @@ async function start() {
       })
       server.on('error', function (err) {
         if (err.code === 'EADDRINUSE') { // 端口已经被使用
-          getStarted(Math.ceil(Math.random() * 10000))
+          getStarted(Math.ceil(Math.random() * 100000))
         }
       })
-    })(Math.ceil(Math.random() * 10000))
+    })(Math.ceil(Math.random() * 100000))
   } else {
     app.listen(port, host)
     consola.ready({
