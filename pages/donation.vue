@@ -8,7 +8,7 @@
             <button
               type="button"
               class="btn btn-primary btn-sm donate-switch"
-              @click="switchLang()"
+              @click="switchLanguage()"
             >
               <i class="ri-earth-line"></i>
               {{ $t('lang.donation.line2') }}
@@ -117,6 +117,7 @@ export default {
   },
   data() {
     return {
+      lang: this.$i18n.locale,
       donors: null
     }
   },
@@ -139,7 +140,7 @@ export default {
     }
   },
   methods: {
-    switchLang: function() {
+    switchLanguage: function() {
       if (this.lang === 'zh-CN') {
         this.lang = 'en-US'
         this.$i18n.locale = this.lang
