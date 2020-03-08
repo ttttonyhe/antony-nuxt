@@ -95,7 +95,7 @@ export default {
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
       var scrollTop = $(window).scrollTop()
-      var scrollHeight = $('div.footer.reveal').offset().top - 1000
+      var scrollHeight = $('div.footer.reveal').offset().top - 1500
       if (scrollTop >= scrollHeight) {
         if (click == 0) {
           getCommentsHeight()
