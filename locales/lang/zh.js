@@ -65,7 +65,9 @@ export const lang = {
   },
   music: {
     title: '音乐推荐',
-    des: '希望你听到一些音乐之外的东西'
+    des: '希望你听到一些音乐之外的东西',
+    musicLink: '来自网易云音乐歌单，使用 imjad API 获取',
+    goMusicLink: '前往了解'
   },
   donation: {
     line1: '赞助与赞助列表',
@@ -82,6 +84,7 @@ export const lang = {
     },
     line9: '姓名',
     line10: '金额',
-    line11: '日期'
+    line11: '日期',
+    line12: '转换'
   }
 }

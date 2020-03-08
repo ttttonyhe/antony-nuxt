@@ -65,7 +65,9 @@ export const lang = {
   },
   music: {
     title: 'Music',
-    des: 'Wish you can hear more than the sound'
+    des: 'Wish you can hear more than the sound',
+    musicLink: 'Fetched from Netease Cloud Music using imjad API',
+    goMusicLink: 'Learn More'
   },
   donation:{
     line1: 'Donate to TonyHe',
@@ -82,6 +84,7 @@ export const lang = {
   },
   line9: 'Name',
   line10: 'Amount',
-  line11: 'Date'
+  line11: 'Date',
+  line12: 'Exchange'
 }
 }
