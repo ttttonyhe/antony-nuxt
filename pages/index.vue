@@ -74,9 +74,9 @@
                 >{{ $t('lang.index.quickView') }}</button>
               </div>
 
-              <a :href="'/post/' + post.id" style="text-decoration: none;">
+              <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
                 <h5 v-html="post.title.rendered"></h5>
-              </a>
+              </nuxt-link>
 
               <!-- 文章速览 -->
               <!-- previewClose 已关闭的速览显示描述内容,previewPost 准备开始速览显示加载圆圈,previewPostOpened 开启的速览显示全文内容 -->
@@ -151,12 +151,12 @@
                     <b>{{ post.post_categories[0].name }}</b>
                     {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
                   </nuxt-link>
-                  <a :href="'/post/' + post.id" style="text-decoration: none;">
+                  <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
                     <h5
                       v-html="post.title.rendered"
                       style="margin: 0px;padding: 0px;margin-top:15px"
                     ></h5>
-                  </a>
+                  </nuxt-link>
                   <p v-html="post.post_excerpt.four.substr(0, 65) + '...'" :id="post.id"></p>
                   <div class="article-list-footer">
                     <span class="article-list-date">{{ post.post_date }}</span>

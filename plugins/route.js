@@ -14,10 +14,6 @@ export default ({
 }) => {
   /* Before & after switching to a new route */
   app.router.beforeEach((to, from, next) => {
-    // Change Title According to Path
-    if (to.meta.title) {
-      document.title = to.meta.title;
-    }
     // Start progress bar
     NProgress.start();
     next();
