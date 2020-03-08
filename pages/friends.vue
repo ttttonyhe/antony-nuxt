@@ -81,7 +81,7 @@ export default {
   async asyncData(context) {
     let res = await Promise.all([
       context.$axios
-        .get('https://blog.ouorz.com/wp-json/wp/v2/posts?&per_page=100&categories=2')
+        .get('https://blog.ouorz.com/wp-json/wp/v2/posts?&per_page=100&categories=2&orderby=title&order=asc')
         .then(response => {
           return response.data
         })
