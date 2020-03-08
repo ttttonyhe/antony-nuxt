@@ -66,5 +66,22 @@ export const lang = {
   music: {
     title: 'Music',
     des: 'Wish you can hear more than the sound'
-  }
+  },
+  donation:{
+    line1: 'Donate to TonyHe',
+    line2: '中文版本',
+    line3: 'If you feel that my projects are helpful to you and you are willing to give me a little support, you can donate to me in the following ways, which will help me to maintain the continuous development of my projects, thank you very much!',
+    line4: 'Alipay',
+    line5: 'Wechat Pay',
+    line6: 'Bitcoin',
+    line7: 'Paypal',
+    line8: {
+      line1: 'The following list will not be updated automatically, please',
+      line2: 'contact me',
+      line3: ' after your payment. The donor\'s name will be kept on the list below, thank you very much for your support.',
+  },
+  line9: 'Name',
+  line10: 'Amount',
+  line11: 'Date'
+}
 }
