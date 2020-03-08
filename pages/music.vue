@@ -39,6 +39,16 @@
           </template>
           <!-- 加载骨架图 -->
           <template v-else>
+            <ul class="article-list" style="margin-bottom:10px;padding: 0px;">
+          <!-- 友情链接交换提示 -->
+          <li
+            class="article-list-item reveal index-post-list notice-list"
+          >
+            <div>{{ $t('lang.music.musicLink') }}</div>
+            <a href="https://api.imjad.cn/cloudmusic.md">{{ $t('lang.music.goMusicLink') }}</a>
+          </li>
+          <!-- 友情链接交换提示 -->
+        </ul>
             <li
               class="article-list-item reveal index-post-list music-view-list"
               v-for="(post,index) in posts"
