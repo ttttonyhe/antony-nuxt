@@ -1170,7 +1170,7 @@ img {
   }
 
   @media screen and (max-width: 767px) {
-    ol{
+    ol {
       padding-left: 30px !important;
 
       li {
@@ -2394,6 +2394,7 @@ table {
   margin: 30px 0 !important;
 
   @media screen and (max-width: 767px) {
+
     ol,
     ul {
       padding-left: 30px !important;
@@ -3504,4 +3505,116 @@ input:focus {
 
 .comments-scroll-a {
   text-decoration: none;
+}
+
+
+.artucle-list-img-right-buy {
+  flex-basis: 100%;
+}
+
+
+.buy-list-item {
+  display: flex;
+  border: 1px solid rgba(238, 238, 238, 0.73);
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 3px;
+  height: 60px;
+  margin-bottom: 20px;
+  margin-top: -5px;
+  border-radius: 4px;
+
+  .buy-left-img-noborder {
+    width: 60px;
+
+    img {
+      opacity: 0.8;
+      height: 100%;
+      border-radius: 4px 0px 0px 4px;
+    }
+  }
+
+  .buy-left-img {
+    width: 60px;
+
+    img {
+      opacity: 0.8;
+      height: 100%;
+      border-right: 1px solid #eee;
+      border-radius: 4px 0px 0px 4px;
+    }
+  }
+
+
+  .buy-right-info {
+    width: 80%;
+    margin-left: 3.5%;
+    display: flex;
+    line-height: 1;
+    padding: 7px 0px 0px 0px;
+
+    h3 {
+      font-size: 18px;
+      letter-spacing: .5px;
+      color: #666;
+    }
+
+    p {
+      margin: 0px;
+      font-size: 13px;
+      letter-spacing: .3px;
+      color: #999;
+    }
+
+    div:nth-child(1) {
+      flex-basis: 100%;
+    }
+
+    div:nth-child(2) {
+      a {
+        text-decoration: none;
+        font-style: normal;
+        padding: 8px 12px;
+        font-size: 15px;
+        color: rgb(254, 174, 72) !important;
+        border-radius: 4px;
+        background: rgb(255, 238, 219);
+        font-weight: 600;
+        letter-spacing: .5px;
+        opacity: 1;
+        white-space: nowrap;
+        margin-top: 7.3px;
+        display: inline-block;
+        margin-right: -12px;
+        opacity: .8;
+
+        &:hover {
+          text-decoration: none;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width: 767px) {
+  .buy-right-info {
+    margin-left: 5.5%;
+
+    h3 {
+      white-space: nowrap;
+      max-width: 170px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    p {
+      white-space: nowrap;
+      max-width: 140px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    div:nth-child(2) {
+      display: none;
+    }
+  }
 }

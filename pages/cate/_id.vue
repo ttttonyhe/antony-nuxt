@@ -38,13 +38,16 @@
             :style="post.post_categories[0].term_id | link_style"
             :key="index"
           >
+            <!-- 无特色图像或友情链接或项目分类 -->
             <template
               v-if="post.post_img.url == false || post.post_categories[0].term_id == 2 || post.post_categories[0].term_id == 5"
             >
+              <!-- 文章置顶 -->
               <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
                 <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
                 {{ $t('lang.index.atTop') }}
               </em>
+              <!-- 文章置顶 -->
               <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
                 <b>{{ post.post_categories[0].name }}</b>
                 {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
@@ -93,47 +96,90 @@
                 </div>
               </div>
             </template>
+            <!-- 无特色图像或友情链接或项目分类 -->
+            <!-- 有特色图像及其他分类 -->
             <template v-else>
               <div class="article-list-img-else">
                 <div
+                  v-if="post.post_categories[0].term_id !== 4"
                   class="article-list-img"
                   :style="'background-image:url(' + post.post_img.url +')'"
                 ></div>
-                <div class="article-list-img-right">
-                  <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                    <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
-                    {{ $t('lang.index.atTop') }}
-                  </em>
-                  <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
-                    <b>{{ post.post_categories[0].name }}</b>
-                    {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                  </em>
-                  <nuxt-link
-                    v-else
-                    :to="'/cate/' + post.post_categories[0].term_id"
-                    v-html="post.post_categories[0].name"
-                    class="img-cate"
-                  ></nuxt-link>
-
-                  <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
-                    <h5
-                      v-html="post.title.rendered"
-                      style="margin: 0px;padding: 0px;margin-top:15px"
-                    ></h5>
-                  </nuxt-link>
-                  <p v-html="post.post_excerpt.nine.substr(0, 80) + '...'" :id="post.id"></p>
-                  <div class="article-list-footer">
-                    <span class="article-list-date">{{ post.post_date }}</span>
-                    <span class="article-list-divider">-</span>
-                    <span
-                      v-if="post.post_metas.views !== ''"
-                      class="article-list-minutes"
-                    >{{ post.post_metas.views }}&nbsp;Views</span>
-                    <span v-else class="article-list-minutes">0&nbsp;Views</span>
+                <div :class="post.post_categories[0].term_id == 4 ? '' : 'article-list-img-right'">
+                  <template v-if="post.post_categories[0].term_id == 4">
+                    <div>
+                      <div class="buy-list-item">
+                        <div :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'">
+                          <img :src="post.post_img.url" />
+                        </div>
+                        <div class="buy-right-info">
+                          <div>
+                            <h3 v-html="post.post_metas.fineTool.itemName"></h3>
+                            <p v-html="post.post_metas.fineTool.itemDes"></p>
+                          </div>
+                          <div>
+                            <a
+                              :href="post.post_metas.fineTool.itemLink"
+                              v-html="post.post_metas.fineTool.itemLinkName"
+                            ></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                  <div>
+                    <template v-if="post.post_categories[0].term_id !== 4">
+                      <div>
+                        <!-- 文章置顶 -->
+                        <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
+                          <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
+                          {{ $t('lang.index.atTop') }}
+                        </em>
+                        <!-- 文章置顶 -->
+                        <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
+                          <b>{{ post.post_categories[0].name }}</b>
+                          {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                        </em>
+                        <nuxt-link
+                          v-else
+                          :to="'/cate/' + post.post_categories[0].term_id"
+                          v-html="post.post_categories[0].name"
+                          class="img-cate"
+                        ></nuxt-link>
+                      </div>
+                    </template>
+                    <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
+                      <h5
+                        v-html="post.title.rendered"
+                        style="margin: 0px;padding: 0px;margin-top:15px"
+                      ></h5>
+                    </nuxt-link>
+                    <p v-html="post.post_excerpt.nine.substr(0, 80) + '...'" :id="post.id"></p>
+                    <div class="article-list-footer">
+                      <nuxt-link
+                        v-if="post.post_categories[0].term_id == 4"
+                        :to="'/cate/' + post.post_categories[0].term_id"
+                        class="article-list-date"
+                        v-html="post.post_categories[0].name"
+                        style="margin:0px"
+                      >{{ post.post_categories[0].name }}</nuxt-link>
+                      <span
+                        class="article-list-divider"
+                        v-if="post.post_categories[0].term_id == 4"
+                      >-</span>
+                      <span class="article-list-date">{{ post.post_date }}</span>
+                      <span class="article-list-divider">-</span>
+                      <span
+                        v-if="post.post_metas.views !== ''"
+                        class="article-list-minutes"
+                      >{{ post.post_metas.views }}&nbsp;Views</span>
+                      <span v-else class="article-list-minutes">0&nbsp;Views</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </template>
+            <!-- 有特色图像及其他分类 -->
           </li>
 
           <!-- 无限滚动占位内容 -->

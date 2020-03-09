@@ -110,6 +110,29 @@
             <div class="article-content" v-html="posts.content.rendered"></div>
             <!-- 文章内容 -->
 
+            <template v-if="posts.post_categories[0].term_id == 4">
+              <div>
+                <div class="buy-list-item" style="margin: 60px 10px -35px 10px;">
+                  <div
+                    :class="posts.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
+                  >
+                    <img :src="posts.post_img.url" />
+                  </div>
+                  <div class="buy-right-info">
+                    <div>
+                      <h3 v-html="posts.post_metas.fineTool.itemName"></h3>
+                      <p v-html="posts.post_metas.fineTool.itemDes"></p>
+                    </div>
+                    <div>
+                      <a
+                        :href="posts.post_metas.fineTool.itemLink"
+                        v-html="posts.post_metas.fineTool.itemLinkName"
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
             <!-- 文章标签 -->
             <div
               style="text-align: left;margin: 60px 0px 40px 8px;border-radius: 6px;"
@@ -178,7 +201,7 @@ const highlightCode = () => {
 
 // 与 iframe 通信获取评论列表高度
 var getCommentsHeight = function() {
-  document.domain = 'ouorz.com'
+  //document.domain = 'ouorz.com'
   var iframe = document.getElementById('article-comments-iframe')
   var iwindow = iframe.contentWindow
   var idoc = iwindow.document
@@ -272,7 +295,7 @@ export default {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
 
-    document.domain = 'ouorz.com'
+    //document.domain = 'ouorz.com'
     var click = 0
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
