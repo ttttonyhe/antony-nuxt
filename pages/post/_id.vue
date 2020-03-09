@@ -201,7 +201,7 @@ const highlightCode = () => {
 
 // 与 iframe 通信获取评论列表高度
 var getCommentsHeight = function() {
-  //document.domain = 'ouorz.com'
+  document.domain = 'ouorz.com'
   var iframe = document.getElementById('article-comments-iframe')
   var iwindow = iframe.contentWindow
   var idoc = iwindow.document
@@ -295,7 +295,7 @@ export default {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
 
-    //document.domain = 'ouorz.com'
+    document.domain = 'ouorz.com'
     var click = 0
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
