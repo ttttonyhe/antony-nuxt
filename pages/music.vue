@@ -4,7 +4,7 @@
       <div class="grid-cell" id="grid-cell">
         <div id="header_info">
           <!-- 顶部标题与分类区块 -->
-          <nav class="header-nav reveal">
+          <nav class="header-nav reveal cate-top">
             <div class="cate-nav">
               <div>
                 <nuxt-link to="/" class="top1 header-logo cate-name">{{ $t('lang.music.title') }}</nuxt-link>
