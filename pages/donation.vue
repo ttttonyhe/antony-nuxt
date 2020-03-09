@@ -165,7 +165,7 @@ export default {
       let res = await Promise.all([
         // 获取博客文章数据
         this.$axios
-          .get('https://blockchain.info/tobtc?currency=CNY&value=' + value)
+          .get('https://blockchain.info/tobtc?cors=true&currency=CNY&value=' + value)
           .then(response => {
             return response.data
           })
