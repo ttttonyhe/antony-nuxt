@@ -2887,7 +2887,9 @@ pre {
 .header-item-icon-div {
   transform: translateY(2.5px);
   display: inline-block;
-  margin-right: 4px
+  margin-right: 4px;
+  vertical-align: text-bottom;
+  margin-bottom: -4px;
 }
 
 .header-item-icon-div i {
