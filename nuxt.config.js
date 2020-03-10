@@ -5,7 +5,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'TonyHe - Just A Poor Lifesinger',
     meta: [{
         charset: 'utf-8'
       },
@@ -16,7 +16,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'TonyHe\'s Personal Blog'
       }
     ],
     link: [{
