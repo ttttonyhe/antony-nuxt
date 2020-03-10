@@ -136,17 +136,22 @@
                   <template v-if="post.post_categories[0].term_id == 4">
                     <div>
                       <div class="buy-list-item">
-                        <div :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'">
+                        <div
+                          :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
+                        >
                           <img :src="post.post_img.url" />
                         </div>
                         <div class="buy-right-info">
                           <div>
-                            <h3 v-html="post.post_metas.fineTool.itemName"></h3>
+                            <a :href="post.post_metas.fineTool.itemLink" target="_blank">
+                              <h3 v-html="post.post_metas.fineTool.itemName"></h3>
+                            </a>
                             <p v-html="post.post_metas.fineTool.itemDes"></p>
                           </div>
                           <div>
                             <a
                               :href="post.post_metas.fineTool.itemLink"
+                              target="_blank"
                               v-html="post.post_metas.fineTool.itemLinkName"
                             ></a>
                           </div>

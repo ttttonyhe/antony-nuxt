@@ -45,7 +45,7 @@
             class="article-list-item reveal index-post-list notice-list"
           >
             <div>{{ $t('lang.music.musicLink') }}</div>
-            <a href="https://api.imjad.cn/cloudmusic.md">{{ $t('lang.music.goMusicLink') }}</a>
+            <a target="_blank" href="https://api.imjad.cn/cloudmusic.md">{{ $t('lang.music.goMusicLink') }}</a>
           </li>
           <!-- 友情链接交换提示 -->
         </ul>
