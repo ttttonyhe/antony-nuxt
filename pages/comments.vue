@@ -93,7 +93,7 @@ export default {
     //获取文章列表
     this.$axios
       .get(
-        "https://blog.ouorz.com/wp-content/themes/peg/com/data/comments.data.json"
+        "https://blog.ouorz.com/wp-content/themes/peg/com/data/comments.data.json?rand=" + (Math.random() * 1000)
       )
       .then(response => {
         this.posts = response.data.reverse();
