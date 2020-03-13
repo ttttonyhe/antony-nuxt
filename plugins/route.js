@@ -15,7 +15,7 @@ export default ({
   /* Before & after switching to a new route */
   app.router.beforeEach((to, from, next) => {
     // Start progress bar
-    NProgress.start();
+    NProgress.inc();
     next();
   })
   app.router.afterEach(() => {
