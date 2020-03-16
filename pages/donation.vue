@@ -71,10 +71,14 @@
             <p class="page-p donate-p">
               {{ $t('lang.donation.line8.line1') }}
               <a
-                href="https://www..ouorz.com/post/126#in10"
+                href="https://www.ouorz.com/post/126#in10"
                 target="_blank"
               >{{ $t('lang.donation.line8.line2') }}</a>
               {{ $t('lang.donation.line8.line3') }}
+              <br/><br/>
+              {{ $t('lang.donation.line13') }}
+              <a href="https://www.blockchain.com/api/exchange_rates_api" target="_blank">BlockChain</a>
+              {{ $t('lang.donation.line14') }}
             </p>
             <table border="1" class="donate-table">
               <tbody>
@@ -165,7 +169,10 @@ export default {
       let res = await Promise.all([
         // 获取博客文章数据
         this.$axios
-          .get('https://blockchain.info/tobtc?cors=true&currency=CNY&value=' + value)
+          .get(
+            'https://blockchain.info/tobtc?cors=true&currency=CNY&value=' +
+              value
+          )
           .then(response => {
             return response.data
           })
@@ -192,7 +199,7 @@ export default {
               this.donorsBTC[i].amount = value.toFixed(7)
             })
             this.donorsBTC[i].unit = '฿'
-          }else{
+          } else {
             this.donorsBTC[i].amount = this.donorsBTC[i].amount.toFixed(7)
           }
         }

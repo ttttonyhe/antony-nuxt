@@ -85,6 +85,8 @@ export const lang = {
   line9: 'Name',
   line10: 'Amount',
   line11: 'Date',
-  line12: 'Exchange'
+  line12: 'Exchange',
+  line13: 'Bitcoin exchange rates powered by ',
+  line14: 'API.'
 }
 }

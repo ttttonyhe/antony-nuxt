@@ -85,6 +85,8 @@ export const lang = {
     line9: '姓名',
     line10: '金额',
     line11: '日期',
-    line12: '转换'
+    line12: '转换',
+    line13: '比特币汇率转换 API 由',
+    line14: '提供。'
   }
 }
