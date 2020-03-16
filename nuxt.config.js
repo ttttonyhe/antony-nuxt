@@ -80,6 +80,8 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    extractCSS: true,
+    maxChunkSize: 500000,
     /*
      ** You can extend webpack config here
      */
