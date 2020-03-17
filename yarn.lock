@@ -1028,13 +1028,6 @@
     consola "^2.11.3"
     defu "^1.0.0"
 
-"@nuxtjs/component-cache@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.npm.taobao.org/@nuxtjs/component-cache/download/@nuxtjs/component-cache-1.1.5.tgz#4866cb601a7e6a1387e931bbb929bafeec5981d5"
-  integrity sha1-SGbLYBp+ahOH6TG7uSm6/uxZgdU=
-  dependencies:
-    lru-cache "^5.1.1"
-
 "@nuxtjs/markdownit-loader@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@nuxtjs/markdownit-loader/download/@nuxtjs/markdownit-loader-1.1.1.tgz#7223b49064a176394f6f82aad3bf622069004799"
@@ -1345,9 +1338,9 @@ acorn-walk@^6.1.1:
   integrity sha1-Ejy487hMIXHx9/slJhWxx4prGow=
 
 acorn@^6.0.7, acorn@^6.2.1:
-  version "6.4.0"
-  resolved "https://registry.npm.taobao.org/acorn/download/acorn-6.4.0.tgz?cache=0&sync_timestamp=1583066442663&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Facorn%2Fdownload%2Facorn-6.4.0.tgz#b659d2ffbafa24baf5db1cdbb2c94a983ecd2784"
-  integrity sha1-tlnS/7r6JLr12xzbsslKmD7NJ4Q=
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.1.tgz#531e58ba3f51b9dacb9a6646ca4debf5b14ca474"
+  integrity sha512-ZVA9k326Nwrj3Cj9jlh3wGFutC2ZornPNARZwsNYqQYgN0EsV2d53w5RN/co65Ohn4sUAUtb1rSUAOD6XN9idA==
 
 aggregate-error@^3.0.0:
   version "3.0.1"
