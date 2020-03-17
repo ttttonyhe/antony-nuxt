@@ -66,7 +66,7 @@
       </template>
     </div>
     <div>
-      <ul class="post_tags">
+      <ul :class="'post_tags ' + (cookie ? 'post_tags_noscroll' : '')">
         <li class="cat-real" v-for="(tag,index) in tages" :key="index">
           <nuxt-link :to="'/tag/' + tag.id">#{{ tag.name }}</nuxt-link>
         </li>
@@ -86,7 +86,8 @@ export default {
   props: {
     loading_cates: Boolean,
     loading_tages: Boolean,
-    tages: Array
+    tages: Array,
+    cookie: Boolean
   }
 };
 </script>

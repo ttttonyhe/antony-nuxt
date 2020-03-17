@@ -1984,6 +1984,10 @@ img {
   padding-bottom: 100px
 }
 
+.post_tags_noscroll {
+  overflow-x: hidden !important;
+}
+
 .post_tags li {
   display: inline-block;
   margin-left: 5px;
@@ -2127,7 +2131,8 @@ table {
   top: 0px;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 8px;
   display: flex;
-  background: rgba(255, 255, 255, 0.95);
+  background: hsla(0, 0%, 100%, 0.75);
+  backdrop-filter: blur(10px);
   z-index: 2;
   padding: 0 35px;
   transition: ease-in-out .2s

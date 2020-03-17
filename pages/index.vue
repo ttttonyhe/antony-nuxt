@@ -4,10 +4,10 @@
       <div class="grid-cell" id="grid-cell">
         <!-- 顶部标题与分类区块 -->
         <template v-if="!loading_tages">
-          <headerTop :loading_tages="loading_tages" :loading_cates="loading_cates" :tages="tages" />
+          <headerTop :loading_tages="loading_tages" :loading_cates="loading_cates" :tages="tages" :cookie="notice.visible" />
         </template>
         <template v-else>
-          <headerTop :loading_tages="loading_tages" :loading_cates="loading_cates" />
+          <headerTop :loading_tages="loading_tages" :loading_cates="loading_cates" :cookie="notice.visible" />
         </template>
         <!-- 顶部标题与分类区块 -->
 
