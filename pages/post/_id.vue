@@ -110,7 +110,7 @@
             <div class="article-content" v-html="posts.content.rendered"></div>
             <!-- 文章内容 -->
 
-            <template v-if="posts.post_categories[0].term_id == 4 && posts.post_metas.fineTool.itemName">
+            <template v-if="posts.post_categories[0].term_id == 4 && posts.post_metas.fineTool">
               <div>
                 <div class="buy-list-item" style="margin: 60px 10px -35px 10px;">
                   <div
