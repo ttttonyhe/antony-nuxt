@@ -1343,6 +1343,7 @@ img {
       box-shadow: none !important;
       border: 1px solid #eee;
       padding: 2px 12px !important;
+      padding-top: 0px !important;
 
       a {
         font-size: 15px !important;
@@ -1355,7 +1356,7 @@ img {
   }
 
   .header-item-icon-div {
-    transform: translateY(1px) !important;
+    transform: translateY(6.5px) !important;
     margin: 0px !important;
 
     i {
@@ -2167,6 +2168,8 @@ table {
   .article-list li {
     width: 87% !important;
     margin-left: 7% !important;
+    border-radius: 4px;
+    border: 1px solid #eee;
   }
 
   .article-list-item p {
