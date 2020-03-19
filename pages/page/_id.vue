@@ -97,7 +97,7 @@ export default {
       var scrollTop = $(window).scrollTop()
       var scrollHeight = $('div.footer.reveal').offset().top - 1500
       if (scrollTop >= scrollHeight) {
-        if (click == 10) {
+        if (click <= 10) {
           getCommentsHeight()
           click++
         }
