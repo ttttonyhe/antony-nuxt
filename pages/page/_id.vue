@@ -91,13 +91,13 @@ export default {
     this.$axios.get('https://blog.ouorz.com/comment.html')
 
     document.domain = 'ouorz.com'
-    var click = 10 //这回真的操作 10 次确保操作成功哈哈哈哈
+    var click = 0 //这回真的操作 10 次确保操作成功哈哈哈哈
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
       var scrollTop = $(window).scrollTop()
       var scrollHeight = $('div.footer.reveal').offset().top - 1500
       if (scrollTop >= scrollHeight) {
-        if (click == 0) {
+        if (click == 10) {
           getCommentsHeight()
           click++
         }
