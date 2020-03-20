@@ -50,7 +50,7 @@
             :key="index"
           >
             <div class="link-list-left">
-              <img :src="post.post_metas.img[0]" class="link-list-img friends-img" />
+              <img :src="post.post_metas.img[0]" :class="'link-list-img friends-img ' + (post.post_metas.linkImg == 'none' ? 'img-none-line' : '')" />
             </div>
             <div class="link-list-right friends-right">
               <a
