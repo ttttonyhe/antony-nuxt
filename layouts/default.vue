@@ -91,9 +91,6 @@ export default {
 </script>
 
 <style lang="scss">
-[v-cloak] {
-  display: none !important;
-}
 #nprogress .bar {
   background: #3797fe !important;
   z-index: 9999;
