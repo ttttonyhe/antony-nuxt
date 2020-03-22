@@ -51,6 +51,10 @@ module.exports = {
     {
       src: '@/plugins/gotop',
       ssr: false
+    },
+    {
+      src: '@/plugins/contents',
+      ssr: false
     }
   ],
   /*
