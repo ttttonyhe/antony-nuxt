@@ -4,7 +4,7 @@
       <div class="grid-cell" id="grid-cell">
         <!-- 左侧区块 -->
         <div class="single-left" :style="(exist_index ? '' : 'margin-top:-15px')" v-if="!loading">
-          <articleIndex @exist_index="existIndex()"></articleIndex>
+          <articleIndex @exist_index="existIndex"></articleIndex>
           <div>
             <div
               class="index-div-next"
@@ -203,6 +203,7 @@ var getCommentsHeight = function() {
 
 export default {
   name: 'Posts',
+  scrollToTop: true,
   async asyncData(context) {
     let res = await Promise.all([
       // 获取博客文章数据
@@ -301,6 +302,9 @@ export default {
       var content_offtop = $('.article-content').offset().top
       var content_height = $('.article-content').innerHeight()
 
+      document.domain = 'ouorz.com'
+      var click = 0
+
       // 监听滑动
       $(window).scroll(function() {
         if ($(this).scrollTop() > content_offtop) {
@@ -324,22 +328,22 @@ export default {
           评论区监听事件
           mounted 中执行会被在文章目录组件中对于监听的重置污染
         */
-        document.domain = 'ouorz.com'
-        var click = 0
         // 监听滑动，接近底部触发高度获取请求
         $(window).scroll(function() {
-          var scrollTop = $(window).scrollTop()
-          var scrollHeight = $('div.footer.reveal').offset().top - 1500
-          if (scrollTop >= scrollHeight) {
-            if (click == 0) {
-              getCommentsHeight()
-              click++
+          //仅在文章页监听
+          if (window.location.pathname.split('/')[1] == 'post') {
+            var scrollTop = $(window).scrollTop()
+            var scrollHeight = $('div.footer.reveal').offset().top - 1500
+            if (scrollTop >= scrollHeight) {
+              if (click == 0) {
+                getCommentsHeight()
+                click++
+              }
             }
           }
         })
         /* 评论区监听事件 */
       })
-
     },
     existIndex: function(data) {
       this.exist_index = data
