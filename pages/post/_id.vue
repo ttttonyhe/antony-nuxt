@@ -193,6 +193,7 @@ const highlightCode = () => {
 
 // 与 iframe 通信获取评论列表高度
 var getCommentsHeight = function() {
+  // 强制设置同源
   document.domain = 'ouorz.com'
   var iframe = document.getElementById('article-comments-iframe')
   var iwindow = iframe.contentWindow
@@ -286,20 +287,6 @@ export default {
 
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
-
-    document.domain = 'ouorz.com'
-    var click = 0
-    // 监听滑动，接近底部触发高度获取请求
-    $(window).scroll(function() {
-      var scrollTop = $(window).scrollTop()
-      var scrollHeight = $('div.footer.reveal').offset().top - 1500
-      if (scrollTop >= scrollHeight) {
-        if (click == 0) {
-          getCommentsHeight()
-          click++
-        }
-      }
-    })
   },
   methods: {
     controlScroll: function() {
@@ -310,9 +297,11 @@ export default {
       getCommentsHeight()
     },
     createReadingBar: function() {
-      //文章阅读进度条
+      // 文章阅读进度条
       var content_offtop = $('.article-content').offset().top
       var content_height = $('.article-content').innerHeight()
+
+      // 监听滑动
       $(window).scroll(function() {
         if ($(this).scrollTop() > content_offtop) {
           //滑动到内容部分
@@ -330,9 +319,29 @@ export default {
           this.reading_p = 0
         }
         $('.reading-bar').css('width', this.reading_p + '%')
+
+        /* 
+          评论区监听事件
+          mounted 中执行会被在文章目录组件中对于监听的重置污染
+        */
+        document.domain = 'ouorz.com'
+        var click = 0
+        // 监听滑动，接近底部触发高度获取请求
+        $(window).scroll(function() {
+          var scrollTop = $(window).scrollTop()
+          var scrollHeight = $('div.footer.reveal').offset().top - 1500
+          if (scrollTop >= scrollHeight) {
+            if (click == 0) {
+              getCommentsHeight()
+              click++
+            }
+          }
+        })
+        /* 评论区监听事件 */
       })
+
     },
-    existIndex: function(data){
+    existIndex: function(data) {
       this.exist_index = data
     }
   },
