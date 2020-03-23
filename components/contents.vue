@@ -106,48 +106,78 @@ export default {
 
     if (count_e !== 1) {
       //若存在h3标签
-
-      $(window).scroll(function() {
-        //滑动窗口时
-        var scroH = $(this).scrollTop() + 130
-        var navH = offset[count_sc] //从1开始获取当前h3位置
-        var navH_prev = offset[count_sc - 1] //获取上一个h3位置(以备回滑)
-        if (scroH >= navH) {
-          //滑过当前h3位置
-          $('#ti' + (count_sc - 1)).attr('class', '')
-          $('#ti' + count_sc).attr('class', 'active')
-          $('#article-index').animate(
-            {
-              scrollTop: $('#article-index>#ti' + count_sc)[0].offsetTop - 50
-            },
-            100
-          )
-          count_sc++ //调至下一个h3位置
-        }
-
-        if (scroH <= navH_prev && count_sc - 2 !== 0) {
-          //滑回上一个h3位置,调至上一个h3位置
-          $('#ti' + (count_sc - 2)).attr('class', 'active')
-          $('#article-index').animate(
-            {
-              scrollTop:
-                $('#article-index>#ti' + (count_sc - 2))[0].offsetTop - 50
-            },
-            100
-          )
-          count_sc--
-          $('#ti' + count_sc).attr('class', '')
-        }
-        if (scroH <= navH_prev && count_sc - 2 == 0) {
-          //首个标题直接滑动至顶部
-          $('#ti1').attr('class', 'active')
-          $('#article-index').scrollTop(0)
-        }
+      $(window).unbind('scroll')
+      $(window).scroll(function indexScroll() {
         
+        //仅在文章页监听
+        if (window.location.pathname.split('/')[1] == 'post') {
+          //滑动窗口时
+          var scroH = $(this).scrollTop() + 130
+          var navH = offset[count_sc] //从1开始获取当前h3位置
+          var navH_prev = offset[count_sc - 1] //获取上一个h3位置(以备回滑)
+          if (scroH >= navH) {
+            //滑过当前h3位置
+            $('#ti' + (count_sc - 1)).attr('class', '')
+            $('#ti' + count_sc).attr('class', 'active')
+            $('#article-index').animate(
+              {
+                scrollTop: $('#article-index>#ti' + count_sc)[0].offsetTop - 50
+              },
+              100
+            )
+            count_sc++ //调至下一个h3位置
+          }
+
+          if (scroH <= navH_prev && count_sc - 2 !== 0) {
+            //滑回上一个h3位置,调至上一个h3位置
+            $('#ti' + (count_sc - 2)).attr('class', 'active')
+            $('#article-index').animate(
+              {
+                scrollTop:
+                  $('#article-index>#ti' + (count_sc - 2))[0].offsetTop - 50
+              },
+              100
+            )
+            count_sc--
+            $('#ti' + count_sc).attr('class', '')
+          }
+          if (scroH <= navH_prev && count_sc - 2 == 0) {
+            //首个标题直接滑动至顶部
+            $('#ti1').attr('class', 'active')
+            $('#article-index').scrollTop(0)
+          }
+        }
+
+        //顶部菜单重新监听，unbind 后会取消所有监听
+        var a = $(document).scrollTop()
+        if (a <= 0) {
+          $('#header-div').attr('class', 'tony-header-fixed')
+          $('#view-div').css('display', 'none')
+          $('#header-div').hover(
+            function() {
+              $('#header-div').attr('class', 'tony-header-scoll')
+            },
+            function() {
+              $('#header-div').attr('class', 'tony-header-fixed')
+            }
+          )
+        } else {
+          $('#header-div').attr('class', 'tony-header-scoll')
+          $('#view-div').css('display', 'block')
+          $('#header-div').hover(
+            function() {
+              $('#header-div').attr('class', 'tony-header-scoll')
+            },
+            function() {
+              $('#header-div').attr('class', 'tony-header-scoll')
+            }
+          )
+        }
       })
+      this.$emit('exist_index', true)
     } else {
       $('.index-div').css('display', 'none')
-      this.exist_index = false
+      this.$emit('exist_index', false)
     }
     /* 文章目录 */
   }

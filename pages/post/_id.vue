@@ -4,7 +4,7 @@
       <div class="grid-cell" id="grid-cell">
         <!-- 左侧区块 -->
         <div class="single-left" :style="(exist_index ? '' : 'margin-top:-15px')" v-if="!loading">
-          <articleIndex></articleIndex>
+          <articleIndex @exist_index="existIndex()"></articleIndex>
           <div>
             <div
               class="index-div-next"
@@ -193,7 +193,7 @@ const highlightCode = () => {
 
 // 与 iframe 通信获取评论列表高度
 var getCommentsHeight = function() {
-  document.domain = 'ouorz.com'
+  //document.domain = 'ouorz.com'
   var iframe = document.getElementById('article-comments-iframe')
   var iwindow = iframe.contentWindow
   var idoc = iwindow.document
@@ -287,7 +287,7 @@ export default {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
 
-    document.domain = 'ouorz.com'
+    //document.domain = 'ouorz.com'
     var click = 0
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
@@ -331,6 +331,9 @@ export default {
         }
         $('.reading-bar').css('width', this.reading_p + '%')
       })
+    },
+    existIndex: function(data){
+      this.exist_index = data
     }
   },
   // 监听页面变化
