@@ -145,6 +145,8 @@ export default {
             //首个标题直接滑动至顶部
             $('#ti1').attr('class', 'active')
             $('#article-index').scrollTop(0)
+            count_sc = 1
+            $('#ti' + count_sc).attr('class', '')
           }
         }
 
