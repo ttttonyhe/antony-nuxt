@@ -69,6 +69,7 @@ module.exports = {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/markdownit
     '@nuxtjs/markdownit'
   ],
   markdownit: {
@@ -86,6 +87,8 @@ module.exports = {
   build: {
     extractCSS: true,
     maxChunkSize: 500000,
+    productionSourceMap: false,
+    productionGzip: true,
     /*
      ** You can extend webpack config here
      */
