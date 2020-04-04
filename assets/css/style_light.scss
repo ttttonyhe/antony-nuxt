@@ -9,6 +9,18 @@
   src: url("../../static/font/product-sans.ttf")
 }
 
+.gray-for-heroes {
+  border-radius: 4px;
+  background: #f7f8f9;
+  padding: 1px 10px;
+  color: #999 !important;
+  font-size: 13px !important;
+  letter-spacing: .5px;
+  &:hover{
+    background: #f1f2f3;
+  }
+}
+
 html {
   font-family: "Product Sans" !important;
   line-height: 1.15;
@@ -3436,7 +3448,7 @@ input:focus {
   padding: 0px !important;
 }
 
-.img-none-line{
+.img-none-line {
   border: none !important;
 }
 

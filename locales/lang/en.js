@@ -6,6 +6,7 @@ export const lang = {
     noneTag: 'NaN',
     quickView: 'Quick View',
     mood: 'Mood',
+    moodGray: 'Gray Mode',
     noneMood: 'Plain',
     friendsLink: 'Feel free to contact me for a link exchange :)',
     goFriendsLink: 'Get Started'

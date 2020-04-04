@@ -4,10 +4,19 @@
       <div class="grid-cell" id="grid-cell">
         <!-- 顶部标题与分类区块 -->
         <template v-if="!loading_tages">
-          <headerTop :loading_tages="loading_tages" :loading_cates="loading_cates" :tages="tages" :cookie="notice.visible" />
+          <headerTop
+            :loading_tages="loading_tages"
+            :loading_cates="loading_cates"
+            :tages="tages"
+            :cookie="notice.visible"
+          />
         </template>
         <template v-else>
-          <headerTop :loading_tages="loading_tages" :loading_cates="loading_cates" :cookie="notice.visible" />
+          <headerTop
+            :loading_tages="loading_tages"
+            :loading_cates="loading_cates"
+            :cookie="notice.visible"
+          />
         </template>
         <!-- 顶部标题与分类区块 -->
 
@@ -229,7 +238,18 @@
                   <i class="ri-contrast-2-line"></i>
                   {{ $t('lang.index.mood') }} | {{ post.post_metas.status ? post.post_metas.status : $t('lang.index.noneMood') }}
                 </span>
+                <span class="article-list-divider">-</span>
+                <a
+                  class="article-list-date gray-for-heroes"
+                  href="#"
+                  @click="grayMode()"
+                >{{ $t('lang.index.moodGray') }}</a>
               </div>
+              <style v-if="grayDisplay">
+                  html {
+                    filter: grayScale(100%);
+                  }
+              </style>
             </template>
             <!-- 状态类型文章 -->
           </li>
@@ -306,7 +326,8 @@ export default {
       lang: 'zh-CN',
       listLoading: {},
       paged: 1,
-      pageLoading: false
+      pageLoading: false,
+      grayDisplay: false
     }
   },
   head() {
@@ -477,6 +498,9 @@ export default {
     discard_notice() {
       this.cookie.set('ouorz_read_cookie', 1)
       this.notice.visible = false
+    },
+    grayMode() {
+      this.grayDisplay = !this.grayDisplay
     }
   },
   // 监听页面变化
