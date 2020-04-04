@@ -9,6 +9,11 @@
   src: url("../../static/font/product-sans.ttf")
 }
 
+
+.gray-mode {
+  filter: grayscale(1)
+}
+
 .gray-for-heroes {
   border-radius: 4px;
   background: #f7f8f9;
@@ -16,7 +21,8 @@
   color: #999 !important;
   font-size: 13px !important;
   letter-spacing: .5px;
-  &:hover{
+
+  &:hover {
     background: #f1f2f3;
   }
 }

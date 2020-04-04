@@ -245,11 +245,6 @@
                   @click="grayMode()"
                 >{{ $t('lang.index.moodGray') }}</a>
               </div>
-              <style v-if="grayDisplay">
-                  html {
-                    filter: grayScale(100%);
-                  }
-              </style>
             </template>
             <!-- 状态类型文章 -->
           </li>
@@ -326,8 +321,7 @@ export default {
       lang: 'zh-CN',
       listLoading: {},
       paged: 1,
-      pageLoading: false,
-      grayDisplay: false
+      pageLoading: false
     }
   },
   head() {
@@ -500,7 +494,11 @@ export default {
       this.notice.visible = false
     },
     grayMode() {
-      this.grayDisplay = !this.grayDisplay
+      if ($('html').attr('class') !== 'gray-mode') {
+        $('html').attr('class', 'gray-mode')
+      } else {
+        $('html').attr('class', '')
+      }
     }
   },
   // 监听页面变化
