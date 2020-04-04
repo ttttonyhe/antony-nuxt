@@ -238,12 +238,14 @@
                   <i class="ri-contrast-2-line"></i>
                   {{ $t('lang.index.mood') }} | {{ post.post_metas.status ? post.post_metas.status : $t('lang.index.noneMood') }}
                 </span>
-                <span class="article-list-divider">-</span>
-                <a
-                  class="article-list-date gray-for-heroes"
-                  href="#"
-                  @click="grayMode()"
-                >{{ $t('lang.index.moodGray') }}</a>
+                <template v-if="post.id == 691">
+                  <span class="article-list-divider">-</span>
+                  <a
+                    class="article-list-date gray-for-heroes"
+                    href="#"
+                    @click="grayMode()"
+                  >{{ $t('lang.index.moodGray') }}</a>
+                </template>
               </div>
             </template>
             <!-- 状态类型文章 -->
