@@ -161,8 +161,7 @@
                             <a
                               :href="post.post_metas.fineTool.itemLink"
                               target="_blank"
-                              v-html="post.post_metas.fineTool.itemLinkName"
-                            ></a>
+                            >{{ post.post_metas.fineTool.itemLinkName }} <span><i class="ri-arrow-right-up-line"></i></span></a>
                           </div>
                         </div>
                       </div>

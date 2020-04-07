@@ -3617,10 +3617,31 @@ input:focus {
         margin-right: -12px;
         opacity: .8;
 
+        span {
+          opacity: 0;
+          margin-left: -20px;
+          margin-right: -3px;
+          transition: ease-in-out .2s;
+          i {
+            font-size: 20px;
+            display: inline-block;
+            margin-bottom: -10px;
+            vertical-align: text-top;
+            transform: translateY(-1px);
+          }
+        }
+
         &:hover {
           text-decoration: none;
           opacity: 1;
+
+          >span {
+            margin-left: -3px;
+            margin-right: -7px;
+            opacity: 1;
+          }
         }
+
       }
     }
   }
