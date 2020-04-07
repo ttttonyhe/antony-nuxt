@@ -4,7 +4,7 @@
       <!-- Content Menu -->
       <div class="header-div1" v-if="($route.path).match(routeDetect)">
         <nuxt-link to="/" style="display: inline-block;">
-          <img src="https://static.ouorz.com/t.jpg" />
+          <img src="https://static.ouorz.com/t.webp" />
         </nuxt-link>
         <a href="https://blog.ouorz.com/feed">
           <b-button variant="light">{{ $t('lang.header.rss') }}</b-button>
@@ -17,7 +17,7 @@
       <!-- Index Menu -->
       <div class="header-div1-1" v-else>
         <nuxt-link to="/" style="display: inline-block;">
-          <img src="https://static.ouorz.com/t.jpg" />
+          <img src="https://static.ouorz.com/t.webp" />
         </nuxt-link>
         <a>
           <b-button variant="light" @click="openSearch">{{ $t('lang.header.search') }}</b-button>
