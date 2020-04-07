@@ -10,7 +10,7 @@
     </div>
     <div class="footer reveal">
       <p>
-        Copyright &copy; 2018-{{ new Date().getFullYear() }} · TonyHe ·
+        &copy; Copyright 2018-{{ new Date().getFullYear() }} · TonyHe ·
         <a
           href="http://www.beian.miit.gov.cn"
           target="_blank"
