@@ -89,7 +89,7 @@
       </ul>
 
       <!-- 滑动右侧 -->
-      <a class="tags-scroll-right" href="#" @click="scrollTags('right')">
+      <a v-if="!loading_tages" class="tags-scroll-right" href="#" @click="scrollTags('right')">
         <i class="ri-arrow-right-line"></i>
       </a>
       <!-- 滑动右侧 -->
@@ -115,7 +115,7 @@ export default {
     // 标签横向滑动
     scrollTags(direction) {
       if (direction == 'right') {
-        if (this.translateX >= 0 && this.translateX < 400) {
+        if (this.translateX >= 0 && this.translateX < 360) {
           this.translateX += 60
         }
       } else {
