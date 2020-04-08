@@ -78,7 +78,7 @@
       <!-- 滑动左侧 -->
 
       <ul :class="'post_tags ' + (cookie ? 'post_tags_noscroll' : '')">
-        <li class="cat-real" v-for="(tag,index) in tages" :key="index">
+        <li class="cat-real" v-for="(tag,index) in tages" :key="'topCat' + tag.id">
           <nuxt-link :to="'/tag/' + tag.id">#{{ tag.name }}</nuxt-link>
         </li>
         <li

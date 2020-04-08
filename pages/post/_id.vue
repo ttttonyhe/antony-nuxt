@@ -146,7 +146,7 @@
                   class="cat-real"
                   style="display: inline-block;"
                   v-for="(tag,index) in post_tags"
-                  :key="index"
+                  :key="'postTag' + tag.id"
                 >
                   <nuxt-link
                     :to="'/tag/' + tag.id"

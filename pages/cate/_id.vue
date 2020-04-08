@@ -36,7 +36,7 @@
             :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
             v-for="(post,index) in posts"
             :style="post.post_categories[0].term_id | link_style"
-            :key="index"
+            :key="'catePost' + post.id"
           >
             <!-- 无特色图像或友情链接或项目分类 -->
             <template
@@ -125,8 +125,7 @@
                             <a
                               :href="post.post_metas.fineTool.itemLink"
                               target="_blank"
-                              v-html="post.post_metas.fineTool.itemLinkName"
-                            ></a>
+                            >{{ post.post_metas.fineTool.itemLinkName }} <span><i class="ri-arrow-right-up-line"></i></span></a>
                           </div>
                         </div>
                       </div>
@@ -201,9 +200,9 @@
           </mugen-scroll>
           <!-- 无限滚动占位内容 -->
         </ul>
-      </div>
-    </div>
-  </div>
+      </template>
+    </template>
+  </template>
 </template>
 
 <script>

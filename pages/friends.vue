@@ -47,7 +47,7 @@
             class="article-list-item reveal index-post-list friends-li"
             v-for="(post,index) in posts"
             style="display: flex;"
-            :key="index"
+            :key="'friendPost' + post.id"
           >
             <div class="link-list-left">
               <img :src="post.post_metas.img[0]" :class="'link-list-img friends-img ' + (post.post_metas.linkImg == 'none' ? 'img-none-line' : '')" />

@@ -38,7 +38,7 @@
           <li
             v-for="(post,index) in posts"
             class="article-list-item reveal index-post-list"
-            :key="index"
+            :key="'Comment' + post.id"
           >
             <div>
               <em

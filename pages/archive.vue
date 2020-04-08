@@ -40,12 +40,12 @@
           <li
             class="article-list-item reveal index-post-list archive"
             v-for="(array,index_array) in posts_array"
-            :key="index_array"
+            :key="'Year' + array.year"
           >
             <h2>{{ array.year }}</h2>
             <h3>{{ array.year }} / {{ parseInt(((array.posts[0].date.split('T'))[0].split('-'))[1]) }}</h3>
 
-            <div v-for="(post,index) in array.posts" :key="index">
+            <div v-for="(post,index) in array.posts" :key="'archivePost' + post.id">
               <template
                 v-if="articleDisplay(post.post_categories[0].term_id,post.post_metas.status,true)"
               >

@@ -36,7 +36,7 @@
           <li
             :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
             v-for="(post,index) in posts"
-            :key="index"
+            :key="'indexPost' + post.id"
             :id="'div' + post.id"
           >
             <!-- 不包含特色图像文章 -->
@@ -70,7 +70,7 @@
                       v-for="(tag,index) in post.post_tags.slice(0,2)"
                       :href="tag.url"
                       v-html="tag.name"
-                      :key="index"
+                      :key="'indexPostTag' + tag.id"
                       style="margin-left: 5px;"
                     ></a>
                   </template>

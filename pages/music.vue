@@ -52,7 +52,7 @@
             <li
               class="article-list-item reveal index-post-list music-view-list"
               v-for="(post,index) in posts"
-              :key="index"
+              :key="'musicPost' + post.id"
               style="display: flex;"
             >
               <div class="link-list-left">

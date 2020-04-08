@@ -31,7 +31,7 @@
             :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
             v-for="(post,index) in posts"
             :style="post.post_categories[0].term_id | link_style"
-            :key="index"
+            :key="'tagPost' + post.id"
           >
             <template
               v-if="post.post_img.url == false || post.post_categories[0].term_id == 2 || post.post_categories[0].term_id == 5"
