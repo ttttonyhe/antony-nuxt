@@ -488,7 +488,8 @@ body {
   font-weight: 400;
   line-height: 1.8;
   color: #615b5b;
-  background: #fff
+  background: #fff;
+  transition: ease-in-out .2s;
 }
 
 p {
@@ -1387,7 +1388,10 @@ img {
   }
 
   .article-list-footer {
-    display: block
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
   }
 
   .article-list-divider:last-of-type {
@@ -2141,7 +2145,10 @@ table {
   background: transparent;
   z-index: 2;
   padding: 0 35px;
-  transition: ease-in-out .2s
+  transition: ease-in-out .2s;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .tony-header-scoll {
@@ -2154,7 +2161,10 @@ table {
   background: hsla(0, 0%, 100%, 0.9);
   z-index: 2;
   padding: 0 35px;
-  transition: ease-in-out .2s
+  transition: ease-in-out .2s;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .lead {

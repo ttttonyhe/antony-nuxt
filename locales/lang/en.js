@@ -12,7 +12,7 @@ export const lang = {
     goFriendsLink: 'Get Started'
   },
   header: {
-    rss: 'RSS',
+    rss: 'RSS Feed',
     search: 'Search',
     lang: '中文版',
     index: 'Home',
@@ -39,11 +39,11 @@ export const lang = {
     friendsDes: 'All the lovely ones...'
   },
   post: {
-    index: 'Index',
+    index: 'Contents',
     prev: 'Previous',
     next: 'Next',
-    donation: 'Donation and List',
-    des: 'Blog Post',
+    donation: 'Donate to Tony',
+    des: 'Article',
     cate: 'Category',
     estimate: 'ETA',
     readingTime: 'Time of Reading',
