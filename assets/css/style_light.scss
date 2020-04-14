@@ -489,12 +489,12 @@ body {
   line-height: 1.8;
   color: #615b5b;
   background: #fff;
-  transition: ease-in-out .2s;
 }
 
 p {
   margin: 0;
-  font-weight: 400
+  font-weight: 400;
+  transition: all .2s;
 }
 
 b,
@@ -2146,9 +2146,6 @@ table {
   z-index: 2;
   padding: 0 35px;
   transition: ease-in-out .2s;
-  overflow: hidden;
-  overflow-x: auto;
-  white-space: nowrap;
 }
 
 .tony-header-scoll {
@@ -2162,9 +2159,6 @@ table {
   z-index: 2;
   padding: 0 35px;
   transition: ease-in-out .2s;
-  overflow: hidden;
-  overflow-x: auto;
-  white-space: nowrap;
 }
 
 .lead {
