@@ -46,34 +46,16 @@
             <h3>{{ array.year }} / {{ parseInt(((array.posts[0].date.split('T'))[0].split('-'))[1]) }}</h3>
 
             <div v-for="(post,index) in array.posts" :key="'archivePost' + post.id">
-              <template
-                v-if="articleDisplay(post.post_categories[0].term_id,post.post_metas.status,true)"
+              <div
+                v-if="(index !== 0) && (parseInt(((post.date.split('T'))[0].split('-'))[1]) !== parseInt(((array.posts[index - 1].date.split('T'))[0].split('-'))[1]))"
               >
-                <div
-                  v-if="(index !== 0) && (parseInt(((post.date.split('T'))[0].split('-'))[1]) !== parseInt(((array.posts[index - 1].date.split('T'))[0].split('-'))[1]))"
-                >
-                  <h3>{{ array.year }} / {{ parseInt(((post.date.split('T'))[0].split('-'))[1]) }}</h3>
-                </div>
-                <a class="post-a" :href="'/post/'+post.id">
-                  <p
-                    v-html="'<em class=\'post-date\'>' + (post.date.split('T'))[0] + '</em>' + post.title.rendered"
-                  ></p>
-                </a>
-              </template>
-              <template v-else>
-                <div>
-                  <div
-                    v-if="(index !== 0) && (parseInt(((post.date.split('T'))[0].split('-'))[1]) !== parseInt(((array.posts[index - 1].date.split('T'))[0].split('-'))[1]))"
-                  >
-                    <h3>{{ array.year }} / {{ parseInt(((post.date.split('T'))[0].split('-'))[1]) }}</h3>
-                  </div>
-                  <a class="post-a" style="display:none">
-                    <p
-                      v-html="'<em class=\'post-date\'>' + (post.date.split('T'))[0] + '</em>' + 'Tony 发布了一篇不想在这里展示的文章'"
-                    ></p>
-                  </a>
-                </div>
-              </template>
+                <h3>{{ array.year }} / {{ parseInt(((post.date.split('T'))[0].split('-'))[1]) }}</h3>
+              </div>
+              <a class="post-a" :href="'/post/'+post.id">
+                <p
+                  v-html="'<em class=\'post-date\'>' + (post.date.split('T'))[0] + '</em>' + post.title.rendered"
+                ></p>
+              </a>
             </div>
           </li>
         </ul>
@@ -148,22 +130,30 @@ export default {
     let postsLength = this.posts.length
     for (i = 0; i < postsLength; i++) {
       //遍历所有文章
-      if (this.posts[i].date.split('T')[0].split('-')[0] !== this.last_year) {
-        //当前文章发布年与上一篇不同
-        this.posts_array[(k += 1)] = [] //初始化数组
-        this.posts_array[k]['posts'] = [] //初始化 posts 数组
-        this.posts_array[k]['year'] = parseInt(
-          this.posts[i].date.split('T')[0].split('-')[0]
-        ) //增加年份
-        this.posts_array[k]['posts'][
-          this.posts_array[k]['posts'].length
-        ] = this.posts[i] //增加文章
-        this.last_year = this.posts[i].date.split('T')[0].split('-')[0] //赋值当前文章发布年份
-      } else {
-        //发布年份与上一篇相同
-        this.posts_array[k]['posts'][
-          this.posts_array[k]['posts'].length
-        ] = this.posts[i] //增加文章
+      if (
+        this.articleDisplay(
+          this.posts[i].post_categories[0].term_id,
+          this.posts[i].post_metas.status,
+          true
+        )
+      ) {
+        if (this.posts[i].date.split('T')[0].split('-')[0] !== this.last_year) {
+          //当前文章发布年与上一篇不同
+          this.posts_array[(k += 1)] = [] //初始化数组
+          this.posts_array[k]['posts'] = [] //初始化 posts 数组
+          this.posts_array[k]['year'] = parseInt(
+            this.posts[i].date.split('T')[0].split('-')[0]
+          ) //增加年份
+          this.posts_array[k]['posts'][
+            this.posts_array[k]['posts'].length
+          ] = this.posts[i] //增加文章
+          this.last_year = this.posts[i].date.split('T')[0].split('-')[0] //赋值当前文章发布年份
+        } else {
+          //发布年份与上一篇相同
+          this.posts_array[k]['posts'][
+            this.posts_array[k]['posts'].length
+          ] = this.posts[i] //增加文章
+        }
       }
     }
     this.loading = false
