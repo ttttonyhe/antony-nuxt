@@ -2622,7 +2622,8 @@ table {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  padding-right: 10px
+  padding-right: 10px;
+  cursor: pointer;
 }
 
 .index-ul li:hover {
