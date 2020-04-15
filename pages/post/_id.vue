@@ -268,6 +268,11 @@ export default {
     }
   },
   mounted() {
+    // 判断文章归属分类以重定向
+    if([2,5,58].indexOf(parseInt(this.posts.categories[0])) > -1){
+      window.location.href = 'https://www.ouorz.com'
+    }
+
     // 百度主动推送
     ;(function() {
       var bp = document.createElement('script')
@@ -302,7 +307,7 @@ export default {
       var content_offtop = $('.article-content').offset().top
       var content_height = $('.article-content').innerHeight()
 
-      document.domain = 'ouorz.com'
+      //document.domain = 'ouorz.com'
       var click = 0
 
       // 监听滑动
