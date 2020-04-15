@@ -200,9 +200,9 @@
           </mugen-scroll>
           <!-- 无限滚动占位内容 -->
         </ul>
-      </template>
-    </template>
-  </template>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
