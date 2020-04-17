@@ -58,6 +58,7 @@ yarn run start
 <br/>
 
 ### Features 依赖与实现
++ TypeScript
 + Vue-mugen-scroll 无限加载
 + Vue-i18n 国际化
 + Nprogress 加载进度条
