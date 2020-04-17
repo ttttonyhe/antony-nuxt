@@ -12,7 +12,8 @@
               <div>
                 <nuxt-link to="/">
                   <b-button variant="primary" class="cate-back">
-                    <i class="ri-arrow-left-line"></i> {{ $t('lang.cate.backHome') }}
+                    <i class="ri-arrow-left-line"></i>
+                    {{ $t('lang.cate.backHome') }}
                   </b-button>
                 </nuxt-link>
               </div>
@@ -48,18 +49,25 @@
                 style="color: rgb(153, 153, 153);font-style: normal;padding: 3px 7px;border-radius: 4px;background: #f1f2f3;margin-left: 5px;"
               >{{ post.email }}</em>
             </div>
-            <nuxt-link :to="post.page_key == '249' ? '/page/249' : '/post/'+post.page_key" style="text-decoration:none">
+            <nuxt-link
+              :to="post.page_key == '249' ? '/page/249' : '/post/'+post.page_key"
+              style="text-decoration:none"
+            >
               <div class="content-c" v-html="$md.render(post.content)"></div>
             </nuxt-link>
             <div class="archive-footer">
               <em>{{ post.date }}</em>
               <em>
-                <a :href="post.link.length ? post.link : '/page/249'">{{ $t('lang.comments.viewLink') }}</a>
+                <a
+                  :href="post.link.length ? post.link : '/page/249'"
+                >{{ $t('lang.comments.viewLink') }}</a>
               </em>
             </div>
           </li>
           <div class="music-view-more" v-if="!loading">
-            <a href="#">{{ $t('lang.comments.total') }} {{ posts.length }} {{ $t('lang.comments.line') }}</a>
+            <a
+              href="#"
+            >{{ $t('lang.comments.total') }} {{ posts.length }} {{ $t('lang.comments.line') }}</a>
           </div>
         </ul>
       </div>
@@ -67,43 +75,47 @@
   </div>
 </template>
 
-<script>
-// import header-top-inside
-import topInsideCate from "@/components/topInsideCate";
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default {
-  name: "Comments",
+// import header-top-inside
+import topInsideCate from '@/components/topInsideCate.vue'
+
+@Component({
   components: {
     topInsideCate
-  },
-  data() {
-    return {
-      flag: false,
-      posts: null,
-      loading: true, //v-if判断显示占位符
-      errored: true
-    };
-  },
+  }
+})
+export default class Comments extends Vue {
+
+  flag: boolean = false
+  posts: any[] = []
+  loading: boolean = true
+  errored: boolean = true
+
   head() {
     return {
       title: 'TonyHe - 评论列表'
     }
-  },
+  }
+
   mounted() {
     //获取文章列表
     this.$axios
       .get(
-        "https://blog.ouorz.com/wp-content/themes/peg/com/data/comments.data.json?rand=" + (Math.random() * 1000)
+        'https://blog.ouorz.com/wp-content/themes/peg/com/data/comments.data.json?rand=' +
+          Math.random() * 1000
       )
-      .then(response => {
-        this.posts = response.data.reverse();
+      .then((response: { data: any }) => {
+        this.posts = response.data.reverse()
       })
-      .catch(() => {
-        this.errored = false;
+      .catch((): void => {
+        this.errored = false
       })
-      .then(() => {
-        this.loading = false;
-      });
+      .then((): void => {
+        this.loading = false
+      })
   }
-};
+
+}
 </script>

@@ -11,9 +11,9 @@ NProgress.configure({
 
 export default ({
   app
-}) => {
+}:any) => {
   /* Before & after switching to a new route */
-  app.router.beforeEach((to, from, next) => {
+  app.router.beforeEach((to:any, from:any, next:any) => {
     // Start progress bar
     NProgress.inc();
     next();

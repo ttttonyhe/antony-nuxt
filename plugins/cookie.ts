@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import cookies from 'vue-cookie'
 var cookie = {
-  install(Vue) {
+  install(Vue:any) {
     Vue.prototype.cookie = cookies;
   }
 }

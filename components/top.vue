@@ -70,7 +70,6 @@
       <a
         v-if="translateX > 0"
         class="tags-scroll-right scroll-left"
-        href="#"
         @click="scrollTags('left')"
       >
         <i class="ri-arrow-left-line"></i>
@@ -89,7 +88,7 @@
       </ul>
 
       <!-- 滑动右侧 -->
-      <a v-if="!loading_tages" class="tags-scroll-right" href="#" @click="scrollTags('right')">
+      <a v-if="!loading_tages" class="tags-scroll-right" @click="scrollTags('right')">
         <i class="ri-arrow-right-line"></i>
       </a>
       <!-- 滑动右侧 -->

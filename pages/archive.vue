@@ -64,48 +64,48 @@
   </div>
 </template>
 
-<script>
-// import header-top-inside
-import topInsideCate from '~/components/topInsideCate'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default {
-  name: 'Archive',
+// import header-top-inside
+import topInsideCate from '~/components/topInsideCate.vue'
+
+@Component({
   components: {
     topInsideCate
-  },
-  async asyncData(context) {
+  }
+})
+export default class Archive extends Vue {
+  
+  async asyncData(context: any): Promise<{ post_count: any; posts: any[] }> {
     let res1 = await Promise.all([
       // 获取博客文章数据
       context.$axios
         .get('https://blog.ouorz.com/wp-json/wp/v2/posts?per_page=1')
-        .then(post_one => {
+        .then((post_one: { data: any[] }): number => {
           return parseInt(post_one.data[0].post_total_count.post_count)
         })
     ])
-
     let res2 = await Promise.all([
       context.$axios
         .get('https://blog.ouorz.com/wp-json/wp/v2/posts?per_page=' + res1) //默认以发布时间排序
-        .then(response => {
+        .then((response: { data: any }) => {
           return response.data
         })
     ])
-
     return {
       post_count: res1,
       posts: res2[0]
     }
-  },
-  data() {
-    return {
-      posts: null,
-      loading: true, //v-if判断显示占位符
-      loading_des: false,
-      post_count: 0,
-      last_year: 0,
-      posts_array: []
-    }
-  },
+  }
+
+  posts: any[] = []
+  loading: boolean = true
+  loading_des: boolean = false
+  post_count: number = 0
+  last_year: number = 0
+  posts_array: any[] = []
+
   head() {
     return {
       title: 'TonyHe - 文章归档',
@@ -123,11 +123,12 @@ export default {
         }
       ]
     }
-  },
+  }
+
   mounted() {
     var k = -1
     var i = 0
-    let postsLength = this.posts.length
+    let postsLength: number = this.posts.length
     for (i = 0; i < postsLength; i++) {
       //遍历所有文章
       if (
@@ -157,21 +158,20 @@ export default {
       }
     }
     this.loading = false
-  },
-  methods: {
-    articleDisplay: (cateId, status, type) => {
-      if (type) {
-        if (cateId !== 2 && cateId !== 58 && cateId !== 5 && !status) {
-          return true
-        } else {
-          return false
-        }
+  }
+
+  articleDisplay = (cateId: number, status: any, type: boolean) => {
+    if (type) {
+      if (cateId !== 2 && cateId !== 58 && cateId !== 5 && !status) {
+        return true
       } else {
-        if (cateId !== 2 && cateId !== 58 && cateId !== 5 && !status) {
-          return false
-        } else {
-          return true
-        }
+        return false
+      }
+    } else {
+      if (cateId !== 2 && cateId !== 58 && cateId !== 5 && !status) {
+        return false
+      } else {
+        return true
       }
     }
   }

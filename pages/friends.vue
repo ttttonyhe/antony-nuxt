@@ -34,9 +34,7 @@
 
         <ul class="article-list" style="margin-bottom:10px">
           <!-- 友情链接交换提示 -->
-          <li
-            class="article-list-item reveal index-post-list notice-list"
-          >
+          <li class="article-list-item reveal index-post-list notice-list">
             <div>{{ $t('lang.index.friendsLink') }}</div>
             <nuxt-link to="/page/249">{{ $t('lang.index.goFriendsLink') }}</nuxt-link>
           </li>
@@ -50,7 +48,10 @@
             :key="'friendPost' + post.id"
           >
             <div class="link-list-left">
-              <img :src="post.post_metas.img[0]" :class="'link-list-img friends-img ' + (post.post_metas.linkImg == 'none' ? 'img-none-line' : '')" />
+              <img
+                :src="post.post_metas.img[0]"
+                :class="'link-list-img friends-img ' + (post.post_metas.linkImg == 'none' ? 'img-none-line' : '')"
+              />
             </div>
             <div class="link-list-right friends-right">
               <a
@@ -60,7 +61,10 @@
               >
                 <h5 class="friends-h5" v-html="post.title.rendered"></h5>
               </a>
-              <p class="cate-link-item-p cate-link-p friends-p" v-html="post.post_excerpt.nine.substr(0, 80)"></p>
+              <p
+                class="cate-link-item-p cate-link-p friends-p"
+                v-html="post.post_excerpt.nine.substr(0, 80)"
+              ></p>
             </div>
           </li>
         </ul>
@@ -69,65 +73,68 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Inject } from 'nuxt-property-decorator'
 // import header-top-inside
-import topInsideCate from '~/components/topInsideCate'
+import topInsideCate from '~/components/topInsideCate.vue'
 
-export default {
-  name: 'Friends',
+@Component({
   components: {
     topInsideCate
-  },
-  async asyncData(context) {
-    let res = await Promise.all([
+  }
+})
+export default class Friends extends Vue {
+
+  posts:any[] = []
+  loading:boolean = true
+  loading_cate:boolean = true
+  errored:boolean = true
+  loading_stop:boolean = false
+  loading_end:boolean = false
+  paged:number = 1
+  pagedLoading:boolean = false
+
+  async asyncData(context: any): Promise<{ posts: [] }> {
+    let res:any[] = await Promise.all([
       context.$axios
-        .get('https://blog.ouorz.com/wp-json/wp/v2/posts?&per_page=100&categories=2')
-        .then(response => {
+        .get(
+          'https://blog.ouorz.com/wp-json/wp/v2/posts?&per_page=100&categories=2'
+        )
+        .then((response: any) => {
           return response.data
         })
     ])
-
     // Fisher-Yates Shuffle 洗牌随机排序
     for (let i = res[0].length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let t = res[0][i]; res[0][i] = res[0][j]; res[0][j] = t;
+      let j = Math.floor(Math.random() * (i + 1))
+      let t = res[0][i]
+      res[0][i] = res[0][j]
+      res[0][j] = t
     }
-
     return {
       posts: res[0]
     }
-  },
-  data() {
-    return {
-      posts: null,
-      loading: true,
-      loading_cate: true,
-      errored: true,
-      loading_stop: false,
-      loading_end: false,
-      paged: 1,
-      pagedLoading: false,
-      listLoading: {}
-    }
-  },
+  }
+
   mounted() {
     this.loading_stop = true
     this.loading = false
-  },
+  }
+
   head() {
     return {
       title: 'TonyHe - 伙伴链接'
     }
-  },
-  methods: {
-    // 判断分类目录名称是否包含中文调整「返回主页」按钮位置
-    includeChinese: str => {
-      if (escape(str).indexOf('%u') < 0) {
-        return false
-      } else {
-        return true
-      }
+  }
+
+  // 判断分类目录名称是否包含中文调整「返回主页」按钮位置
+  includeChinese = (str: string): boolean => {
+    if (escape(str).indexOf('%u') < 0) {
+      return false
+    } else {
+      return true
     }
   }
+  
 }
 </script>

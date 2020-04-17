@@ -158,10 +158,12 @@
                             <p v-html="post.post_metas.fineTool.itemDes"></p>
                           </div>
                           <div>
-                            <a
-                              :href="post.post_metas.fineTool.itemLink"
-                              target="_blank"
-                            >{{ post.post_metas.fineTool.itemLinkName }} <span><i class="ri-arrow-right-up-line"></i></span></a>
+                            <a :href="post.post_metas.fineTool.itemLink" target="_blank">
+                              {{ post.post_metas.fineTool.itemLinkName }}
+                              <span>
+                                <i class="ri-arrow-right-up-line"></i>
+                              </span>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -241,7 +243,6 @@
                   <span class="article-list-divider">-</span>
                   <a
                     class="article-list-date gray-for-heroes"
-                    href="#"
                     @click="grayMode()"
                   >{{ $t('lang.index.moodGray') }}</a>
                 </template>
@@ -269,9 +270,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
 // import header-top
-import headerTop from '../components/top'
+import headerTop from '../components/top.vue'
 
 // import infinite loading feature
 import MugenScroll from 'vue-mugen-scroll'
@@ -284,47 +287,50 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/rainbow.css'
 
 // highlightjs 初始化函数
-const highlightCode = () => {
-  const preEl = document.querySelectorAll('pre')
-  preEl.forEach(el => {
+const highlightCode = (): void => {
+  const preEl: any = document.querySelectorAll('pre')
+  preEl.forEach((el:any) => {
     hljs.highlightBlock(el)
   })
 }
 
-export default {
-  name: 'Index',
+@Component({
   components: {
     headerTop,
     MugenScroll
-  },
-  data() {
-    return {
-      posts: null,
-      posts_id_sticky: '0',
-      cates: null,
-      tages: null,
-      loading: true, //v-if判断显示占位符
-      loading_cates: true,
-      loading_tages: true,
-      errored: true,
-      loading_css: '',
-      version: '&categories_exclude=5,2,74',
-      previewPost: 0,
-      previewPostOpened: 0,
-      previewContent: '',
-      previewClass: '',
-      previewClose: 0,
-      loading_first: false,
-      loading_end: false,
-      notice: {
-        visible: false
-      },
-      lang: 'zh-CN',
-      listLoading: {},
-      paged: 1,
-      pageLoading: false
-    }
-  },
+  }
+})
+export default class Index extends Vue {
+
+  // Data 数据
+  posts: any[] = []
+  posts_id_sticky: string = '0'
+  cates: any[] = []
+  tages: any[] = []
+  loading: boolean = true
+  loading_cates: boolean = true
+  loading_tages: boolean = true
+  errored: boolean = true
+  loading_css: string = ''
+  version: string = '&categories_exclude=5,2,74'
+  previewPost: number = 0
+  previewPostOpened: number = 0
+  previewContent: string = ''
+  previewClass: string = ''
+  previewClose: number = 0
+  loading_first: boolean = false
+  loading_end: boolean = false
+  notice = {
+    visible: false
+  } as {
+    visible: boolean
+  }
+  lang: string = 'zh-CN'
+  listLoading: any = {}
+  paged: number = 1
+  pagedLoading: boolean = false
+
+  //头部信息
   head() {
     return {
       title: 'TonyHe - Just A Poor Lifesinger',
@@ -342,7 +348,9 @@ export default {
         }
       ]
     }
-  },
+  }
+
+  // 挂载函数
   mounted() {
     highlightCode()
     // 获取标签
@@ -350,21 +358,21 @@ export default {
       .get(
         'https://blog.ouorz.com/wp-json/wp/v2/tags?orderby=count&order=desc&per_page=15'
       )
-      .then(response => {
+      .then((response: { data: any }) => {
         this.tages = response.data
       })
-      .finally(() => {
+      .finally((): void => {
         this.loading_cates = false
         setTimeout(() => {
           this.loading_tages = false
         }, 500)
       })
-      .catch(() => {
+      .catch((): void => {
         this.errored = false
       })
 
     //判断 cookie 说明阅读
-    if (parseInt(this.cookie.get('ouorz_read_cookie')) !== 1) {
+    if (parseInt((this as any).cookie.get('ouorz_read_cookie')) !== 1) {
       this.notice.visible = true
     }
 
@@ -374,11 +382,11 @@ export default {
         'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=1&per_page=10' +
           this.version
       )
-      .then(res_sticky => {
+      .then((res_sticky: { data: any }) => {
         this.posts = res_sticky.data
 
         //获取顶置文章 IDs 以在获取其余文章时排除
-        let postsLength = this.posts.length
+        let postsLength:number = this.posts.length
         for (var s = 0; s < postsLength; ++s) {
           this.posts_id_sticky += ',' + this.posts[s].id
         }
@@ -389,119 +397,114 @@ export default {
               this.posts_id_sticky +
               this.version
           )
-          .then(res_normal => {
+          .then((res_normal: { data: any }) => {
             //拼接其余文章
             this.posts = this.posts.concat(res_normal.data)
           })
       })
-      .catch(() => {
+      .catch((): void => {
         this.errored = false
       })
-      .finally(() => {
+      .finally((): void => {
         this.loading = false
         this.loading_first = true
         this.paged = 2 //加载完1页后累加页数
       })
-  },
-  methods: {
-    //加载下一页文章列表
-    new_page: function() {
-      //语言包匹配
-      if (this.$i18n.locale == 'zh-CN') {
-        this.listLoading = {
-          loading: '加载中',
-          list: '文章列表',
-          all: '全部文章'
-        }
-      } else {
-        this.listLoading = {
-          loading: 'Loading',
-          list: 'Posts List',
-          all: 'All Posts'
-        }
+  }
+
+  //加载下一页文章列表
+  new_page(): void {
+    //语言包匹配
+    if (this.$i18n.locale == 'zh-CN') {
+      this.listLoading = {
+        loading: '加载中',
+        list: '文章列表',
+        all: '全部文章'
       }
-      if (!this.pagedLoading) {
-        this.pagedLoading = true
-        $('#view-text').html('-&nbsp;' + this.listLoading.loading + '&nbsp;-')
-        this.$axios
-          .get(
-            'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=0&exclude=' +
-              this.posts_id_sticky +
-              '&per_page=10&page=' +
-              this.paged +
-              this.version
-          )
-          .then(response => {
-            if (response.data.length !== 0) {
-              //判断是否最后一页
-              $('#view-text').html(
-                '-&nbsp;' + this.listLoading.list + '&nbsp;-'
-              )
-              this.posts.push.apply(this.posts, response.data) //拼接在上一页之后
-              this.paged += 1
-            } else {
-              $('#view-text').html(
-                '-&nbsp;' + this.listLoading.list + '&nbsp;-'
-              )
-              this.loading_first = false
-              this.loading_end = true
-            }
-            this.pagedLoading = false
-          })
-          .catch(() => {
-            $('#view-text').html('-&nbsp;' + this.listLoading.all + '&nbsp;-')
-            this.paged = 1
-            this.loading_first = false
-            this.loading_end = true
-          })
-      }
-    },
-    // 文章内容快速预览
-    preview: function(postId) {
-      $('#btn' + this.previewPost).html('全文速览') //以防未收起上个预览，更改上个预览按钮
-      this.previewPost = postId //准备预览文章 ID
-      this.$axios
-        .get('https://blog.ouorz.com/wp-json/wp/v2/posts/' + postId)
-        .then(response => {
-          this.previewPostOpened = postId //正在预览文章 ID
-          if (response.data.length !== 0) {
-            //判断是否最后一页
-            $('#btn' + postId).html('收起预览') //开始预览，更改按钮
-            this.previewContent = response.data.content.rendered //加载文章内容
-            this.previewClass = 'preview-p' //更改预览内容块 class
-            window.location.hash = '#div' + postId
-          } else {
-            this.previewContent = '这里什么都没有...' //无内容默认展示
-            this.previewClass = 'preview-p' //更改预览内容区块 class
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    // 关闭文章内容快速预览
-    closePreview: function(postId) {
-      $('#btn' + postId).html('全文速览') //收起预览，更改按钮
-      this.previewClose = postId //收起预览的文章 ID
-      this.previewContent = '' //初始化预览内容
-      this.previewPost = 0 //初始化准备预览文章 ID
-      this.previewPostOpened = 0 //初始化正在预览文章 ID
-      this.previewClass = '' //初始化预览内容块 class
-      this.previewClose = 0 //初始化已收起预览的文章 ID
-    },
-    // 关闭 cookies 使用提示
-    discard_notice() {
-      this.cookie.set('ouorz_read_cookie', 1)
-      this.notice.visible = false
-    },
-    grayMode() {
-      if ($('html').attr('class') !== 'gray-mode') {
-        $('html').attr('class', 'gray-mode')
-      } else {
-        $('html').attr('class', '')
+    } else {
+      this.listLoading = {
+        loading: 'Loading',
+        list: 'Posts List',
+        all: 'All Posts'
       }
     }
-  },
+    if (!this.pagedLoading) {
+      this.pagedLoading = true
+      $('#view-text').html('-&nbsp;' + this.listLoading.loading + '&nbsp;-')
+      this.$axios
+        .get(
+          'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=0&exclude=' +
+            this.posts_id_sticky +
+            '&per_page=10&page=' +
+            this.paged +
+            this.version
+        )
+        .then((response:{data:any}) => {
+          if (response.data.length !== 0) {
+            //判断是否最后一页
+            $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
+            this.posts.push.apply(this.posts, response.data) //拼接在上一页之后
+            this.paged += 1
+          } else {
+            $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
+            this.loading_first = false
+            this.loading_end = true
+          }
+          this.pagedLoading = false
+        })
+        .catch(() => {
+          $('#view-text').html('-&nbsp;' + this.listLoading.all + '&nbsp;-')
+          this.paged = 1
+          this.loading_first = false
+          this.loading_end = true
+        })
+    }
+  }
+  // 文章内容快速预览
+  preview(postId: number): void {
+    $('#btn' + this.previewPost).html('全文速览') //以防未收起上个预览，更改上个预览按钮
+    this.previewPost = postId //准备预览文章 ID
+    this.$axios
+      .get('https://blog.ouorz.com/wp-json/wp/v2/posts/' + postId)
+      .then(response => {
+        this.previewPostOpened = postId //正在预览文章 ID
+        if (response.data.length !== 0) {
+          //判断是否最后一页
+          $('#btn' + postId).html('收起预览') //开始预览，更改按钮
+          this.previewContent = response.data.content.rendered //加载文章内容
+          this.previewClass = 'preview-p' //更改预览内容块 class
+          window.location.hash = '#div' + postId
+        } else {
+          this.previewContent = '这里什么都没有...' //无内容默认展示
+          this.previewClass = 'preview-p' //更改预览内容区块 class
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+  // 关闭文章内容快速预览
+  closePreview(postId: number): void {
+    $('#btn' + postId).html('全文速览') //收起预览，更改按钮
+    this.previewClose = postId //收起预览的文章 ID
+    this.previewContent = '' //初始化预览内容
+    this.previewPost = 0 //初始化准备预览文章 ID
+    this.previewPostOpened = 0 //初始化正在预览文章 ID
+    this.previewClass = '' //初始化预览内容块 class
+    this.previewClose = 0 //初始化已收起预览的文章 ID
+  }
+  // 关闭 cookies 使用提示
+  discard_notice(): void {
+    (this as any).cookie.set('ouorz_read_cookie', 1)
+    this.notice.visible = false
+  }
+  grayMode(): void {
+    if ($('html').attr('class') !== 'gray-mode') {
+      $('html').attr('class', 'gray-mode')
+    } else {
+      $('html').attr('class', '')
+    }
+  }
   // 监听页面变化
   updated() {
     // 页面内容变化时执行代码渲染

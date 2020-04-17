@@ -75,9 +75,13 @@
                 target="_blank"
               >{{ $t('lang.donation.line8.line2') }}</a>
               {{ $t('lang.donation.line8.line3') }}
-              <br/><br/>
+              <br />
+              <br />
               {{ $t('lang.donation.line13') }}
-              <a href="https://www.blockchain.com/api/exchange_rates_api" target="_blank">BlockChain</a>
+              <a
+                href="https://www.blockchain.com/api/exchange_rates_api"
+                target="_blank"
+              >BlockChain</a>
               {{ $t('lang.donation.line14') }}
             </p>
             <table border="1" class="donate-table">
@@ -110,15 +114,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Donation',
-  async asyncData(context) {
-    let res = await Promise.all([
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({})
+export default class Donation extends Vue {
+  async asyncData(
+    context: any
+  ): Promise<{ donorsCurrent: any[]; donorsCNY: any[]; donorsBTC: any }> {
+    let res: any[] = await Promise.all([
       // 获取博客文章数据
       context.$axios
         .get('https://blog.ouorz.com/wp-content/themes/peg/com/data/donors.php')
-        .then(response => {
+        .then((response: {data:any}) => {
           return response.data.donors
         })
     ])
@@ -127,16 +135,14 @@ export default {
       donorsCNY: res[0],
       donorsBTC: null
     }
-  },
-  data() {
-    return {
-      lang: this.$i18n.locale,
-      donorsBTC: null,
-      donorsCNY: null,
-      donorsCurrent: null,
-      unit: 'cny'
-    }
-  },
+  }
+
+  lang: string = 'zh-CN'
+  donorsBTC: any = null
+  donorsCNY: any[] = []
+  donorsCurrent: any[] = []
+  unit: string = 'cny'
+
   head() {
     return {
       title: 'TonyHe - 赞助与列表',
@@ -154,64 +160,63 @@ export default {
         }
       ]
     }
-  },
-  methods: {
-    switchLanguage: function() {
-      if (this.lang === 'zh-CN') {
-        this.lang = 'en-US'
-        this.$i18n.locale = this.lang
-      } else {
-        this.lang = 'zh-CN'
-        this.$i18n.locale = this.lang
-      }
-    },
-    cnyTobtc: async function(value) {
-      let res = await Promise.all([
-        // 获取博客文章数据
-        this.$axios
-          .get(
-            'https://blockchain.info/tobtc?cors=true&currency=CNY&value=' +
-              value
-          )
-          .then(response => {
-            return response.data
+  }
+
+  switchLanguage():void {
+    if (this.lang === 'zh-CN') {
+      this.lang = 'en-US'
+      this.$i18n.locale = this.lang
+    } else {
+      this.lang = 'zh-CN'
+      this.$i18n.locale = this.lang
+    }
+  }
+
+  async cnyTobtc(value: number): Promise<number> {
+    let res = await Promise.all([
+      // 获取博客文章数据
+      this.$axios
+        .get(
+          'https://blockchain.info/tobtc?cors=true&currency=CNY&value=' + value
+        )
+        .then(response => {
+          return response.data
+        })
+    ])
+    return res[0]
+  }
+
+  switchCurrency():void {
+    if (this.unit == 'btc') {
+      this.unit = 'cny'
+      this.$axios
+        .get('https://blog.ouorz.com/wp-content/themes/peg/com/data/donors.php')
+        .then(response => {
+          this.donorsCNY = response.data.donors
+          this.donorsCurrent = this.donorsCNY
+        })
+    } else {
+      this.unit = 'btc'
+      this.donorsBTC = this.donorsCurrent
+      for (let i = 0; i < this.donorsBTC.length; i++) {
+        if (this.donorsBTC[i].unit !== '฿') {
+          this.cnyTobtc(parseFloat(this.donorsBTC[i].amount)).then(value => {
+            this.donorsBTC[i].amount = value.toFixed(7)
           })
-      ])
-      return res[0]
-    },
-    switchCurrency: function() {
-      if (this.unit == 'btc') {
-        this.unit = 'cny'
-        this.$axios
-          .get(
-            'https://blog.ouorz.com/wp-content/themes/peg/com/data/donors.php'
-          )
-          .then(response => {
-            this.donorsCNY = response.data.donors
-            this.donorsCurrent = this.donorsCNY
-          })
-      } else {
-        this.unit = 'btc'
-        this.donorsBTC = this.donorsCurrent
-        for (let i = 0; i < this.donorsBTC.length; i++) {
-          if (this.donorsBTC[i].unit !== '฿') {
-            this.cnyTobtc(parseFloat(this.donorsBTC[i].amount)).then(value => {
-              this.donorsBTC[i].amount = value.toFixed(7)
-            })
-            this.donorsBTC[i].unit = '฿'
-          } else {
-            this.donorsBTC[i].amount = this.donorsBTC[i].amount.toFixed(7)
-          }
+          this.donorsBTC[i].unit = '฿'
+        } else {
+          this.donorsBTC[i].amount = this.donorsBTC[i].amount.toFixed(7)
         }
-        this.donorsCurrent = this.donorsBTC
       }
-    },
-    toFixorNot: function(value) {
-      if (this.unit == 'btc') {
-        return value
-      } else {
-        return parseFloat(value).toFixed(2)
-      }
+      this.donorsCurrent = this.donorsBTC
+    }
+  }
+  
+  toFixorNot(value: number): number {
+    if (this.unit == 'btc') {
+      return value
+    } else {
+      return parseFloat(value.toFixed(2))
     }
   }
 }

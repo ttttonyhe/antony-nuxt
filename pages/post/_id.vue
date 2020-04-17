@@ -177,34 +177,49 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Watch } from 'nuxt-property-decorator'
+
+// import jQuery feature
 import $ from 'jquery'
+
 // imort hightlight.js feature and stylesheet
 import hljs from 'highlight.js'
 import 'highlight.js/styles/rainbow.css'
 
 // highlightjs 初始化函数
-const highlightCode = () => {
-  const preEl = document.querySelectorAll('pre')
-  preEl.forEach(el => {
+const highlightCode = ():void => {
+  const preEl:any = document.querySelectorAll('pre')
+  preEl.forEach((el:any) => {
     hljs.highlightBlock(el)
   })
 }
 
 // 与 iframe 通信获取评论列表高度
-var getCommentsHeight = function() {
+function getCommentsHeight():void {
   // 强制设置同源
   document.domain = 'ouorz.com'
-  var iframe = document.getElementById('article-comments-iframe')
-  var iwindow = iframe.contentWindow
-  var idoc = iwindow.document
+  var iframe:any = document.getElementById('article-comments-iframe')
+  var iwindow:any = iframe.contentWindow
+  var idoc:any = iwindow.document
   iframe.style.height = idoc.body.offsetHeight + 'px'
 }
 
-export default {
-  name: 'Posts',
-  scrollToTop: true,
-  async asyncData(context) {
+interface postData {
+  posts: any[]
+  post_tags_string: string
+  post_title: string
+  cate: string
+  cate_url: string
+  post_tags: any[]
+  post_prenext: any[]
+}
+
+@Component({
+  scrollToTop: true
+})
+export default class Posts extends Vue {
+  async asyncData(context: any): Promise<postData> {
     let res = await Promise.all([
       // 获取博客文章数据
       context.$axios
@@ -212,13 +227,13 @@ export default {
           'https://blog.ouorz.com/wp-json/wp/v2/posts/' +
             context.route.params.id
         )
-        .then(response => {
+        .then((response: { data: any }) => {
           return response.data
         })
     ])
 
     // 生成头部 keywords
-    let tagsLength = res[0].post_tags.length
+    let tagsLength: number = res[0].post_tags.length
     for (let i = 0; i < tagsLength; ++i) {
       if (i == 0) {
         var post_tags_string = res[0].post_tags[i].name
@@ -237,23 +252,21 @@ export default {
       post_tags: res[0].post_tags,
       post_prenext: res[0].post_prenext
     }
-  },
-  data() {
-    return {
-      posts: null,
-      loading: true,
-      errored: true,
-      cate: '分类目录',
-      cate_url: '',
-      post_tags: [],
-      post_prenext: [],
-      exist_index: true,
-      post_title: 'Loading...',
-      post_tags_string: null,
-      scrollAble: false,
-      scrollAbleHtml: '开启滑动 <i class="ri-play-line"></i>'
-    }
-  },
+  }
+
+  posts: any = []
+  loading: boolean = true
+  errored: boolean = true
+  cate: string = '分类目录'
+  cate_url: string = ''
+  post_tags: any[] = []
+  post_prenext: any[] = []
+  exist_index: boolean = true
+  post_title: string = 'Loading...'
+  post_tags_string: string = ''
+  scrollAble: boolean = false
+  scrollAbleHtml: string = '开启滑动 <i class="ri-play-line"></i>'
+
   head() {
     return {
       title: 'TonyHe - ' + this.posts.title.rendered,
@@ -266,10 +279,11 @@ export default {
         { hid: 'keywords', name: 'keywords', content: this.post_tags_string }
       ]
     }
-  },
+  }
+
   mounted() {
     // 判断文章归属分类以重定向
-    if([2,5,58].indexOf(parseInt(this.posts.categories[0])) > -1){
+    if ([2, 5, 58].indexOf(parseInt(this.posts.categories[0])) > -1) {
       window.location.href = 'https://www.ouorz.com'
     }
 
@@ -282,7 +296,7 @@ export default {
       } else {
         bp.src = 'http://push.zhanzhang.baidu.com/push.js'
       }
-      var s = document.getElementsByTagName('script')[0]
+      var s: any = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(bp, s)
     })()
 
@@ -293,79 +307,77 @@ export default {
 
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
-  },
-  methods: {
-    controlScroll: function() {
-      this.scrollAble = this.scrollAble ? false : true
-      this.scrollAbleHtml = this.scrollAble
-        ? '关闭滑动 <i class="ri-pause-line"></i>'
-        : '开启滑动 <i class="ri-play-line"></i>'
-      getCommentsHeight()
-    },
-    createReadingBar: function() {
-      // 文章阅读进度条
-      var content_offtop = $('.article-content').offset().top
-      var content_height = $('.article-content').innerHeight()
+  }
 
-      //document.domain = 'ouorz.com'
-      var click = 0
+  controlScroll(): void {
+    this.scrollAble = this.scrollAble ? false : true
+    this.scrollAbleHtml = this.scrollAble
+      ? '关闭滑动 <i class="ri-pause-line"></i>'
+      : '开启滑动 <i class="ri-play-line"></i>'
+    getCommentsHeight()
+  }
 
-      // 监听滑动
-      $(window).scroll(function() {
-        if ($(this).scrollTop() > content_offtop) {
-          //滑动到内容部分
-          if ($(this).scrollTop() - content_offtop <= content_height) {
-            //在内容部分内滑动
-            this.reading_p = Math.round(
-              (($(this).scrollTop() - content_offtop) / content_height) * 100
-            )
-          } else {
-            //滑出内容部分
-            this.reading_p = 100
-          }
+  createReadingBar(): void {
+    // 文章阅读进度条
+    var content_offtop = $('.article-content').offset().top
+    var content_height = $('.article-content').innerHeight()
+
+    document.domain = 'ouorz.com'
+    var click = 0
+    var reading_p = 0
+
+    // 监听滑动
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > content_offtop) {
+        //滑动到内容部分
+        if ($(window).scrollTop() - content_offtop <= content_height) {
+          //在内容部分内滑动
+          reading_p = Math.round(
+            (($(window).scrollTop() - content_offtop) / content_height) * 100
+          )
         } else {
-          //未滑到内容部分
-          this.reading_p = 0
+          //滑出内容部分
+          reading_p = 100
         }
-        $('.reading-bar').css('width', this.reading_p + '%')
+      } else {
+        //未滑到内容部分
+        reading_p = 0
+      }
+      $('.reading-bar').css('width', reading_p + '%')
 
-        /* 
+      /* 
           评论区监听事件
           mounted 中执行会被在文章目录组件中对于监听的重置污染
         */
-        // 监听滑动，接近底部触发高度获取请求
-        $(window).scroll(function() {
-          //仅在文章页监听
-          if (window.location.pathname.split('/')[1] == 'post') {
-            var scrollTop = $(window).scrollTop()
-            var scrollHeight = $('div.footer.reveal').offset().top - 1500
-            if (scrollTop >= scrollHeight) {
-              if (click == 0) {
-                getCommentsHeight()
-                click++
-              }
+      // 监听滑动，接近底部触发高度获取请求
+      $(window).scroll(function() {
+        //仅在文章页监听
+        if (window.location.pathname.split('/')[1] == 'post') {
+          var scrollTop = $(window).scrollTop()
+          var scrollHeight = $('div.footer.reveal').offset().top - 1500
+          if (scrollTop >= scrollHeight) {
+            if (click == 0) {
+              getCommentsHeight()
+              click++
             }
           }
-        })
-        /* 评论区监听事件 */
+        }
       })
-    },
-    existIndex: function(data) {
-      this.exist_index = data
-    }
-  },
+      /* 评论区监听事件 */
+    })
+  }
+
+  existIndex(data: boolean): void {
+    this.exist_index = data
+  }
+
   // 监听页面变化
   updated() {
     // 页面变化时监听阅读进度条
     this.createReadingBar()
     // 页面内容变化时执行代码渲染
     highlightCode()
-  },
-  watch: {
-    $route() {
-      Object.assign(this.$data, this.$options.data())
-      $(window).unbind('scroll')
-    }
   }
+
 }
 </script>

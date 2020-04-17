@@ -122,10 +122,12 @@
                             <p v-html="post.post_metas.fineTool.itemDes"></p>
                           </div>
                           <div>
-                            <a
-                              :href="post.post_metas.fineTool.itemLink"
-                              target="_blank"
-                            >{{ post.post_metas.fineTool.itemLinkName }} <span><i class="ri-arrow-right-up-line"></i></span></a>
+                            <a :href="post.post_metas.fineTool.itemLink" target="_blank">
+                              {{ post.post_metas.fineTool.itemLinkName }}
+                              <span>
+                                <i class="ri-arrow-right-up-line"></i>
+                              </span>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -205,30 +207,51 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
 // import jquery features
 import $ from 'jquery'
 
 // import header-top-inside
-import topInsideCate from '~/components/topInsideCate'
+import topInsideCate from '~/components/topInsideCate.vue'
 
 // import infinite loading feature
 import MugenScroll from 'vue-mugen-scroll'
 
-export default {
-  name: 'Cates',
+@Component({
   components: {
     topInsideCate,
     MugenScroll
   },
-  async asyncData(context) {
+  filters: {
+    link_page: function(cate_id: number) {
+      if (cate_id == 2) {
+        return '添加于 '
+      } else if (cate_id == 5) {
+        return '创造于 '
+      } else {
+        return ''
+      }
+    },
+    link_style: function(cate_id: number) {
+      if (cate_id == 2 || cate_id == 5) {
+        return 'display: flex;'
+      } else {
+        return ''
+      }
+    }
+  }
+})
+export default class Cates extends Vue {
+  async asyncData(context: any): Promise<{ cate: any[]; posts: any[] }> {
     let res1 = await Promise.all([
       context.$axios
         .get(
           'https://blog.ouorz.com/wp-json/wp/v2/categories/' +
             context.route.params.id
         )
-        .then(response => {
+        .then((response: { data: any }) => {
           return response.data
         })
     ])
@@ -239,7 +262,7 @@ export default {
           'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=1&categories=' +
             context.route.params.id
         )
-        .then(sticky_posts => {
+        .then((sticky_posts: { data: any }) => {
           return sticky_posts.data
         })
     ])
@@ -248,29 +271,30 @@ export default {
       cate: res1[0],
       posts: res2[0]
     }
-  },
-  data() {
-    return {
-      posts: null,
-      posts_id_sticky: '0',
-      cate: {
-        name: '分类目录',
-        description: '分类目录描述'
-      },
-      loading: true,
-      loading_cate: true,
-      errored: true,
-      loading_stop: false,
-      loading_first: false,
-      loading_end: false,
-      paged: 1,
-      pagedLoading: false,
-      listLoading: {}
-    }
-  },
+  }
+
+  posts: any[] = []
+  posts_id_sticky: string = '0'
+  cate = {
+    name: '分类目录',
+    description: '分类目录描述'
+  } as {
+    name: string
+    description: string
+  }
+  loading: boolean = true
+  loading_cate: boolean = true
+  errored: boolean = true
+  loading_stop: boolean = false
+  loading_first: boolean = false
+  loading_end: boolean = false
+  paged: number = 1
+  pagedLoading: boolean = false
+  listLoading: any = {}
+
   mounted() {
     //获取顶置文章 IDs 以在获取其余文章时排除
-    let postsLength = this.posts.length
+    let postsLength: number = this.posts.length
     for (var s = 0; s < postsLength; ++s) {
       this.posts_id_sticky += ',' + this.posts[s].id
     }
@@ -285,7 +309,7 @@ export default {
           '&per_page=10&page=' +
           this.paged
       )
-      .then(res_normal => {
+      .then((res_normal: { data: any }) => {
         this.loading_cate = false
         //拼接其余文章
         this.posts = this.posts.concat(res_normal.data)
@@ -293,100 +317,80 @@ export default {
         this.loading_first = true
         this.paged = 2 //加载完1页后累加页数
       })
-  },
+  }
+
   head() {
     return {
       title: 'TonyHe - ' + this.cate.name
     }
-  },
-  methods: {
-    // 判断分类目录名称是否包含中文调整「返回主页」按钮位置
-    includeChinese: str => {
-      if (escape(str).indexOf('%u') < 0) {
-        return false
-      } else {
-        return true
+  }
+
+  // 判断分类目录名称是否包含中文调整「返回主页」按钮位置
+  includeChinese = (str: string): boolean => {
+    if (escape(str).indexOf('%u') < 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  //定义方法
+  query_style_list(cate: number, sticky: any) {
+    if (cate == 5) {
+      return 'flex-basis: 100%;'
+    } else if (cate !== 7 && cate !== 2 && !sticky) {
+      return 'margin-top: -10px;'
+    }
+  }
+
+  //加载下一页文章列表
+  new_page(): void {
+    //语言包匹配
+    if (this.$i18n.locale == 'zh-CN') {
+      this.listLoading = {
+        loading: '加载中',
+        list: '文章列表',
+        all: '全部文章'
       }
-    },
-    //定义方法
-    query_style_list: function(cate, sticky) {
-      if (cate == 5) {
-        return 'flex-basis: 100%;'
-      } else if (cate !== 7 && cate !== 2 && !sticky) {
-        return 'margin-top: -10px;'
-      }
-    },
-    //加载下一页文章列表
-    new_page: function() {
-      //语言包匹配
-      if (this.$i18n.locale == 'zh-CN') {
-        this.listLoading = {
-          loading: '加载中',
-          list: '文章列表',
-          all: '全部文章'
-        }
-      } else {
-        this.listLoading = {
-          loading: 'Loading',
-          list: 'Posts List',
-          all: 'All Posts'
-        }
-      }
-      if (!this.pagedLoading) {
-        this.pagedLoading = true
-        $('#view-text').html('-&nbsp;' + this.listLoading.loading + '&nbsp;-')
-        this.$axios
-          .get(
-            'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=0&exclude=' +
-              this.posts_id_sticky +
-              '&per_page=10&page=' +
-              this.paged +
-              '&categories=' +
-              this.$route.params.id
-          )
-          .then(response => {
-            if (response.data.length !== 0) {
-              //判断是否最后一页
-              $('#view-text').html(
-                '-&nbsp;' + this.listLoading.list + '&nbsp;-'
-              )
-              this.posts = this.posts.concat(response.data) //拼接在上一页之后
-              this.paged += 1
-            } else {
-              $('#view-text').html(
-                '-&nbsp;' + this.listLoading.list + '&nbsp;-'
-              )
-              this.loading_first = false
-              this.loading_end = true
-            }
-            this.pagedLoading = false
-          })
-          .catch(() => {
-            $('#view-text').html('-&nbsp;' + this.listLoading.all + '&nbsp;-')
-            this.paged = 1
-            this.loading_first = false
-            this.loading_end = true
-            this.pagedLoading = true
-          })
+    } else {
+      this.listLoading = {
+        loading: 'Loading',
+        list: 'Posts List',
+        all: 'All Posts'
       }
     }
-  },
-  filters: {
-    link_page: function(cate_id) {
-      if (cate_id == 2) {
-        return '添加于 '
-      } else if (cate_id == 5) {
-        return '创造于 '
-      } else {
-        return ''
-      }
-    },
-    link_style: function(cate_id) {
-      if (cate_id == 2 || cate_id == 5) {
-        return 'display: flex;'
-      } else {
-        return ''
-      }
+    if (!this.pagedLoading) {
+      this.pagedLoading = true
+      $('#view-text').html('-&nbsp;' + this.listLoading.loading + '&nbsp;-')
+      this.$axios
+        .get(
+          'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=0&exclude=' +
+            this.posts_id_sticky +
+            '&per_page=10&page=' +
+            this.paged +
+            '&categories=' +
+            this.$route.params.id
+        )
+        .then((response: { data: any }) => {
+          if (response.data.length !== 0) {
+            //判断是否最后一页
+            $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
+            this.posts = this.posts.concat(response.data) //拼接在上一页之后
+            this.paged += 1
+          } else {
+            $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
+            this.loading_first = false
+            this.loading_end = true
+          }
+          this.pagedLoading = false
+        })
+        .catch((): void => {
+          $('#view-text').html('-&nbsp;' + this.listLoading.all + '&nbsp;-')
+          this.paged = 1
+          this.loading_first = false
+          this.loading_end = true
+          this.pagedLoading = true
+        })
     }
   }
 }

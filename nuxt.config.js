@@ -7,29 +7,23 @@ module.exports = {
   head: {
     title: 'TonyHe - Just A Poor Lifesinger',
     meta: [{
-        charset: 'utf-8'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'TonyHe\'s Personal Blog'
-      }
+      charset: 'utf-8'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1'
+    },
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'TonyHe\'s Personal Blog'
+    }
     ],
     link: [{
       rel: 'icon',
       type: 'image/x-icon',
       href: '/favicon.ico'
     }]
-  },
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: {
-    color: '#fff'
   },
   /*
    ** Global CSS
@@ -60,7 +54,12 @@ module.exports = {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [],
+  buildModules: [
+    ['@nuxt/typescript-build', {
+      typeCheck: true,
+      ignoreNotFoundWarnings: true
+    }]
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -85,6 +84,12 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    babel: {
+      plugins: [
+        ["@babel/plugin-proposal-decorators", { legacy: true }],
+        ["@babel/plugin-proposal-class-properties", { loose: true }]
+      ]
+    },
     extractCSS: true,
     maxChunkSize: 500000,
     productionSourceMap: false,
@@ -92,6 +97,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend() { }
   }
 }

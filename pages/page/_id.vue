@@ -31,28 +31,39 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import $ from 'jquery'
 
 // 与 iframe 通信获取评论列表高度
-var getCommentsHeight = function() {
+function getCommentsHeight(): void {
   document.domain = 'ouorz.com'
-  var iframe = document.getElementById('article-comments-iframe')
-  var iwindow = iframe.contentWindow
-  var idoc = iwindow.document
+  var iframe: any = document.getElementById('article-comments-iframe')
+  var iwindow: any = iframe.contentWindow
+  var idoc: any = iwindow.document
   iframe.style.height = idoc.body.offsetHeight + 'px'
 }
 
-export default {
-  name: 'Page',
-  async asyncData(context) {
+interface pageData {
+  posts: any[]
+  page: {
+    title: string
+    content: string
+    views: number
+    date: string
+  }
+}
+
+@Component({})
+export default class Page extends Vue {
+  async asyncData(context: any): Promise<pageData> {
     let res = await Promise.all([
       context.$axios
         .get(
           'https://blog.ouorz.com/wp-json/wp/v2/pages/' +
             context.route.params.id
         )
-        .then(response => {
+        .then((response: { data: any }) => {
           return response.data
         })
     ])
@@ -66,26 +77,30 @@ export default {
         date: res[0].post_date
       }
     }
-  },
+  }
+
   head() {
     return {
       title: 'TonyHe - ' + this.page.title
     }
-  },
-  data() {
-    return {
-      posts: null,
-      errored: true,
-      page: {
-        title: '',
-        content: '',
-        views: '',
-        date: ''
-      },
-      scrollAble: false,
-      scrollAbleHtml: '加载全部评论 <i class="ri-play-line"></i>'
-    }
-  },
+  }
+
+  posts: any = []
+  errored: boolean = true
+  page = {
+    title: '',
+    content: '',
+    views: 0,
+    date: ''
+  } as {
+    title: string
+    content: string
+    views: number
+    date: string
+  }
+  scrollAble: boolean = false
+  scrollAbleHtml: string = '加载全部评论 <i class="ri-play-line"></i>'
+
   mounted() {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/comment.html')
@@ -103,15 +118,13 @@ export default {
         }
       }
     })
-  },
-  methods: {
-    controlScroll: function() {
-      this.scrollAble = this.scrollAble ? false : true
-      this.scrollAbleHtml = this.scrollAble
-        ? '关闭列表滑动 <i class="ri-pause-line"></i>'
-        : '加载全部评论 <i class="ri-play-line"></i>'
-      getCommentsHeight()
-    }
+  }
+  controlScroll(): void {
+    this.scrollAble = this.scrollAble ? false : true
+    this.scrollAbleHtml = this.scrollAble
+      ? '关闭列表滑动 <i class="ri-pause-line"></i>'
+      : '加载全部评论 <i class="ri-play-line"></i>'
+    getCommentsHeight()
   }
 }
 </script>

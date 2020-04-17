@@ -40,15 +40,16 @@
           <!-- 加载骨架图 -->
           <template v-else>
             <ul class="article-list" style="margin-bottom:10px;padding: 0px;">
-          <!-- 友情链接交换提示 -->
-          <li
-            class="article-list-item reveal index-post-list notice-list"
-          >
-            <div>{{ $t('lang.music.musicLink') }}</div>
-            <a target="_blank" href="https://api.imjad.cn/cloudmusic.md">{{ $t('lang.music.goMusicLink') }}</a>
-          </li>
-          <!-- 友情链接交换提示 -->
-        </ul>
+              <!-- 友情链接交换提示 -->
+              <li class="article-list-item reveal index-post-list notice-list">
+                <div>{{ $t('lang.music.musicLink') }}</div>
+                <a
+                  target="_blank"
+                  href="https://api.imjad.cn/cloudmusic.md"
+                >{{ $t('lang.music.goMusicLink') }}</a>
+              </li>
+              <!-- 友情链接交换提示 -->
+            </ul>
             <li
               class="article-list-item reveal index-post-list music-view-list"
               v-for="(post,index) in posts"
@@ -83,35 +84,33 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Inject } from 'nuxt-property-decorator'
 // import header-top-inside
-import topInsideCate from '~/components/topInsideCate'
+import topInsideCate from '~/components/topInsideCate.vue'
 
-export default {
-  name: 'Archive',
+@Component({
   components: {
     topInsideCate
-  },
-  data() {
-    return {
-      posts: null,
-      cates: null,
-      des: null,
-      loading: true, //v-if判断显示占位符
-      loading_des: true,
-      errored: true
-    }
-  },
+  }
+})
+export default class Music extends Vue {
+  posts: any[] = []
+  cates: any[] = []
+  des: string = ''
+  loading: boolean = true //v-if判断显示占位符
+  loading_des: boolean = true
+  errored: boolean = true
   head() {
     return {
       title: 'TonyHe - 音乐推荐'
     }
-  },
+  }
   mounted() {
     //获取文章列表
     this.$axios
       .get('https://api.imjad.cn/cloudmusic/?type=playlist&id=88891196')
-      .then(response => {
+      .then((response: {data:any}) => {
         this.posts = response.data.playlist.tracks
       })
       .catch(() => {

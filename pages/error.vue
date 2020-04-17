@@ -15,8 +15,10 @@
   </div>
 </template>
 <script>
-export default {
-  name: '404',
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({})
+export default class Error extends Vue{
   head() {
     return {
       title: 'TonyHe - 404 Not Found',

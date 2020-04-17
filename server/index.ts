@@ -7,13 +7,13 @@ const {
 } = require('nuxt')
 const app = express()
 
-function randomNum(minNum, maxNum) {
+function randomNum(minNum:number, maxNum:number):number {
   switch (arguments.length) {
     case 1:
-      return parseInt(Math.random() * minNum + 1, 10);
+      return parseInt((Math.random() * minNum + 1).toString(), 10);
       break;
     case 2:
-      return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+      return parseInt((Math.random() * (maxNum - minNum + 1) + minNum).toString(), 10);
       break;
     default:
       return 0;
