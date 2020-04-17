@@ -212,11 +212,11 @@ export default class Donation extends Vue {
     }
   }
   
-  toFixorNot(value: number): number {
+  toFixorNot(value: number): any {
     if (this.unit == 'btc') {
       return value
     } else {
-      return parseFloat(value.toFixed(2))
+      return parseFloat(value as any).toFixed(2)
     }
   }
 }
