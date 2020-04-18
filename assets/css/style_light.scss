@@ -3740,6 +3740,19 @@ input:focus {
   }
 }
 
-.cookie-click{
+.cookie-click {
   cursor: pointer;
+}
+
+.creator-icon {
+  height: 12.5px;
+  width: 12.5px;
+  display: inline-block;
+  vertical-align: text-bottom;
+  transform: translateY(-2.2px);
+}
+
+.copy-icon {
+  display: inline-block;
+  transform: translateY(2.3px) translateX(1px);
 }
