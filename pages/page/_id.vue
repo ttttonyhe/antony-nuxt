@@ -103,7 +103,7 @@ export default class Page extends Vue {
 
   mounted() {
     // 手动访问一遍以增加访问量 2333
-    this.$axios.get('https://blog.ouorz.com/comment.html')
+    this.$axios.get('https://blog.ouorz.com/comment.html'+ '?from=front')
 
     document.domain = 'ouorz.com'
     var click = 0 //这回真的操作 10 次确保操作成功哈哈哈哈

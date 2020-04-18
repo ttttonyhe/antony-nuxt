@@ -306,7 +306,7 @@ export default class Posts extends Vue {
     highlightCode()
 
     // 手动访问一遍以增加访问量 2333
-    this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id)
+    this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id + '?from=front')
   }
 
   controlScroll(): void {
