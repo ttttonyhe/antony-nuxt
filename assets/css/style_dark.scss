@@ -58,6 +58,7 @@
 .list-show-btn {
   color: rgb(46, 62, 96) !important;
   background: #f6f7f8 !important;
+  opacity: 0.8 !important;
 }
 
 .article-list-item {
@@ -285,4 +286,20 @@
 
 .page-p {
   color: #fff !important;
+}
+
+.gray-for-heroes {
+  background: #333 !important;
+
+  &:hover {
+    background: #333 !important;
+  }
+}
+
+.buy-list-item {
+  .buy-right-info {
+    h3{
+      color: #fff !important;
+    }
+  }
 }
