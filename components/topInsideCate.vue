@@ -60,11 +60,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "topInsideCate",
-  props: {
-    loading: Boolean
-  }
-};
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+@Component({})
+export default class topInsideCate extends Vue {
+  @Prop()
+  loading!: boolean
+}
 </script>

@@ -21,26 +21,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
 // PC & Mobile Navigation Menu Components
-import mobileNav from '~/components/headers/mobileNav'
-import computerNav from '~/components/headers/computerNav'
-import siteFooter from '~/components/footer'
+import mobileNav from '~/components/headers/mobileNav.vue'
+import computerNav from '~/components/headers/computerNav.vue'
+import siteFooter from '~/components/footer.vue'
 
 // Import RemixIcon feature
 import 'remixicon/fonts/remixicon.css'
 
-export default {
-  data() {
-    return {
-      mobile: false
-    }
-  },
+@Component({
   components: {
     mobileNav,
     computerNav,
     siteFooter
-  },
+  }
+})
+export default class layouts extends Vue {
+  mobile: boolean = false
   head() {
     return {
       htmlAttrs: {
@@ -64,7 +64,7 @@ export default {
         }
       ]
     }
-  },
+  }
   mounted() {
     // Detect Mobile or PC using UserAgent
     let flag = navigator.userAgent.match(
@@ -78,11 +78,11 @@ export default {
 
     if (process.env.NODE_ENV === 'production') {
       // Baidu analysis
-      var _hmt = _hmt || []
+      var _hmt: any = _hmt || []
       ;(function() {
         var hm = document.createElement('script')
         hm.src = 'https://hm.baidu.com/hm.js?20265c137ab04d39313561665f1ae7a1'
-        var s = document.getElementsByTagName('script')[0]
+        var s: any = document.getElementsByTagName('script')[0]
         s.parentNode.insertBefore(hm, s)
       })()
     }

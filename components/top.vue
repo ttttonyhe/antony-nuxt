@@ -1,7 +1,7 @@
 <template>
   <div id="header_info" class="index-top">
     <nav class="header-nav reveal">
-      <img class="header-avatar-top" src="https://static.ouorz.com/t.webp" />
+      <img class="header-avatar-top" src="https://static.ouorz.com/t.jpg" />
       <a style="text-decoration:none;" href="/" class="header-logo" title="TonyHe">TonyHe</a>
 
       <p class="lead" style="margin-top: 0px;margin-left:5px">Just A Poor Lifesinger</p>
@@ -67,11 +67,7 @@
     </div>
     <div class="tags-div">
       <!-- 滑动左侧 -->
-      <a
-        v-if="translateX > 0"
-        class="tags-scroll-right scroll-left"
-        @click="scrollTags('left')"
-      >
+      <a v-if="translateX > 0" class="tags-scroll-right scroll-left" @click="scrollTags('left')">
         <i class="ri-arrow-left-line"></i>
       </a>
       <!-- 滑动左侧 -->
@@ -96,41 +92,43 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'headerTop',
-  props: {
-    loading_cates: Boolean,
-    loading_tages: Boolean,
-    tages: Array,
-    cookie: Boolean
-  },
-  data() {
-    return {
-      translateX: 0
-    }
-  },
-  methods: {
-    // 标签横向滑动
-    scrollTags(direction) {
-      if (direction == 'right') {
-        if (this.translateX >= 0 && this.translateX < 360) {
-          this.translateX += 60
-        }
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+@Component({})
+export default class headerTop extends Vue {
+  // 获取参数
+  @Prop()
+  loading_cates!: boolean
+  @Prop()
+  loading_tages!: boolean
+  @Prop()
+  tages!: any[]
+  @Prop()
+  cookie!: boolean
+
+  // 定义数据
+  translateX: number = 0
+
+  // 标签横向滑动
+  scrollTags(direction: string): void {
+    if (direction == 'right') {
+      if (this.translateX >= 0 && this.translateX < 360) {
+        this.translateX += 60
+      }
+    } else {
+      if (this.translateX - 60 >= 0) {
+        this.translateX -= 60
       } else {
-        if (this.translateX - 60 >= 0) {
-          this.translateX -= 60
-        } else {
-          this.translateX = 0
-        }
+        this.translateX = 0
       }
-      let k = document.getElementsByClassName('post_tags')[0].children
-      for (let i = 0; i < k.length; ++i) {
-        k[i].setAttribute(
-          'style',
-          'transform:translateX(-' + this.translateX + 'px)'
-        )
-      }
+    }
+    let k = document.getElementsByClassName('post_tags')[0].children
+    for (let i = 0; i < k.length; ++i) {
+      k[i].setAttribute(
+        'style',
+        'transform:translateX(-' + this.translateX + 'px)'
+      )
     }
   }
 }

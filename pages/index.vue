@@ -29,7 +29,7 @@
             :title="$t('lang.index.cookieText')"
           >
             <div>{{ $t('lang.index.cookieText') }}</div>
-            <a @click="discard_notice()" href="#">{{ $t('lang.index.cookie') }}</a>
+            <a @click="discard_notice()" class="cookie-click">{{ $t('lang.index.cookie') }}</a>
           </li>
           <!-- cookies 使用提示 -->
 

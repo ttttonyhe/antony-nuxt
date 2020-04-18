@@ -4,7 +4,7 @@
       <!-- Content Menu -->
       <div class="header-div1" v-if="($route.path).match(routeDetect)">
         <nuxt-link to="/" style="display: inline-block;">
-          <img src="https://static.ouorz.com/t.webp" />
+          <img src="https://static.ouorz.com/t.jpg" />
         </nuxt-link>
         <a href="https://blog.ouorz.com/feed">
           <b-button variant="light">{{ $t('lang.header.rss') }}</b-button>
@@ -17,7 +17,7 @@
       <!-- Index Menu -->
       <div class="header-div1-1" v-else>
         <nuxt-link to="/" style="display: inline-block;">
-          <img src="https://static.ouorz.com/t.webp" />
+          <img src="https://static.ouorz.com/t.jpg" />
         </nuxt-link>
         <a>
           <b-button variant="light" @click="openSearch">{{ $t('lang.header.search') }}</b-button>
@@ -130,24 +130,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
 // import jqeury feature
 import $ from 'jquery'
 
-export default {
-  name: 'computerNav',
-  data() {
-    return {
-      routeDetect: RegExp(/post/),
-      search_content: null,
-      search_key: null,
-      search_loading: false,
-      loading_ph: false,
-      search_open: false,
-      lang: 'zh-CN',
-      searchDisplay: false
-    }
-  },
+@Component({})
+export default class computerNav extends Vue {
+  routeDetect: any = RegExp(/post/)
+  search_content: string = ''
+  search_key: string = ''
+  search_loading: boolean = false
+  loading_ph: boolean = false
+  search_open: boolean = false
+  lang: string = 'zh-CN'
+  searchDisplay: boolean = false
   mounted() {
     // add event listener which changes class for the nav when scrolling
     $(window).scroll(function() {
@@ -176,48 +174,50 @@ export default {
         )
       }
     })
-  },
-  methods: {
-    // 显示搜索区域
-    openSearch: function() {
-      this.searchDisplay = true
-    },
-    // 请求搜索
-    searchQuery: function() {
-      this.search_loading = false
-      this.loading_ph = true
+  }
 
-      var s = this.search_key
-      this.$axios
-        .get('https://blog.ouorz.com/wp-json/wp/v2/posts?search=' + s)
-        .then(response => {
-          this.search_content = response.data
-          this.loading_ph = false
-          this.search_loading = true
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    // 关闭搜索区域
-    closeSearch: function() {
-      this.searchDisplay = false
-      this.loading_ph = false
-      this.search_content = null
-      this.search_loading = false
-      this.search_key = null
-    },
-    // i18n 切换语言包
-    switchLang: function() {
-      if (this.lang === 'zh-CN') {
-        this.lang = 'en-US'
-        this.$i18n.locale = this.lang
-      } else {
-        this.lang = 'zh-CN'
-        this.$i18n.locale = this.lang
-      }
+  // 显示搜索区域
+  openSearch(): void {
+    this.searchDisplay = true
+  }
+
+  // 请求搜索
+  searchQuery(): void {
+    this.search_loading = false
+    this.loading_ph = true
+    var s = this.search_key
+    this.$axios
+      .get('https://blog.ouorz.com/wp-json/wp/v2/posts?search=' + s)
+      .then((response: { data: any }) => {
+        this.search_content = response.data
+        this.loading_ph = false
+        this.search_loading = true
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  // 关闭搜索区域
+  closeSearch(): void {
+    this.searchDisplay = false
+    this.loading_ph = false
+    this.search_content = ''
+    this.search_loading = false
+    this.search_key = ''
+  }
+
+  // i18n 切换语言包
+  switchLang() {
+    if (this.lang === 'zh-CN') {
+      this.lang = 'en-US'
+      this.$i18n.locale = this.lang
+    } else {
+      this.lang = 'zh-CN'
+      this.$i18n.locale = this.lang
     }
   }
+  
 }
 </script>
 

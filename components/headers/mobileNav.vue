@@ -8,8 +8,9 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "mobileNav"
-};
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({})
+export default class mobileNav extends Vue {}
 </script>

@@ -12,11 +12,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
 import GoTopButton from 'vue-go-top-button'
 import 'vue-go-top-button/dist/lib/vue-go-top-button.min.css'
 
-export default {
-  components: { GoTopButton }
-}
+@Component({ components: { GoTopButton } })
+export default class goToTop extends Vue {}
 </script>
