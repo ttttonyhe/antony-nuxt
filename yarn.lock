@@ -1116,7 +1116,7 @@
     consola "^2.5.6"
     http-proxy-middleware "^0.19.1"
 
-"@nuxtjs/pwa@^3.0.0-0":
+"@nuxtjs/pwa@^3.0.0-beta.20":
   version "3.0.0-beta.20"
   resolved "https://registry.npm.taobao.org/@nuxtjs/pwa/download/@nuxtjs/pwa-3.0.0-beta.20.tgz#56766da5485c09cb73307285292203f4a4417d5d"
   integrity sha1-VnZtpUhcCctzMHKFKSID9KRBfV0=

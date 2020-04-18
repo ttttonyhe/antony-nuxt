@@ -61,6 +61,32 @@ module.exports = {
     }]
   ],
   /*
+  ** Nuxt.js PWA configuration
+  */
+  manifest: {
+    name: "TonyHe's Blog",
+    short_name: "TonyHe",
+    description: "Just A Poor Lifesinger",
+    background_color: "#f6f7f8",
+    theme_color: "#f1f2f3",
+    lang: "zh",
+    start_url: "/"
+  },
+  render: {
+    resourceHints: false,
+    http2: {
+      push: true
+    },
+    static: {
+      maxAge: "1y",
+      setHeaders(res, path) {
+        if (path.includes("sw.js")) {
+          res.setHeader("Cache-Control", `public, max-age=${15 * 60}`);
+        }
+      }
+    }
+  },
+  /*
    ** Nuxt.js modules
    */
   modules: [
@@ -69,7 +95,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/markdownit
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    "@nuxtjs/pwa"
   ],
   markdownit: {
     injected: true,
