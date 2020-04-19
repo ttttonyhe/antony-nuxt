@@ -7,17 +7,17 @@ module.exports = {
   head: {
     title: 'TonyHe - Just A Poor Lifesinger',
     meta: [{
-      charset: 'utf-8'
-    },
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1'
-    },
-    {
-      hid: 'description',
-      name: 'description',
-      content: 'TonyHe\'s Personal Blog'
-    }
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'TonyHe\'s Personal Blog'
+      }
     ],
     link: [{
       rel: 'icon',
@@ -49,6 +49,10 @@ module.exports = {
     {
       src: '@/plugins/contents',
       ssr: false
+    },
+    {
+      src: '~plugins/ga.js',
+      ssr: false
     }
   ],
   /*
@@ -61,8 +65,8 @@ module.exports = {
     }]
   ],
   /*
-  ** Nuxt.js PWA configuration
-  */
+   ** Nuxt.js PWA configuration
+   */
   manifest: {
     name: "TonyHe's Blog",
     short_name: "TonyHe",
@@ -113,8 +117,12 @@ module.exports = {
   build: {
     babel: {
       plugins: [
-        ["@babel/plugin-proposal-decorators", { legacy: true }],
-        ["@babel/plugin-proposal-class-properties", { loose: true }]
+        ["@babel/plugin-proposal-decorators", {
+          legacy: true
+        }],
+        ["@babel/plugin-proposal-class-properties", {
+          loose: true
+        }]
       ]
     },
     extractCSS: true,
@@ -124,6 +132,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend() { }
+    extend() {}
   }
 }

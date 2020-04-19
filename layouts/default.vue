@@ -76,6 +76,7 @@ export default class layouts extends Vue {
       this.mobile = false
     }
 
+    /* 百度统计(已弃用)
     if (process.env.NODE_ENV === 'production') {
       // Baidu analysis
       var _hmt: any = _hmt || []
@@ -86,6 +87,8 @@ export default class layouts extends Vue {
         s.parentNode.insertBefore(hm, s)
       })()
     }
+    */
+
   }
 }
 </script>
