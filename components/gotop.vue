@@ -1,14 +1,16 @@
 <template>
   <div>
-    <go-top-button
-      :animate="true"
-      :speed="70"
-      :acceleration="8"
-      :scrollDistance="10"
-      class="goup-container footer-goup"
-    >
-      <i class="ri-arrow-up-s-fill footer-goup-icon"></i>
-    </go-top-button>
+    <client-only>
+      <go-top-button
+        :animate="true"
+        :speed="70"
+        :acceleration="8"
+        :scrollDistance="10"
+        class="goup-container footer-goup"
+      >
+        <i class="ri-arrow-up-s-fill footer-goup-icon"></i>
+      </go-top-button>
+    </client-only>
   </div>
 </template>
 

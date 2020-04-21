@@ -363,8 +363,9 @@ export default class Index extends Vue {
       })
       .finally((): void => {
         this.loading_cates = false
+        let _this:any = this
         setTimeout(() => {
-          this.loading_tages = false
+          _this.loading_tages = false
         }, 500)
       })
       .catch((): void => {
