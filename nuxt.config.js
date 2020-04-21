@@ -51,8 +51,9 @@ module.exports = {
       ssr: false
     },
     {
-      src: '~plugins/ga.js',
-      ssr: false
+      src: '@/plugins/ga.js',
+      ssr: false,
+      mode: 'client'
     }
   ],
   /*

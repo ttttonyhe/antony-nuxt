@@ -1,6 +1,8 @@
 <template>
   <div>
-    <goToTop></goToTop>
+    <client-only>
+      <goToTop></goToTop>
+    </client-only>
     <div
       class="goup-container footer-github"
     >

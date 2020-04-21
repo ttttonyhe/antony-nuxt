@@ -2,12 +2,18 @@
  *  Google Analytics
  ** 只在生产模式的客户端中使用
  */
-if (process.client && process.env.NODE_ENV === 'production') {
+export default ({
+  app
+}) => {
   /*
-   ** Google 统计分析脚本
+   ** Only run on client-side and only in production mode
+   */
+  if (process.env.NODE_ENV !== 'production') return
+  /*
+   ** Include Google Analytics Script
    */
   (function (i, s, o, g, r, a, m) {
-    i.GoogleAnalyticsObject = r;
+    i['GoogleAnalyticsObject'] = r;
     i[r] = i[r] || function () {
       (i[r].q = i[r].q || []).push(arguments)
     }, i[r].l = 1 * new Date();
@@ -16,25 +22,17 @@ if (process.client && process.env.NODE_ENV === 'production') {
     a.async = 1;
     a.src = g;
     m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
   /*
-   ** 当前页的访问统计
+   ** Set the current page
    */
   ga('create', 'UA-163998158-1', 'auto')
-}
-
-export default ({
-  app: {
-    router
-  },
-  store
-}) => {
   /*
-   ** 每次路由变更时进行pv统计
+   ** Every time the route changes (fired on initialization too)
    */
-  router.afterEach((to, from) => {
+  app.router.afterEach((to, from) => {
     /*
-     ** 告诉 GA 增加一个 PV
+     ** We tell Google Analytics to add a `pageview`
      */
     ga('set', 'page', to.fullPath)
     ga('send', 'pageview')
