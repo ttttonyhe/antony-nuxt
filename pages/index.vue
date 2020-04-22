@@ -1,273 +1,280 @@
 <template>
-  <div id="index">
-    <div class="grid grid-centered" style="max-width: 660px;padding: 0px 20px;margin-top: 80px">
-      <div class="grid-cell" id="grid-cell">
-        <!-- 顶部标题与分类区块 -->
-        <template v-if="!loading_tages">
-          <headerTop
-            :loading_tages="loading_tages"
-            :loading_cates="loading_cates"
-            :tages="tages"
-            :cookie="notice.visible"
-          />
-        </template>
-        <template v-else>
-          <headerTop
-            :loading_tages="loading_tages"
-            :loading_cates="loading_cates"
-            :cookie="notice.visible"
-          />
-        </template>
-        <!-- 顶部标题与分类区块 -->
+  <client-only>
+    <div id="index">
+      <div class="grid grid-centered" style="max-width: 660px;padding: 0px 20px;margin-top: 80px">
+        <div class="grid-cell" id="grid-cell">
+          <!-- 顶部标题与分类区块 -->
+          <template v-if="!loading_tages">
+            <headerTop
+              :loading_tages="loading_tages"
+              :loading_cates="loading_cates"
+              :tages="tages"
+              :cookie="notice.visible"
+            />
+          </template>
+          <template v-else>
+            <headerTop
+              :loading_tages="loading_tages"
+              :loading_cates="loading_cates"
+              :cookie="notice.visible"
+            />
+          </template>
+          <!-- 顶部标题与分类区块 -->
 
-        <ul class="article-list">
-          <!-- cookies 使用提示 -->
-          <li
-            class="article-list-item reveal index-post-list notice-list"
-            v-if="notice.visible"
-            v-b-tooltip.hover
-            :title="$t('lang.index.cookieText')"
-          >
-            <div>{{ $t('lang.index.cookieText') }}</div>
-            <a @click="discard_notice()" class="cookie-click">{{ $t('lang.index.cookie') }}</a>
-          </li>
-          <!-- cookies 使用提示 -->
-
-          <li
-            :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
-            v-for="(post,index) in posts"
-            :key="'indexPost' + post.id"
-            :id="'div' + post.id"
-          >
-            <!-- 不包含特色图像文章 -->
-            <template
-              v-if="post.post_img.url == false && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
+          <ul class="article-list">
+            <!-- cookies 使用提示 -->
+            <li
+              class="article-list-item reveal index-post-list notice-list"
+              v-if="notice.visible"
+              v-b-tooltip.hover
+              :title="$t('lang.index.cookieText')"
             >
-              <div class="list-show-div">
-                <!-- 置顶文章提示 -->
-                <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                  <i class="ri-arrow-up-circle-line"></i>
-                  {{ $t('lang.index.atTop') }}
-                </em>
-                <!-- 置顶文章提示 -->
-                <em
-                  v-if="post.post_categories[0].term_id === 7"
-                  class="article-list-type1"
-                  v-html="'<b>' + post.post_categories[0].name + '</b>' +  ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : '技术')"
-                ></em>
-                <div v-else class="article-list-tags">
-                  <nuxt-link
-                    class="list-normal-tag"
-                    style="color: rgba(255, 152, 0, 0.83) !important;"
-                    :to="'/cate/' + post.post_categories[0].term_id"
-                    v-html="post.post_categories[0].name"
-                  ></nuxt-link>
-                  <template v-if="!post.post_tags.length">
-                    <a style="margin-left: 5px;">{{ $t('lang.index.noneTag') }}</a>
-                  </template>
-                  <template>
-                    <a
-                      v-for="(tag,index) in post.post_tags.slice(0,2)"
-                      :href="tag.url"
-                      v-html="tag.name"
-                      :key="'indexPostTag' + tag.id"
-                      style="margin-left: 5px;"
-                    ></a>
-                  </template>
+              <div>{{ $t('lang.index.cookieText') }}</div>
+              <a @click="discard_notice()" class="cookie-click">{{ $t('lang.index.cookie') }}</a>
+            </li>
+            <!-- cookies 使用提示 -->
+
+            <li
+              :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
+              v-for="(post,index) in posts"
+              :key="'indexPost' + post.id"
+              :id="'div' + post.id"
+            >
+              <!-- 不包含特色图像文章 -->
+              <template
+                v-if="post.post_img.url == false && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
+              >
+                <div class="list-show-div">
+                  <!-- 置顶文章提示 -->
+                  <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
+                    <i class="ri-arrow-up-circle-line"></i>
+                    {{ $t('lang.index.atTop') }}
+                  </em>
+                  <!-- 置顶文章提示 -->
+                  <em
+                    v-if="post.post_categories[0].term_id === 7"
+                    class="article-list-type1"
+                    v-html="'<b>' + post.post_categories[0].name + '</b>' +  ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : '技术')"
+                  ></em>
+                  <div v-else class="article-list-tags">
+                    <nuxt-link
+                      class="list-normal-tag"
+                      style="color: rgba(255, 152, 0, 0.83) !important;"
+                      :to="'/cate/' + post.post_categories[0].term_id"
+                      v-html="post.post_categories[0].name"
+                    ></nuxt-link>
+                    <template v-if="!post.post_tags.length">
+                      <a style="margin-left: 5px;">{{ $t('lang.index.noneTag') }}</a>
+                    </template>
+                    <template>
+                      <a
+                        v-for="(tag,index) in post.post_tags.slice(0,2)"
+                        :href="tag.url"
+                        v-html="tag.name"
+                        :key="'indexPostTag' + tag.id"
+                        style="margin-left: 5px;"
+                      ></a>
+                    </template>
+                  </div>
+                  <button
+                    type="button"
+                    class="list-show-btn"
+                    @click="post.id == previewPostOpened ? closePreview(post.id) : preview(post.id)"
+                    :id="'btn'+post.id"
+                  >{{ $t('lang.index.quickView') }}</button>
                 </div>
-                <button
-                  type="button"
-                  class="list-show-btn"
-                  @click="post.id == previewPostOpened ? closePreview(post.id) : preview(post.id)"
-                  :id="'btn'+post.id"
-                >{{ $t('lang.index.quickView') }}</button>
-              </div>
 
-              <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
-                <h5 v-html="post.title.rendered"></h5>
-              </nuxt-link>
+                <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
+                  <h5 v-html="post.title.rendered"></h5>
+                </nuxt-link>
 
-              <!-- 文章速览 -->
-              <!-- previewClose 已关闭的速览显示描述内容,previewPost 准备开始速览显示加载圆圈,previewPostOpened 开启的速览显示全文内容 -->
-              <template v-if="previewClose !== post.id">
-                <p
-                  v-if="previewPost == post.id && previewPostOpened !== post.id"
-                  class="article-list-content"
-                  :id="post.id"
-                >
-                  <b-spinner variant="secondary" type="grow"></b-spinner>
-                </p>
-                <p
-                  v-else-if="previewPostOpened == post.id && previewPost == post.id"
-                  :id="post.id"
-                  :class="'article-list-content ' + previewClass"
-                  v-html="previewContent"
-                ></p>
-                <p
-                  v-else
-                  class="article-list-content"
-                  :id="post.id"
-                  v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
-                ></p>
+                <!-- 文章速览 -->
+                <!-- previewClose 已关闭的速览显示描述内容,previewPost 准备开始速览显示加载圆圈,previewPostOpened 开启的速览显示全文内容 -->
+                <template v-if="previewClose !== post.id">
+                  <p
+                    v-if="previewPost == post.id && previewPostOpened !== post.id"
+                    class="article-list-content"
+                    :id="post.id"
+                  >
+                    <b-spinner variant="secondary" type="grow"></b-spinner>
+                  </p>
+                  <p
+                    v-else-if="previewPostOpened == post.id && previewPost == post.id"
+                    :id="post.id"
+                    :class="'article-list-content ' + previewClass"
+                    v-html="previewContent"
+                  ></p>
+                  <p
+                    v-else
+                    class="article-list-content"
+                    :id="post.id"
+                    v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
+                  ></p>
+                </template>
+                <template v-else>
+                  <p
+                    class="article-list-content"
+                    :id="post.id"
+                    v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
+                  ></p>
+                </template>
+                <!-- 文章速览 -->
+
+                <div class="article-list-footer">
+                  <span class="article-list-date">{{ post.post_date }}</span>
+                  <span class="article-list-divider">-</span>
+                  <span
+                    v-if="post.post_metas.views !== ''"
+                    class="article-list-minutes"
+                  >{{ post.post_metas.views }}&nbsp;Views</span>
+                  <span v-else class="article-list-minutes">0&nbsp;Views</span>
+                </div>
               </template>
-              <template v-else>
-                <p
-                  class="article-list-content"
-                  :id="post.id"
-                  v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
-                ></p>
-              </template>
-              <!-- 文章速览 -->
+              <!-- 不包含特色图像文章 -->
 
-              <div class="article-list-footer">
-                <span class="article-list-date">{{ post.post_date }}</span>
-                <span class="article-list-divider">-</span>
-                <span
-                  v-if="post.post_metas.views !== ''"
-                  class="article-list-minutes"
-                >{{ post.post_metas.views }}&nbsp;Views</span>
-                <span v-else class="article-list-minutes">0&nbsp;Views</span>
-              </div>
-            </template>
-            <!-- 不包含特色图像文章 -->
-
-            <!-- 包含特色图像文章 -->
-            <template
-              v-else-if="post.post_img.url && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
-            >
-              <div class="article-list-img-else">
-                <div
-                  v-if="post.post_categories[0].term_id !== 4"
-                  class="article-list-img"
-                  :style="'background-image:url(' + post.post_img.url +')'"
-                ></div>
-                <div :class="post.post_categories[0].term_id == 4 ? '' : 'article-list-img-right'">
-                  <template v-if="post.post_categories[0].term_id == 4">
-                    <div>
-                      <div class="buy-list-item">
-                        <div
-                          :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
-                        >
-                          <img :src="post.post_img.url" />
-                        </div>
-                        <div class="buy-right-info">
-                          <div>
-                            <a :href="post.post_metas.fineTool.itemLink" target="_blank">
-                              <h3 v-html="post.post_metas.fineTool.itemName"></h3>
-                            </a>
-                            <p v-html="post.post_metas.fineTool.itemDes"></p>
-                          </div>
-                          <div>
-                            <a :href="post.post_metas.fineTool.itemLink" target="_blank">
-                              {{ post.post_metas.fineTool.itemLinkName }}
-                              <span>
-                                <i class="ri-arrow-right-up-line"></i>
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </template>
-
-                  <div>
-                    <template v-if="post.post_categories[0].term_id !== 4">
+              <!-- 包含特色图像文章 -->
+              <template
+                v-else-if="post.post_img.url && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
+              >
+                <div class="article-list-img-else">
+                  <div
+                    v-if="post.post_categories[0].term_id !== 4"
+                    class="article-list-img"
+                    :style="'background-image:url(' + post.post_img.url +')'"
+                  ></div>
+                  <div
+                    :class="post.post_categories[0].term_id == 4 ? '' : 'article-list-img-right'"
+                  >
+                    <template v-if="post.post_categories[0].term_id == 4">
                       <div>
-                        <!-- 置顶文章提示 -->
-                        <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                          <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
-                          {{ $t('lang.index.atTop') }}
-                        </em>
-                        <!-- 置顶文章提示 -->
-                        <em v-if="post.post_categories[0].term_id === 7" class="article-list-type1">
-                          <b>{{ post.post_categories[0].name }}</b>
-                          {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                        </em>
-                        <nuxt-link
-                          v-else
-                          :to="'/cate/' + post.post_categories[0].term_id"
-                          class="img-cate list-normal-tag"
-                          style="color: rgba(255, 152, 0, 0.83) !important;"
-                        >
-                          <b>{{ post.post_categories[0].name }}</b>
-                          {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                        </nuxt-link>
+                        <div class="buy-list-item">
+                          <div
+                            :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
+                          >
+                            <img :src="post.post_img.url" />
+                          </div>
+                          <div class="buy-right-info">
+                            <div>
+                              <a :href="post.post_metas.fineTool.itemLink" target="_blank">
+                                <h3 v-html="post.post_metas.fineTool.itemName"></h3>
+                              </a>
+                              <p v-html="post.post_metas.fineTool.itemDes"></p>
+                            </div>
+                            <div>
+                              <a :href="post.post_metas.fineTool.itemLink" target="_blank">
+                                {{ post.post_metas.fineTool.itemLinkName }}
+                                <span>
+                                  <i class="ri-arrow-right-up-line"></i>
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </template>
-                    <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
-                      <h5
-                        v-html="post.title.rendered"
-                        style="margin: 0px;padding: 0px;margin-top:15px"
-                      ></h5>
-                    </nuxt-link>
-                    <p v-html="post.post_excerpt.four.substr(0, 65) + '...'" :id="post.id"></p>
-                    <div class="article-list-footer">
-                      <nuxt-link
-                        v-if="post.post_categories[0].term_id == 4"
-                        :to="'/cate/' + post.post_categories[0].term_id"
-                        class="article-list-date"
-                        v-html="post.post_categories[0].name"
-                        style="margin:0px"
-                      >{{ post.post_categories[0].name }}</nuxt-link>
-                      <span
-                        class="article-list-divider"
-                        v-if="post.post_categories[0].term_id == 4"
-                      >-</span>
-                      <span class="article-list-date">{{ post.post_date }}</span>
-                      <span class="article-list-divider">-</span>
-                      <span
-                        v-if="post.post_metas.views !== ''"
-                        class="article-list-minutes"
-                      >{{ post.post_metas.views }}&nbsp;Views</span>
-                      <span v-else class="article-list-minutes">0&nbsp;Views</span>
+
+                    <div>
+                      <template v-if="post.post_categories[0].term_id !== 4">
+                        <div>
+                          <!-- 置顶文章提示 -->
+                          <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
+                            <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
+                            {{ $t('lang.index.atTop') }}
+                          </em>
+                          <!-- 置顶文章提示 -->
+                          <em
+                            v-if="post.post_categories[0].term_id === 7"
+                            class="article-list-type1"
+                          >
+                            <b>{{ post.post_categories[0].name }}</b>
+                            {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                          </em>
+                          <nuxt-link
+                            v-else
+                            :to="'/cate/' + post.post_categories[0].term_id"
+                            class="img-cate list-normal-tag"
+                            style="color: rgba(255, 152, 0, 0.83) !important;"
+                          >
+                            <b>{{ post.post_categories[0].name }}</b>
+                            {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                          </nuxt-link>
+                        </div>
+                      </template>
+                      <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
+                        <h5
+                          v-html="post.title.rendered"
+                          style="margin: 0px;padding: 0px;margin-top:15px"
+                        ></h5>
+                      </nuxt-link>
+                      <p v-html="post.post_excerpt.four.substr(0, 65) + '...'" :id="post.id"></p>
+                      <div class="article-list-footer">
+                        <nuxt-link
+                          v-if="post.post_categories[0].term_id == 4"
+                          :to="'/cate/' + post.post_categories[0].term_id"
+                          class="article-list-date"
+                          v-html="post.post_categories[0].name"
+                          style="margin:0px"
+                        >{{ post.post_categories[0].name }}</nuxt-link>
+                        <span
+                          class="article-list-divider"
+                          v-if="post.post_categories[0].term_id == 4"
+                        >-</span>
+                        <span class="article-list-date">{{ post.post_date }}</span>
+                        <span class="article-list-divider">-</span>
+                        <span
+                          v-if="post.post_metas.views !== ''"
+                          class="article-list-minutes"
+                        >{{ post.post_metas.views }}&nbsp;Views</span>
+                        <span v-else class="article-list-minutes">0&nbsp;Views</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </template>
-            <!-- 包含特色图像文章 -->
+              </template>
+              <!-- 包含特色图像文章 -->
 
-            <!-- 状态类型文章 -->
-            <template
-              v-else-if="post.post_categories[0].term_id === 58 || !!post.post_metas.status"
-            >
-              <h3 class="article-list-content article-status" v-html="post.title.rendered"></h3>
-              <div class="article-list-footer">
-                <span class="article-list-date">{{ post.post_date }}</span>
-                <span class="article-list-divider">-</span>
-                <span class="article-list-minutes">
-                  <i class="ri-contrast-2-line"></i>
-                  {{ $t('lang.index.mood') }} | {{ post.post_metas.status ? post.post_metas.status : $t('lang.index.noneMood') }}
-                </span>
-                <template v-if="post.id == 691">
+              <!-- 状态类型文章 -->
+              <template
+                v-else-if="post.post_categories[0].term_id === 58 || !!post.post_metas.status"
+              >
+                <h3 class="article-list-content article-status" v-html="post.title.rendered"></h3>
+                <div class="article-list-footer">
+                  <span class="article-list-date">{{ post.post_date }}</span>
                   <span class="article-list-divider">-</span>
-                  <a
-                    class="article-list-date gray-for-heroes"
-                    @click="grayMode()"
-                  >{{ $t('lang.index.moodGray') }}</a>
-                </template>
-              </div>
-            </template>
-            <!-- 状态类型文章 -->
-          </li>
-
-          <!-- 无限滚动占位内容 -->
-          <mugen-scroll :handler="new_page" :should-handle="loading_first">
-            <li class="article-list-item reveal index-post-list bottom" v-if="!loading_end">
-              <div class="skeleton">
-                <div class="skeleton-head"></div>
-                <div class="skeleton-body">
-                  <div class="skeleton-title"></div>
-                  <div class="skeleton-content"></div>
+                  <span class="article-list-minutes">
+                    <i class="ri-contrast-2-line"></i>
+                    {{ $t('lang.index.mood') }} | {{ post.post_metas.status ? post.post_metas.status : $t('lang.index.noneMood') }}
+                  </span>
+                  <template v-if="post.id == 691">
+                    <span class="article-list-divider">-</span>
+                    <a
+                      class="article-list-date gray-for-heroes"
+                      @click="grayMode()"
+                    >{{ $t('lang.index.moodGray') }}</a>
+                  </template>
                 </div>
-              </div>
+              </template>
+              <!-- 状态类型文章 -->
             </li>
-          </mugen-scroll>
-          <!-- 无限滚动占位内容 -->
-        </ul>
+
+            <!-- 无限滚动占位内容 -->
+            <mugen-scroll :handler="new_page" :should-handle="loading_first">
+              <li class="article-list-item reveal index-post-list bottom" v-if="!loading_end">
+                <div class="skeleton">
+                  <div class="skeleton-head"></div>
+                  <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-content"></div>
+                  </div>
+                </div>
+              </li>
+            </mugen-scroll>
+            <!-- 无限滚动占位内容 -->
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <script lang="ts">
@@ -289,7 +296,7 @@ import 'highlight.js/styles/rainbow.css'
 // highlightjs 初始化函数
 const highlightCode = (): void => {
   const preEl: any = document.querySelectorAll('pre')
-  preEl.forEach((el:any) => {
+  preEl.forEach((el: any) => {
     hljs.highlightBlock(el)
   })
 }
@@ -301,7 +308,6 @@ const highlightCode = (): void => {
   }
 })
 export default class Index extends Vue {
-
   // Data 数据
   posts: any[] = []
   posts_id_sticky: string = '0'
@@ -363,7 +369,7 @@ export default class Index extends Vue {
       })
       .finally((): void => {
         this.loading_cates = false
-        let _this:any = this
+        let _this: any = this
         setTimeout(() => {
           _this.loading_tages = false
         }, 500)
@@ -387,7 +393,7 @@ export default class Index extends Vue {
         this.posts = res_sticky.data
 
         //获取顶置文章 IDs 以在获取其余文章时排除
-        let postsLength:number = this.posts.length
+        let postsLength: number = this.posts.length
         for (var s = 0; s < postsLength; ++s) {
           this.posts_id_sticky += ',' + this.posts[s].id
         }
@@ -440,7 +446,7 @@ export default class Index extends Vue {
             this.paged +
             this.version
         )
-        .then((response:{data:any}) => {
+        .then((response: { data: any }) => {
           if (response.data.length !== 0) {
             //判断是否最后一页
             $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
@@ -496,7 +502,7 @@ export default class Index extends Vue {
   }
   // 关闭 cookies 使用提示
   discard_notice(): void {
-    (this as any).cookie.set('ouorz_read_cookie', 1)
+    ;(this as any).cookie.set('ouorz_read_cookie', 1)
     this.notice.visible = false
   }
   grayMode(): void {

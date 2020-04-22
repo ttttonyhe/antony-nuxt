@@ -1,153 +1,155 @@
 <template>
-  <div class="cates">
-    <div class="grid grid-centered" style="max-width: 660px;padding: 0px 20px;margin-top: 80px">
-      <div class="grid-cell" id="grid-cell">
-        <div id="header_info">
-          <nav class="header-nav reveal cate-top">
-            <div class="cate-nav">
-              <div>
-                <nuxt-link to="/" class="top1 header-logo cate-name" v-html="cate.name"></nuxt-link>
-              </div>
-              <div>
-                <nuxt-link to="/">
-                  <b-button
-                    variant="primary"
-                    :class="includeChinese(cate.name) ? 'cate-back' : 'cate-back-en'"
-                  >
-                    <i class="ri-arrow-left-line"></i>
-                    {{ $t('lang.cate.backHome') }}
-                  </b-button>
-                </nuxt-link>
-              </div>
-            </div>
-            <p class="top2 lead archive-p" v-html="$t('lang.cate.postCount') + ': ' + cate.count"></p>
-          </nav>
-          <!-- 顶部标题与分类区块 -->
-          <topInsideTag :tages="tags" />
-          <!-- 顶部标题与分类区块 -->
-        </div>
-        <ul class="article-list">
-          <li
-            :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
-            v-for="(post,index) in posts"
-            :style="post.post_categories[0].term_id | link_style"
-            :key="'tagPost' + post.id"
-          >
-            <template
-              v-if="post.post_img.url == false || post.post_categories[0].term_id == 2 || post.post_categories[0].term_id == 5"
-            >
-              <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
-                {{ $t('lang.index.atTop') }}
-              </em>
-              <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
-                <b>{{ post.post_categories[0].name }}</b>
-                {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-              </em>
-              <nuxt-link
-                v-else-if="post.post_categories[0].term_id !== 2 && post.post_categories[0].term_id !== 5 && post.sticky"
-                :to="'/cate/' + post.post_categories[0].term_id"
-                v-html="post.post_categories[0].name"
-                class="img-cate"
-              ></nuxt-link>
-              <div v-if="post.post_categories[0].term_id == 2" class="link-list-left">
-                <img :src="post.post_metas.img[0]" class="link-list-img" />
-              </div>
-              <div
-                class="link-list-right"
-                :style="query_style_list(post.post_categories[0].term_id,post.sticky)"
-              >
-                <a
-                  v-if="post.post_categories[0].term_id == 2 || post.post_categories[0].term_id == 5"
-                  :href="post.post_metas.link+'?ref=https://www.ouorz.com'"
-                  style="text-decoration: none;"
-                  target="_blank"
-                >
-                  <h5 style="margin-top: 10px;" v-html="post.title.rendered"></h5>
-                </a>
-
-                <nuxt-link v-else :to="'/post/' + post.id" style="text-decoration: none;">
-                  <h5 v-html="post.title.rendered"></h5>
-                </nuxt-link>
-                <p
-                  :class="post.post_categories[0].term_id == 2 ? 'cate-link-item-p cate-link-p' : ''"
-                  v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
-                ></p>
-                <div class="article-list-footer">
-                  <span
-                    class="article-list-date"
-                  >{{ post.post_categories[0].term_id | link_page }}{{ post.post_date }}</span>
-                  <span
-                    class="article-list-divider"
-                    v-if="post.post_categories[0].term_id !== 2 && post.post_categories[0].term_id !== 5"
-                  >-</span>
-                  <span
-                    class="article-list-minutes"
-                    v-if="post.post_categories[0].term_id !== 2 && post.post_categories[0].term_id !== 5"
-                  >{{ post.post_metas.views }}&nbsp;Views</span>
+  <client-only>
+    <div class="cates">
+      <div class="grid grid-centered" style="max-width: 660px;padding: 0px 20px;margin-top: 80px">
+        <div class="grid-cell" id="grid-cell">
+          <div id="header_info">
+            <nav class="header-nav reveal cate-top">
+              <div class="cate-nav">
+                <div>
+                  <nuxt-link to="/" class="top1 header-logo cate-name" v-html="cate.name"></nuxt-link>
+                </div>
+                <div>
+                  <nuxt-link to="/">
+                    <b-button
+                      variant="primary"
+                      :class="includeChinese(cate.name) ? 'cate-back' : 'cate-back-en'"
+                    >
+                      <i class="ri-arrow-left-line"></i>
+                      {{ $t('lang.cate.backHome') }}
+                    </b-button>
+                  </nuxt-link>
                 </div>
               </div>
-            </template>
-            <template v-else>
-              <div class="article-list-img-else">
+              <p class="top2 lead archive-p" v-html="$t('lang.cate.postCount') + ': ' + cate.count"></p>
+            </nav>
+            <!-- 顶部标题与分类区块 -->
+            <topInsideTag :tages="tags" />
+            <!-- 顶部标题与分类区块 -->
+          </div>
+          <ul class="article-list">
+            <li
+              :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
+              v-for="(post,index) in posts"
+              :style="post.post_categories[0].term_id | link_style"
+              :key="'tagPost' + post.id"
+            >
+              <template
+                v-if="post.post_img.url == false || post.post_categories[0].term_id == 2 || post.post_categories[0].term_id == 5"
+              >
+                <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
+                  <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
+                  {{ $t('lang.index.atTop') }}
+                </em>
+                <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
+                  <b>{{ post.post_categories[0].name }}</b>
+                  {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                </em>
+                <nuxt-link
+                  v-else-if="post.post_categories[0].term_id !== 2 && post.post_categories[0].term_id !== 5 && post.sticky"
+                  :to="'/cate/' + post.post_categories[0].term_id"
+                  v-html="post.post_categories[0].name"
+                  class="img-cate"
+                ></nuxt-link>
+                <div v-if="post.post_categories[0].term_id == 2" class="link-list-left">
+                  <img :src="post.post_metas.img[0]" class="link-list-img" />
+                </div>
                 <div
-                  class="article-list-img"
-                  :style="'background-image:url(' + post.post_img.url +')'"
-                ></div>
-                <div class="article-list-img-right">
-                  <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                    <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
-                    {{ $t('lang.index.atTop') }}
-                  </em>
-                  <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
-                    <b>{{ post.post_categories[0].name }}</b>
-                    {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                  </em>
-                  <nuxt-link
-                    v-else
-                    :to="'/cate/' + post.post_categories[0].term_id"
-                    v-html="post.post_categories[0].name"
-                    class="img-cate"
-                  ></nuxt-link>
+                  class="link-list-right"
+                  :style="query_style_list(post.post_categories[0].term_id,post.sticky)"
+                >
+                  <a
+                    v-if="post.post_categories[0].term_id == 2 || post.post_categories[0].term_id == 5"
+                    :href="post.post_metas.link+'?ref=https://www.ouorz.com'"
+                    style="text-decoration: none;"
+                    target="_blank"
+                  >
+                    <h5 style="margin-top: 10px;" v-html="post.title.rendered"></h5>
+                  </a>
 
-                  <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
-                    <h5
-                      v-html="post.title.rendered"
-                      style="margin: 0px;padding: 0px;margin-top:15px"
-                    ></h5>
+                  <nuxt-link v-else :to="'/post/' + post.id" style="text-decoration: none;">
+                    <h5 v-html="post.title.rendered"></h5>
                   </nuxt-link>
-                  <p v-html="post.post_excerpt.nine.substr(0, 80) + '...'" :id="post.id"></p>
+                  <p
+                    :class="post.post_categories[0].term_id == 2 ? 'cate-link-item-p cate-link-p' : ''"
+                    v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
+                  ></p>
                   <div class="article-list-footer">
-                    <span class="article-list-date">{{ post.post_date }}</span>
-                    <span class="article-list-divider">-</span>
                     <span
-                      v-if="post.post_metas.views !== ''"
+                      class="article-list-date"
+                    >{{ post.post_categories[0].term_id | link_page }}{{ post.post_date }}</span>
+                    <span
+                      class="article-list-divider"
+                      v-if="post.post_categories[0].term_id !== 2 && post.post_categories[0].term_id !== 5"
+                    >-</span>
+                    <span
                       class="article-list-minutes"
+                      v-if="post.post_categories[0].term_id !== 2 && post.post_categories[0].term_id !== 5"
                     >{{ post.post_metas.views }}&nbsp;Views</span>
-                    <span v-else class="article-list-minutes">0&nbsp;Views</span>
                   </div>
                 </div>
-              </div>
-            </template>
-          </li>
+              </template>
+              <template v-else>
+                <div class="article-list-img-else">
+                  <div
+                    class="article-list-img"
+                    :style="'background-image:url(' + post.post_img.url +')'"
+                  ></div>
+                  <div class="article-list-img-right">
+                    <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
+                      <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
+                      {{ $t('lang.index.atTop') }}
+                    </em>
+                    <em v-if="post.post_categories[0].term_id == 7" class="article-list-type1">
+                      <b>{{ post.post_categories[0].name }}</b>
+                      {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                    </em>
+                    <nuxt-link
+                      v-else
+                      :to="'/cate/' + post.post_categories[0].term_id"
+                      v-html="post.post_categories[0].name"
+                      class="img-cate"
+                    ></nuxt-link>
 
-          <!-- 无限滚动占位内容 -->
-          <mugen-scroll :handler="new_page" :should-handle="loading_first">
-            <li class="article-list-item reveal index-post-list bottom" v-if="!loading_end">
-              <div class="skeleton">
-                <div class="skeleton-head"></div>
-                <div class="skeleton-body">
-                  <div class="skeleton-title"></div>
-                  <div class="skeleton-content"></div>
+                    <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
+                      <h5
+                        v-html="post.title.rendered"
+                        style="margin: 0px;padding: 0px;margin-top:15px"
+                      ></h5>
+                    </nuxt-link>
+                    <p v-html="post.post_excerpt.nine.substr(0, 80) + '...'" :id="post.id"></p>
+                    <div class="article-list-footer">
+                      <span class="article-list-date">{{ post.post_date }}</span>
+                      <span class="article-list-divider">-</span>
+                      <span
+                        v-if="post.post_metas.views !== ''"
+                        class="article-list-minutes"
+                      >{{ post.post_metas.views }}&nbsp;Views</span>
+                      <span v-else class="article-list-minutes">0&nbsp;Views</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </template>
             </li>
-          </mugen-scroll>
-          <!-- 无限滚动占位内容 -->
-        </ul>
+
+            <!-- 无限滚动占位内容 -->
+            <mugen-scroll :handler="new_page" :should-handle="loading_first">
+              <li class="article-list-item reveal index-post-list bottom" v-if="!loading_end">
+                <div class="skeleton">
+                  <div class="skeleton-head"></div>
+                  <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-content"></div>
+                  </div>
+                </div>
+              </li>
+            </mugen-scroll>
+            <!-- 无限滚动占位内容 -->
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <script lang="ts">
@@ -319,7 +321,7 @@ export default class Cates extends Vue {
             '&tags=' +
             this.$route.params.id
         )
-        .then((response:{data:any}) => {
+        .then((response: { data: any }) => {
           if (response.data.length !== 0) {
             //判断是否最后一页
             $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
@@ -332,7 +334,7 @@ export default class Cates extends Vue {
           }
           this.pagedLoading = false
         })
-        .catch(():void => {
+        .catch((): void => {
           $('#view-text').html('-&nbsp;' + this.listLoading.all + '&nbsp;-')
           this.paged = 1
           this.loading_first = false

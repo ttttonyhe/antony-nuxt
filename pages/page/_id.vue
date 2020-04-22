@@ -1,34 +1,36 @@
 <template>
-  <div id="page">
-    <div class="grid grid-centered">
-      <div class="grid-cell" id="grid-cell">
-        <article class="article reveal comment-article">
-          <div id="load">
-            <header class="article-header comment-header">
-              <h2 class="single-h2 page-title" v-html="page.title"></h2>
-              <div class="article-list-footer page-footer">
-                <span class="article-list-date">{{ page.date }}</span>
-                <span class="article-list-divider">/</span>
-                <span class="article-list-minutes">{{ page.views }}&nbsp;Views</span>
+  <client-only>
+    <div id="page">
+      <div class="grid grid-centered">
+        <div class="grid-cell" id="grid-cell">
+          <article class="article reveal comment-article">
+            <div id="load">
+              <header class="article-header comment-header">
+                <h2 class="single-h2 page-title" v-html="page.title"></h2>
+                <div class="article-list-footer page-footer">
+                  <span class="article-list-date">{{ page.date }}</span>
+                  <span class="article-list-divider">/</span>
+                  <span class="article-list-minutes">{{ page.views }}&nbsp;Views</span>
+                </div>
+                <div class="single-line"></div>
+              </header>
+              <div class="article-content" v-html="page.content"></div>
+              <div class="article-comments" id="article-comments">
+                <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
+                <iframe
+                  id="article-comments-iframe"
+                  :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + $route.params.id"
+                  style="width: 100%;"
+                  frameborder="0"
+                  :scrolling="scrollAble ? 'yes' : 'no'"
+                ></iframe>
               </div>
-              <div class="single-line"></div>
-            </header>
-            <div class="article-content" v-html="page.content"></div>
-            <div class="article-comments" id="article-comments">
-              <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
-              <iframe
-                id="article-comments-iframe"
-                :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + $route.params.id"
-                style="width: 100%;"
-                frameborder="0"
-                :scrolling="scrollAble ? 'yes' : 'no'"
-              ></iframe>
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <script lang="ts">
@@ -103,7 +105,7 @@ export default class Page extends Vue {
 
   mounted() {
     // 手动访问一遍以增加访问量 2333
-    this.$axios.get('https://blog.ouorz.com/comment.html'+ '?from=front')
+    this.$axios.get('https://blog.ouorz.com/comment.html' + '?from=front')
 
     document.domain = 'ouorz.com'
     var click = 0 //这回真的操作 10 次确保操作成功哈哈哈哈
