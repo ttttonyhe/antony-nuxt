@@ -121,7 +121,7 @@
       </div>
       <!-- Search -->
     </header>
-    <div id="view-div" class="center-info" style="display:none">
+    <div id="view-div" class="center-info" style="display:none" v-if="!($route.path).match(listTextDetect)">
       <p
         style="font-weight: 600;font-size: 1.2rem;color: #555;"
         id="view-text"
@@ -139,6 +139,7 @@ import $ from 'jquery'
 @Component({})
 export default class computerNav extends Vue {
   routeDetect: any = RegExp(/post/)
+  listTextDetect: any = RegExp(/post|page|donation|friends|archive|comments/)
   search_content: string = ''
   search_key: string = ''
   search_loading: boolean = false
