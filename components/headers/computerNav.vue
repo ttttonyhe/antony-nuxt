@@ -4,7 +4,7 @@
       <!-- Content Menu -->
       <div class="header-div1" v-if="($route.path).match(routeDetect)">
         <nuxt-link to="/" style="display: inline-block;">
-          <img src="https://static.ouorz.com/t.jpg" />
+          <img src="https://static.ouorz.com/t.jpg" loading="lazy" />
         </nuxt-link>
         <a href="https://blog.ouorz.com/feed">
           <b-button variant="light">{{ $t('lang.header.rss') }}</b-button>

@@ -1,7 +1,7 @@
 <template>
   <div id="header_info" class="index-top">
     <nav class="header-nav reveal">
-      <img class="header-avatar-top" src="https://static.ouorz.com/t.jpg" />
+      <img class="header-avatar-top" src="https://static.ouorz.com/t.jpg" loading="lazy" alt="TonyHe's Avatar" />
       <a style="text-decoration:none;" href="/" class="header-logo" title="TonyHe">TonyHe</a>
 
       <p class="lead" style="margin-top: 0px;margin-left:5px">Just A Poor Lifesinger</p>

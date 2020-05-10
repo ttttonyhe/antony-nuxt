@@ -52,7 +52,7 @@
                   class="img-cate"
                 ></nuxt-link>
                 <div v-if="post.post_categories[0].term_id == 2" class="link-list-left">
-                  <img :src="post.post_metas.img[0]" class="link-list-img" />
+                  <img :src="post.post_metas.img[0]" class="link-list-img" loading="lazy" />
                 </div>
                 <div
                   class="link-list-right"

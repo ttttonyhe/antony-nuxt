@@ -151,7 +151,7 @@
                           <div
                             :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
                           >
-                            <img :src="post.post_img.url" />
+                            <img :src="post.post_img.url" loading="lazy" :alt="post.post_metas.fineTool.itemName" />
                           </div>
                           <div class="buy-right-info">
                             <div>
