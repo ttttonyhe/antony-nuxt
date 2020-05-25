@@ -12,6 +12,10 @@
   <a href="https://github.com/HelipengTony/antony-nuxt">
     <img src="https://img.shields.io/github/license/HelipengTony/antony-nuxt.svg" alt="license">
   </a>
+
+  <a href="https://travis-ci.com/HelipengTony/antony-nuxt">
+    <img src="https://travis-ci.com/HelipengTony/antony-nuxt.svg?branch=master" alt="license">
+  </a>
 </div>
 
 <br/>
