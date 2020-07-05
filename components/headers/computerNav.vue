@@ -3,7 +3,7 @@
     <header class="tony-header-fixed" id="header-div">
       <!-- Content Menu -->
       <div class="header-div1" v-if="($route.path).match(routeDetect)">
-        <nuxt-link to="/" style="display: inline-block;">
+        <nuxt-link to="/blog" style="display: inline-block;">
           <img src="https://static.ouorz.com/t.jpg" loading="lazy" />
         </nuxt-link>
         <a href="https://blog.ouorz.com/feed">
@@ -16,7 +16,7 @@
       <!-- Content Menu -->
       <!-- Index Menu -->
       <div class="header-div1-1" v-else>
-        <nuxt-link to="/" style="display: inline-block;">
+        <nuxt-link to="/blog" style="display: inline-block;">
           <img src="https://static.ouorz.com/t.jpg" />
         </nuxt-link>
         <a>
@@ -30,7 +30,7 @@
 
       <!-- Menu Items -->
       <div class="header-div2">
-        <nuxt-link to="/">
+        <nuxt-link to="/blog">
           <b-button variant="light">{{ $t('lang.header.index') }}</b-button>
         </nuxt-link>
         <nuxt-link to="/archive">
