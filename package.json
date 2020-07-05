@@ -38,10 +38,15 @@
     "vue-mugen-scroll": "^0.2.6"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/compat-data": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
     "@nuxt/typescript-build": "^0.6.5",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.1",
     "nodemon": "^1.18.9",
     "nuxt-property-decorator": "^2.5.1",
     "prettier": "^1.19.1",

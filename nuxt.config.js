@@ -154,7 +154,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    analyze: true,
+    analyze: false,
     babel: {
       plugins: [
         ["@babel/plugin-proposal-decorators", {

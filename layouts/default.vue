@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Menu -->
-    <div id="nav">
+    <div id="nav" v-if="$route.path !== '/'">
       <template v-if="mobile">
         <mobileNav />
       </template>
@@ -16,7 +16,7 @@
     <!-- Content -->
 
     <!-- Footer -->
-    <siteFooter />
+    <siteFooter v-if="$route.path !== '/'"/>
     <!-- Footer -->
   </div>
 </template>

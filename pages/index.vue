@@ -1,342 +1,166 @@
 <template>
-  <client-only>
-    <div id="index">
-      <div class="grid grid-centered" style="max-width: 660px;padding: 0px 20px;margin-top: 80px">
-        <div class="grid-cell" id="grid-cell">
-          <!-- 顶部标题与分类区块 -->
-          <template v-if="!loading_tages">
-            <headerTop
-              :loading_tages="loading_tages"
-              :loading_cates="loading_cates"
-              :tages="tages"
-              :cookie="notice.visible"
-            />
-          </template>
-          <template v-else>
-            <headerTop
-              :loading_tages="loading_tages"
-              :loading_cates="loading_cates"
-              :cookie="notice.visible"
-            />
-          </template>
-          <!-- 顶部标题与分类区块 -->
-
-          <ul class="article-list">
-            <!-- cookies 使用提示 -->
-            <li
-              class="article-list-item reveal index-post-list notice-list"
-              v-if="notice.visible"
-              v-b-tooltip.hover
-              :title="$t('lang.index.cookieText')"
-            >
-              <div>{{ $t('lang.index.cookieText') }}</div>
-              <a @click="discard_notice()" class="cookie-click">{{ $t('lang.index.cookie') }}</a>
-            </li>
-            <!-- cookies 使用提示 -->
-
-            <li
-              :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
-              v-for="(post,index) in posts"
-              :key="'indexPost' + post.id"
-              :id="'div' + post.id"
-            >
-              <!-- 不包含特色图像文章 -->
-              <template
-                v-if="post.post_img.url == false && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
-              >
-                <div class="list-show-div">
-                  <!-- 置顶文章提示 -->
-                  <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                    <i class="ri-arrow-up-circle-line"></i>
-                    {{ $t('lang.index.atTop') }}
-                  </em>
-                  <!-- 置顶文章提示 -->
-                  <em
-                    v-if="post.post_categories[0].term_id === 7"
-                    class="article-list-type1"
-                    v-html="'<b>' + post.post_categories[0].name + '</b>' +  ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : '技术')"
-                  ></em>
-                  <div v-else class="article-list-tags">
-                    <nuxt-link
-                      class="list-normal-tag"
-                      style="color: rgba(255, 152, 0, 0.83) !important;"
-                      :to="'/cate/' + post.post_categories[0].term_id"
-                      v-html="post.post_categories[0].name"
-                    ></nuxt-link>
-                    <template v-if="!post.post_tags.length">
-                      <a style="margin-left: 5px;">{{ $t('lang.index.noneTag') }}</a>
-                    </template>
-                    <template>
-                      <a
-                        v-for="(tag,index) in post.post_tags.slice(0,2)"
-                        :href="tag.url"
-                        v-html="tag.name"
-                        :key="'indexPostTag' + tag.id"
-                        style="margin-left: 5px;"
-                      ></a>
-                    </template>
-                  </div>
-                  <button
-                    type="button"
-                    class="list-show-btn"
-                    @click="post.id == previewPostOpened ? closePreview(post.id) : preview(post.id)"
-                    :id="'btn'+post.id"
-                  >{{ $t('lang.index.quickView') }}</button>
-                </div>
-
-                <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
-                  <h5 v-html="post.title.rendered"></h5>
-                </nuxt-link>
-
-                <!-- 文章速览 -->
-                <!-- previewClose 已关闭的速览显示描述内容,previewPost 准备开始速览显示加载圆圈,previewPostOpened 开启的速览显示全文内容 -->
-                <template v-if="previewClose !== post.id">
-                  <p
-                    v-if="previewPost == post.id && previewPostOpened !== post.id"
-                    class="article-list-content"
-                    :id="post.id"
-                  >
-                    <b-spinner variant="secondary" type="grow"></b-spinner>
-                  </p>
-                  <p
-                    v-else-if="previewPostOpened == post.id && previewPost == post.id"
-                    :id="post.id"
-                    :class="'article-list-content ' + previewClass"
-                    v-html="previewContent"
-                  ></p>
-                  <p
-                    v-else
-                    class="article-list-content"
-                    :id="post.id"
-                    v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
-                  ></p>
-                </template>
-                <template v-else>
-                  <p
-                    class="article-list-content"
-                    :id="post.id"
-                    v-html="post.post_excerpt.nine.substr(0, 80) + '...'"
-                  ></p>
-                </template>
-                <!-- 文章速览 -->
-
-                <div class="article-list-footer">
-                  <span class="article-list-date">{{ post.post_date }}</span>
-                  <span class="article-list-divider">-</span>
-                  <span
-                    v-if="post.post_metas.views !== ''"
-                    class="article-list-minutes"
-                  >{{ post.post_metas.views }}&nbsp;Views</span>
-                  <span v-else class="article-list-minutes">0&nbsp;Views</span>
-                </div>
-              </template>
-              <!-- 不包含特色图像文章 -->
-
-              <!-- 包含特色图像文章 -->
-              <template
-                v-else-if="post.post_img.url && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
-              >
-                <div class="article-list-img-else">
-                  <div
-                    v-if="post.post_categories[0].term_id !== 4"
-                    class="article-list-img"
-                    :style="'background-image:url(' + post.post_img.url +')'"
-                  ></div>
-                  <div
-                    :class="post.post_categories[0].term_id == 4 ? '' : 'article-list-img-right'"
-                  >
-                    <template v-if="post.post_categories[0].term_id == 4">
-                      <div>
-                        <div class="buy-list-item">
-                          <div
-                            :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
-                          >
-                            <img :src="post.post_img.url" loading="lazy" :alt="post.post_metas.fineTool.itemName" />
-                          </div>
-                          <div class="buy-right-info">
-                            <div>
-                              <a :href="post.post_metas.fineTool.itemLink" target="_blank">
-                                <h3 v-html="post.post_metas.fineTool.itemName"></h3>
-                              </a>
-                              <p v-html="post.post_metas.fineTool.itemDes"></p>
-                            </div>
-                            <div>
-                              <a :href="post.post_metas.fineTool.itemLink" target="_blank">
-                                {{ post.post_metas.fineTool.itemLinkName }}
-                                <span>
-                                  <i class="ri-arrow-right-up-line"></i>
-                                </span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </template>
-
-                    <div>
-                      <template v-if="post.post_categories[0].term_id !== 4">
-                        <div>
-                          <!-- 置顶文章提示 -->
-                          <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                            <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
-                            {{ $t('lang.index.atTop') }}
-                          </em>
-                          <!-- 置顶文章提示 -->
-                          <em
-                            v-if="post.post_categories[0].term_id === 7"
-                            class="article-list-type1"
-                          >
-                            <b>{{ post.post_categories[0].name }}</b>
-                            {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                          </em>
-                          <nuxt-link
-                            v-else
-                            :to="'/cate/' + post.post_categories[0].term_id"
-                            class="img-cate list-normal-tag"
-                            style="color: rgba(255, 152, 0, 0.83) !important;"
-                          >
-                            <b>{{ post.post_categories[0].name }}</b>
-                            {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
-                          </nuxt-link>
-                        </div>
-                      </template>
-                      <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
-                        <h5
-                          v-html="post.title.rendered"
-                          style="margin: 0px;padding: 0px;margin-top:15px"
-                        ></h5>
-                      </nuxt-link>
-                      <p v-html="post.post_excerpt.four.substr(0, 65) + '...'" :id="post.id"></p>
-                      <div class="article-list-footer">
-                        <nuxt-link
-                          v-if="post.post_categories[0].term_id == 4"
-                          :to="'/cate/' + post.post_categories[0].term_id"
-                          class="article-list-date"
-                          v-html="post.post_categories[0].name"
-                          style="margin:0px"
-                        >{{ post.post_categories[0].name }}</nuxt-link>
-                        <span
-                          class="article-list-divider"
-                          v-if="post.post_categories[0].term_id == 4"
-                        >-</span>
-                        <span class="article-list-date">{{ post.post_date }}</span>
-                        <span class="article-list-divider">-</span>
-                        <span
-                          v-if="post.post_metas.views !== ''"
-                          class="article-list-minutes"
-                        >{{ post.post_metas.views }}&nbsp;Views</span>
-                        <span v-else class="article-list-minutes">0&nbsp;Views</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-              <!-- 包含特色图像文章 -->
-
-              <!-- 状态类型文章 -->
-              <template
-                v-else-if="post.post_categories[0].term_id === 58 || !!post.post_metas.status"
-              >
-                <h3 class="article-list-content article-status" v-html="post.title.rendered"></h3>
-                <div class="article-list-footer">
-                  <span class="article-list-date">{{ post.post_date }}</span>
-                  <span class="article-list-divider">-</span>
-                  <span class="article-list-minutes">
-                    <i class="ri-contrast-2-line"></i>
-                    {{ $t('lang.index.mood') }} | {{ post.post_metas.status ? post.post_metas.status : $t('lang.index.noneMood') }}
-                  </span>
-                  <template v-if="post.id == 691">
-                    <span class="article-list-divider">-</span>
-                    <a
-                      class="article-list-date gray-for-heroes"
-                      @click="grayMode()"
-                    >{{ $t('lang.index.moodGray') }}</a>
-                  </template>
-                </div>
-              </template>
-              <!-- 状态类型文章 -->
-            </li>
-
-            <!-- 无限滚动占位内容 -->
-            <mugen-scroll :handler="new_page" :should-handle="loading_first">
-              <li class="article-list-item reveal index-post-list bottom" v-if="!loading_end">
-                <div class="skeleton">
-                  <div class="skeleton-head"></div>
-                  <div class="skeleton-body">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-content"></div>
-                  </div>
-                </div>
-              </li>
-            </mugen-scroll>
-            <!-- 无限滚动占位内容 -->
-          </ul>
+  <div class="intro">
+    <section class="intro-header">
+      <div class="intro-background">
+        <div class="intro-title">
+          <div>
+            <img src="https://static.ouorz.com/t.jpg" />
+          </div>
+          <div>
+            <h1>TonyHe</h1>
+            <p>Just A Poor Lifesinger</p>
+          </div>
         </div>
       </div>
-    </div>
-  </client-only>
+    </section>
+    <section class="intro-menu">
+      <ul>
+        <nuxt-link to="/"><li class="active">Home</li></nuxt-link>
+        <nuxt-link to="/blog"><li>Blog</li></nuxt-link>
+        <nuxt-link to="/post/126"><li>About</li></nuxt-link>
+        <nuxt-link to="/donation"><li>Support</li></nuxt-link>
+        <a href="https://drive.google.com/file/d/1rdfeRdaJCauEMtEggO5cT1-mZpeYQKfI" target="_blank"><li>CV<i class="ri-external-link-line"></i></li></a>
+      </ul>
+    </section>
+    <section class="intro-content">
+      <section class="intro-content-follow">
+        <div class="section-title">
+          <p><i class="ri-heart-add-fill"></i>Follow along</p>
+        </div>
+        <div>
+          <ul>
+            <li>
+              <a href="https://twitter.com/iamtonyhe" target="_blank">
+                <div>
+                  <div><i class="ri-twitter-fill"></i></div>
+                </div>
+                <div><p>@iamtonyhe</p></div>
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/TonyHLP" target="_blank">
+                <div class="fb">
+                  <div><i class="ri-telegram-line"></i></div>
+                </div>
+                <div><p>@TonyHLP</p></div>
+              </a>
+            </li>
+            <li>
+              <a href="http://wpa.qq.com/msgrd?v=3&uin=36624065&site=qq&menu=yes" target="_blank">
+                <div class="ins">
+                  <div><i class="ri-qq-line"></i></div>
+                </div>
+                <div><p>@36624065</p></div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.zhihu.com/people/helipengtony"
+                target="_blank"
+              >
+                <div>
+                  <div><i class="ri-zhihu-line"></i></div>
+                </div>
+                <div><p>@helipengtony</p></div>
+              </a>
+            </li>
+            <li>
+              <a href="https://steamcommunity.com/id/helipeng" target="_blank">
+                <div class="steam">
+                  <div><i class="ri-steam-fill"></i></div>
+                </div>
+                <div><p>@helipeng</p></div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="intro-content-timeline">
+        <div class="section-title">
+          <p><i class="ri-flag-line"></i>Highlights</p>
+        </div>
+        <div>
+          <p>
+            Hi there, here's a few pieces of information that will help you getting to know about me. Talk to me if you have any questions or suggestions.
+          </p>
+          <ul>
+            <li>
+              A high school graduate from
+              <a href="http://cdshishi.net" target="_blank"
+                >SHISHI High School</a
+              >, Chengdu, Sichuan, China
+            </li>
+            <li>
+              Prospective student at the 🏫
+              <a href="https://uwaterloo.ca" target="_blank"
+                >University of Waterloo</a
+              >, 2020 entry,
+              <a
+                href="https://uwaterloo.ca/future-students/programs/mathematics"
+                target="_blank"
+                >Mathematics Honours</a
+              >
+            </li>
+            <li>
+              Interested in changing the world, currently digging in the field
+              of 🖥 <b>Computer Science</b>
+            </li>
+            <li>
+              Addicted to "Dope Tech" including Digital products, Algorithms,
+              Electric cars, Rockets, Spaceships and Robots
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="intro-content-github">
+        <div class="section-title">
+          <p><i class="ri-github-fill"></i>Projects</p>
+        </div>
+        <div>
+          <p>
+            Most of my projects are open-srouce, check them out through the
+            following link. File an issue whenever needed, pull requests are
+            always welcomed.
+          </p>
+        </div>
+        <div class="section-card">
+          <div>
+            <a href="https://github.com/helipengtony" target="_blank"
+              ><p>Github.com/HelipengTony</p></a
+            >
+          </div>
+          <div><i class="ri-arrow-right-circle-fill"></i></div>
+        </div>
+      </section>
+      <section class="intro-content-formal">
+        <div class="section-title">
+          <p><i class="ri-briefcase-3-fill"></i>Contact me</p>
+        </div>
+        <div>
+          <p>
+            If you want to have a formal talk or have some serious issues that
+            must be discussed, please contact me through the following ways
+          </p>
+          <ul>
+            <li><b>Email:</b> tony.hlp@hotmail.com</li>
+            <li><b>Wechat:</b> helipeng_tony</li>
+          </ul>
+        </div>
+      </section>
+      <section class="intro-footer">
+        <p>
+          &copy;2018-2020 TonyHe · <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL-v3.0</a> · Powered by
+          <a href="https://nuxtjs.org" target="_blank">Nuxt.js</a>
+        </p>
+      </section>
+    </section>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Vue } from 'nuxt-property-decorator'
 
-// import header-top
-import headerTop from '../components/top.vue'
-
-// import infinite loading feature
-import MugenScroll from 'vue-mugen-scroll'
-
-// import jQuery feature
-import $ from 'jquery'
-
-// imort hightlight.js feature and stylesheet
-import hljs from 'highlight.js'
-import 'highlight.js/styles/rainbow.css'
-
-// highlightjs 初始化函数
-const highlightCode = (): void => {
-  const preEl: any = document.querySelectorAll('pre')
-  preEl.forEach((el: any) => {
-    hljs.highlightBlock(el)
-  })
-}
-
-@Component({
-  components: {
-    headerTop,
-    MugenScroll
-  }
-})
 export default class Index extends Vue {
-  // Data 数据
-  posts: any[] = []
-  posts_id_sticky: string = '0'
-  cates: any[] = []
-  tages: any[] = []
-  loading: boolean = true
-  loading_cates: boolean = true
-  loading_tages: boolean = true
-  errored: boolean = true
-  loading_css: string = ''
-  version: string = '&categories_exclude=5,2,74'
-  previewPost: number = 0
-  previewPostOpened: number = 0
-  previewContent: string = ''
-  previewClass: string = ''
-  previewClose: number = 0
-  loading_first: boolean = false
-  loading_end: boolean = false
-  notice = {
-    visible: false
-  } as {
-    visible: boolean
-  }
-  lang: string = 'zh-CN'
-  listLoading: any = {}
-  paged: number = 1
-  pagedLoading: boolean = false
-
-  //头部信息
   head() {
     return {
       title: 'TonyHe - Just A Poor Lifesinger',
@@ -354,168 +178,6 @@ export default class Index extends Vue {
         }
       ]
     }
-  }
-
-  // 挂载函数
-  mounted() {
-    highlightCode()
-    // 获取标签
-    this.$axios
-      .get(
-        'https://blog.ouorz.com/wp-json/wp/v2/tags?orderby=count&order=desc&per_page=15'
-      )
-      .then((response: { data: any }) => {
-        this.tages = response.data
-      })
-      .finally((): void => {
-        this.loading_cates = false
-        let _this: any = this
-        setTimeout(() => {
-          _this.loading_tages = false
-        }, 500)
-      })
-      .catch((): void => {
-        this.errored = false
-      })
-
-    //判断 cookie 说明阅读
-    if (parseInt((this as any).cookie.get('ouorz_read_cookie')) !== 1) {
-      this.notice.visible = true
-    }
-
-    //获取文章列表
-    this.$axios
-      .get(
-        'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=1&per_page=10' +
-          this.version
-      )
-      .then((res_sticky: { data: any }) => {
-        this.posts = res_sticky.data
-
-        //获取顶置文章 IDs 以在获取其余文章时排除
-        let postsLength: number = this.posts.length
-        for (var s = 0; s < postsLength; ++s) {
-          this.posts_id_sticky += ',' + this.posts[s].id
-        }
-
-        this.$axios
-          .get(
-            'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=0&per_page=10&exclude=' +
-              this.posts_id_sticky +
-              this.version
-          )
-          .then((res_normal: { data: any }) => {
-            //拼接其余文章
-            this.posts = this.posts.concat(res_normal.data)
-          })
-      })
-      .catch((): void => {
-        this.errored = false
-      })
-      .finally((): void => {
-        this.loading = false
-        this.loading_first = true
-        this.paged = 2 //加载完1页后累加页数
-      })
-  }
-
-  //加载下一页文章列表
-  new_page(): void {
-    //语言包匹配
-    if (this.$i18n.locale == 'zh-CN') {
-      this.listLoading = {
-        loading: '加载中',
-        list: '文章列表',
-        all: '全部文章'
-      }
-    } else {
-      this.listLoading = {
-        loading: 'Loading',
-        list: 'Posts List',
-        all: 'All Posts'
-      }
-    }
-    if (!this.pagedLoading) {
-      this.pagedLoading = true
-      $('#view-text').html('-&nbsp;' + this.listLoading.loading + '&nbsp;-')
-      this.$axios
-        .get(
-          'https://blog.ouorz.com/wp-json/wp/v2/posts?sticky=0&exclude=' +
-            this.posts_id_sticky +
-            '&per_page=10&page=' +
-            this.paged +
-            this.version
-        )
-        .then((response: { data: any }) => {
-          if (response.data.length !== 0) {
-            //判断是否最后一页
-            $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
-            this.posts.push.apply(this.posts, response.data) //拼接在上一页之后
-            this.paged += 1
-          } else {
-            $('#view-text').html('-&nbsp;' + this.listLoading.list + '&nbsp;-')
-            this.loading_first = false
-            this.loading_end = true
-          }
-          this.pagedLoading = false
-        })
-        .catch(() => {
-          $('#view-text').html('-&nbsp;' + this.listLoading.all + '&nbsp;-')
-          this.paged = 1
-          this.loading_first = false
-          this.loading_end = true
-        })
-    }
-  }
-  // 文章内容快速预览
-  preview(postId: number): void {
-    $('#btn' + this.previewPost).html('全文速览') //以防未收起上个预览，更改上个预览按钮
-    this.previewPost = postId //准备预览文章 ID
-    this.$axios
-      .get('https://blog.ouorz.com/wp-json/wp/v2/posts/' + postId)
-      .then(response => {
-        this.previewPostOpened = postId //正在预览文章 ID
-        if (response.data.length !== 0) {
-          //判断是否最后一页
-          $('#btn' + postId).html('收起预览') //开始预览，更改按钮
-          this.previewContent = response.data.content.rendered //加载文章内容
-          this.previewClass = 'preview-p' //更改预览内容块 class
-          window.location.hash = '#div' + postId
-        } else {
-          this.previewContent = '这里什么都没有...' //无内容默认展示
-          this.previewClass = 'preview-p' //更改预览内容区块 class
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-  // 关闭文章内容快速预览
-  closePreview(postId: number): void {
-    $('#btn' + postId).html('全文速览') //收起预览，更改按钮
-    this.previewClose = postId //收起预览的文章 ID
-    this.previewContent = '' //初始化预览内容
-    this.previewPost = 0 //初始化准备预览文章 ID
-    this.previewPostOpened = 0 //初始化正在预览文章 ID
-    this.previewClass = '' //初始化预览内容块 class
-    this.previewClose = 0 //初始化已收起预览的文章 ID
-  }
-  // 关闭 cookies 使用提示
-  discard_notice(): void {
-    ;(this as any).cookie.set('ouorz_read_cookie', 1)
-    this.notice.visible = false
-  }
-  grayMode(): void {
-    if ($('html').attr('class') !== 'gray-mode') {
-      $('html').attr('class', 'gray-mode')
-    } else {
-      $('html').attr('class', '')
-    }
-  }
-  // 监听页面变化
-  updated() {
-    // 页面内容变化时执行代码渲染
-    highlightCode()
   }
 }
 </script>
