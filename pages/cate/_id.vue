@@ -16,7 +16,7 @@
                 ></nuxt-link>
               </div>
               <div>
-                <nuxt-link to="/">
+                <nuxt-link to="/blog">
                   <b-button
                     variant="primary"
                     :class="

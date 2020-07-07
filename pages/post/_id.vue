@@ -54,7 +54,7 @@
             <!-- 文章顶部 -->
             <div class="article-header">
               <span class="badge badge-pill badge-danger single-badge">
-                <nuxt-link to="/" style="text-decoration:none">
+                <nuxt-link to="/blog" style="text-decoration:none">
                   <i class="ri-article-line"></i>
                   {{ $t('lang.post.des') }}
                 </nuxt-link>
