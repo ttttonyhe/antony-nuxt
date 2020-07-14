@@ -1,7 +1,10 @@
 <template>
   <client-only>
     <div id="index">
-      <div class="grid grid-centered" style="max-width: 660px;padding: 0px 20px;margin-top: 80px">
+      <div
+        class="grid grid-centered"
+        style="max-width: 660px;padding: 0px 20px;margin-top: 80px"
+      >
         <div class="grid-cell" id="grid-cell">
           <!-- 顶部标题与分类区块 -->
           <template v-if="!loading_tages">
@@ -30,23 +33,35 @@
               :title="$t('lang.index.cookieText')"
             >
               <div>{{ $t('lang.index.cookieText') }}</div>
-              <a @click="discard_notice()" class="cookie-click">{{ $t('lang.index.cookie') }}</a>
+              <a @click="discard_notice()" class="cookie-click">{{
+                $t('lang.index.cookie')
+              }}</a>
             </li>
             <!-- cookies 使用提示 -->
 
             <li
-              :class="'article-list-item reveal index-post-list ' + (post.sticky ? 'sticky-one' : '')"
-              v-for="(post,index) in posts"
+              :class="
+                'article-list-item reveal index-post-list ' +
+                  (post.sticky ? 'sticky-one' : '')
+              "
+              v-for="(post, index) in posts"
               :key="'indexPost' + post.id"
               :id="'div' + post.id"
             >
               <!-- 不包含特色图像文章 -->
               <template
-                v-if="post.post_img.url == false && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
+                v-if="
+                  post.post_img.url == false &&
+                    post.post_categories[0].term_id !== 58 &&
+                    !post.post_metas.status
+                "
               >
                 <div class="list-show-div">
                   <!-- 置顶文章提示 -->
-                  <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
+                  <em
+                    class="article-list-type1 sticky-one-tag"
+                    v-if="post.sticky"
+                  >
                     <i class="ri-arrow-up-circle-line"></i>
                     {{ $t('lang.index.atTop') }}
                   </em>
@@ -54,7 +69,15 @@
                   <em
                     v-if="post.post_categories[0].term_id === 7"
                     class="article-list-type1"
-                    v-html="'<b>' + post.post_categories[0].name + '</b>' +  ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : '技术')"
+                    v-html="
+                      '<b>' +
+                        post.post_categories[0].name +
+                        '</b>' +
+                        ' | ' +
+                        (post.post_metas.tag_name
+                          ? post.post_metas.tag_name.toUpperCase()
+                          : '技术')
+                    "
                   ></em>
                   <div v-else class="article-list-tags">
                     <nuxt-link
@@ -64,27 +87,38 @@
                       v-html="post.post_categories[0].name"
                     ></nuxt-link>
                     <template v-if="!post.post_tags.length">
-                      <a style="margin-left: 5px;">{{ $t('lang.index.noneTag') }}</a>
+                      <a style="margin-left: 5px;">{{
+                        $t('lang.index.noneTag')
+                      }}</a>
                     </template>
                     <template>
                       <a
-                        v-for="(tag,index) in post.post_tags.slice(0,2)"
-                        :href="tag.url"
+                        v-for="(tag, index) in post.post_tags.slice(0, 2)"
                         v-html="tag.name"
                         :key="'indexPostTag' + tag.id"
                         style="margin-left: 5px;"
+                        :href="'/tag/' + tag.id"
                       ></a>
                     </template>
                   </div>
                   <button
                     type="button"
                     class="list-show-btn"
-                    @click="post.id == previewPostOpened ? closePreview(post.id) : preview(post.id)"
-                    :id="'btn'+post.id"
-                  >{{ $t('lang.index.quickView') }}</button>
+                    @click="
+                      post.id == previewPostOpened
+                        ? closePreview(post.id)
+                        : preview(post.id)
+                    "
+                    :id="'btn' + post.id"
+                  >
+                    {{ $t('lang.index.quickView') }}
+                  </button>
                 </div>
 
-                <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
+                <nuxt-link
+                  :to="'/post/' + post.id"
+                  style="text-decoration: none;"
+                >
                   <h5 v-html="post.title.rendered"></h5>
                 </nuxt-link>
 
@@ -92,14 +126,18 @@
                 <!-- previewClose 已关闭的速览显示描述内容,previewPost 准备开始速览显示加载圆圈,previewPostOpened 开启的速览显示全文内容 -->
                 <template v-if="previewClose !== post.id">
                   <p
-                    v-if="previewPost == post.id && previewPostOpened !== post.id"
+                    v-if="
+                      previewPost == post.id && previewPostOpened !== post.id
+                    "
                     class="article-list-content"
                     :id="post.id"
                   >
                     <b-spinner variant="secondary" type="grow"></b-spinner>
                   </p>
                   <p
-                    v-else-if="previewPostOpened == post.id && previewPost == post.id"
+                    v-else-if="
+                      previewPostOpened == post.id && previewPost == post.id
+                    "
                     :id="post.id"
                     :class="'article-list-content ' + previewClass"
                     v-html="previewContent"
@@ -126,7 +164,8 @@
                   <span
                     v-if="post.post_metas.views !== ''"
                     class="article-list-minutes"
-                  >{{ post.post_metas.views }}&nbsp;Views</span>
+                    >{{ post.post_metas.views }}&nbsp;Views</span
+                  >
                   <span v-else class="article-list-minutes">0&nbsp;Views</span>
                 </div>
               </template>
@@ -134,34 +173,58 @@
 
               <!-- 包含特色图像文章 -->
               <template
-                v-else-if="post.post_img.url && post.post_categories[0].term_id !== 58 && !post.post_metas.status"
+                v-else-if="
+                  post.post_img.url &&
+                    post.post_categories[0].term_id !== 58 &&
+                    !post.post_metas.status
+                "
               >
                 <div class="article-list-img-else">
                   <div
                     v-if="post.post_categories[0].term_id !== 4"
                     class="article-list-img"
-                    :style="'background-image:url(' + post.post_img.url +')'"
+                    :style="'background-image:url(' + post.post_img.url + ')'"
                   ></div>
                   <div
-                    :class="post.post_categories[0].term_id == 4 ? '' : 'article-list-img-right'"
+                    :class="
+                      post.post_categories[0].term_id == 4
+                        ? ''
+                        : 'article-list-img-right'
+                    "
                   >
                     <template v-if="post.post_categories[0].term_id == 4">
                       <div>
                         <div class="buy-list-item">
                           <div
-                            :class="post.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
+                            :class="
+                              post.post_metas.fineTool.itemImgBorder == 'border'
+                                ? 'buy-left-img'
+                                : 'buy-left-img-noborder'
+                            "
                           >
-                            <img :src="post.post_img.url" loading="lazy" :alt="post.post_metas.fineTool.itemName" />
+                            <img
+                              :src="post.post_img.url"
+                              loading="lazy"
+                              :alt="post.post_metas.fineTool.itemName"
+                            />
                           </div>
                           <div class="buy-right-info">
                             <div>
-                              <a :href="post.post_metas.fineTool.itemLink" target="_blank">
-                                <h3 v-html="post.post_metas.fineTool.itemName"></h3>
+                              <a
+                                :href="post.post_metas.fineTool.itemLink"
+                                target="_blank"
+                              >
+                                <h3
+                                  v-html="post.post_metas.fineTool.itemName"
+                                ></h3>
                               </a>
                               <p v-html="post.post_metas.fineTool.itemDes"></p>
                             </div>
                             <div>
-                              <a :href="post.post_metas.fineTool.itemLink" target="_blank">
+                              <a
+                                :href="post.post_metas.fineTool.itemLink"
+                                target="_blank"
+                              >
                                 {{ post.post_metas.fineTool.itemLinkName }}
                                 <span>
                                   <i class="ri-arrow-right-up-line"></i>
@@ -177,8 +240,14 @@
                       <template v-if="post.post_categories[0].term_id !== 4">
                         <div>
                           <!-- 置顶文章提示 -->
-                          <em class="article-list-type1 sticky-one-tag" v-if="post.sticky">
-                            <i class="czs-arrow-up-l" style="font-size: 14px;font-weight: 600;"></i>
+                          <em
+                            class="article-list-type1 sticky-one-tag"
+                            v-if="post.sticky"
+                          >
+                            <i
+                              class="czs-arrow-up-l"
+                              style="font-size: 14px;font-weight: 600;"
+                            ></i>
                             {{ $t('lang.index.atTop') }}
                           </em>
                           <!-- 置顶文章提示 -->
@@ -187,7 +256,12 @@
                             class="article-list-type1"
                           >
                             <b>{{ post.post_categories[0].name }}</b>
-                            {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                            {{
+                              ' | ' +
+                                (post.post_metas.tag_name
+                                  ? post.post_metas.tag_name.toUpperCase()
+                                  : $t('lang.index.noneTag'))
+                            }}
                           </em>
                           <nuxt-link
                             v-else
@@ -196,17 +270,28 @@
                             style="color: rgba(255, 152, 0, 0.83) !important;"
                           >
                             <b>{{ post.post_categories[0].name }}</b>
-                            {{ ' | ' + (post.post_metas.tag_name ? post.post_metas.tag_name.toUpperCase() : $t('lang.index.noneTag')) }}
+                            {{
+                              ' | ' +
+                                (post.post_metas.tag_name
+                                  ? post.post_metas.tag_name.toUpperCase()
+                                  : $t('lang.index.noneTag'))
+                            }}
                           </nuxt-link>
                         </div>
                       </template>
-                      <nuxt-link :to="'/post/' + post.id" style="text-decoration: none;">
+                      <nuxt-link
+                        :to="'/post/' + post.id"
+                        style="text-decoration: none;"
+                      >
                         <h5
                           v-html="post.title.rendered"
                           style="margin: 0px;padding: 0px;margin-top:15px"
                         ></h5>
                       </nuxt-link>
-                      <p v-html="post.post_excerpt.four.substr(0, 65) + '...'" :id="post.id"></p>
+                      <p
+                        v-html="post.post_excerpt.four.substr(0, 65) + '...'"
+                        :id="post.id"
+                      ></p>
                       <div class="article-list-footer">
                         <nuxt-link
                           v-if="post.post_categories[0].term_id == 4"
@@ -214,18 +299,25 @@
                           class="article-list-date"
                           v-html="post.post_categories[0].name"
                           style="margin:0px"
-                        >{{ post.post_categories[0].name }}</nuxt-link>
+                          >{{ post.post_categories[0].name }}</nuxt-link
+                        >
                         <span
                           class="article-list-divider"
                           v-if="post.post_categories[0].term_id == 4"
-                        >-</span>
-                        <span class="article-list-date">{{ post.post_date }}</span>
+                          >-</span
+                        >
+                        <span class="article-list-date">{{
+                          post.post_date
+                        }}</span>
                         <span class="article-list-divider">-</span>
                         <span
                           v-if="post.post_metas.views !== ''"
                           class="article-list-minutes"
-                        >{{ post.post_metas.views }}&nbsp;Views</span>
-                        <span v-else class="article-list-minutes">0&nbsp;Views</span>
+                          >{{ post.post_metas.views }}&nbsp;Views</span
+                        >
+                        <span v-else class="article-list-minutes"
+                          >0&nbsp;Views</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -235,22 +327,51 @@
 
               <!-- 状态类型文章 -->
               <template
-                v-else-if="post.post_categories[0].term_id === 58 || !!post.post_metas.status"
+                v-else-if="
+                  post.post_categories[0].term_id === 58 ||
+                    !!post.post_metas.status
+                "
               >
-                <h3 class="article-list-content article-status" v-html="post.title.rendered"></h3>
+                <h3
+                  class="article-list-content article-status"
+                  v-html="post.title.rendered"
+                ></h3>
                 <div class="article-list-footer">
+                  <span
+                    :class="
+                      'article-list-date ' +
+                        (post.post_metas.markCount ? 'mark-div' : '')
+                    "
+                    @click="addMark(index, post.id)"
+                    ><i
+                      :class="
+                        marking ? 'ri-heart-pulse-fill' : 'ri-heart-3-fill'
+                      "
+                    ></i>
+                    {{
+                      post.post_metas.markCount
+                        ? post.post_metas.markCount
+                        : '0'
+                    }}</span
+                  >
+                  <span class="article-list-divider">-</span>
                   <span class="article-list-date">{{ post.post_date }}</span>
                   <span class="article-list-divider">-</span>
-                  <span class="article-list-minutes">
-                    <i class="ri-contrast-2-line"></i>
-                    {{ $t('lang.index.mood') }} | {{ post.post_metas.status ? post.post_metas.status : $t('lang.index.noneMood') }}
-                  </span>
+                  <span
+                    class="article-list-minutes"
+                    v-html="
+                      post.post_metas.status
+                        ? post.post_metas.status
+                        : $t('lang.index.noneMood')
+                    "
+                  ></span>
                   <template v-if="post.id == 691">
                     <span class="article-list-divider">-</span>
                     <a
                       class="article-list-date gray-for-heroes"
                       @click="grayMode()"
-                    >{{ $t('lang.index.moodGray') }}</a>
+                      >{{ $t('lang.index.moodGray') }}</a
+                    >
                   </template>
                 </div>
               </template>
@@ -259,7 +380,10 @@
 
             <!-- 无限滚动占位内容 -->
             <mugen-scroll :handler="new_page" :should-handle="loading_first">
-              <li class="article-list-item reveal index-post-list bottom" v-if="!loading_end">
+              <li
+                class="article-list-item reveal index-post-list bottom"
+                v-if="!loading_end"
+              >
                 <div class="skeleton">
                   <div class="skeleton-head"></div>
                   <div class="skeleton-body">
@@ -335,6 +459,7 @@ export default class Index extends Vue {
   listLoading: any = {}
   paged: number = 1
   pagedLoading: boolean = false
+  marking: boolean = false
 
   //头部信息
   head() {
@@ -505,12 +630,28 @@ export default class Index extends Vue {
     ;(this as any).cookie.set('ouorz_read_cookie', 1)
     this.notice.visible = false
   }
+  // 黑白模式
   grayMode(): void {
     if ($('html').attr('class') !== 'gray-mode') {
       $('html').attr('class', 'gray-mode')
     } else {
       $('html').attr('class', '')
     }
+  }
+  // Mark 操作
+  addMark(index: number, id: number): void {
+    this.marking = true
+    this.$axios
+      .get('https://blog.ouorz.com/wp-json/tony/v1/mark/' + id)
+      .then(response => {
+        this.posts[
+          index
+        ].post_metas.markCount = response.data.markCountNow.toString()
+        this.marking = false
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
   // 监听页面变化
   updated() {
