@@ -11,13 +11,13 @@
               <div class="cate-nav">
                 <div>
                   <nuxt-link
-                    to="/blog"
+                    to="/"
                     class="top1 header-logo cate-name"
                     v-html="cate.name"
                   ></nuxt-link>
                 </div>
                 <div>
-                  <nuxt-link to="/blog">
+                  <nuxt-link to="/">
                     <b-button
                       variant="primary"
                       :class="

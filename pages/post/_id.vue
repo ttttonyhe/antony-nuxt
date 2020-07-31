@@ -54,7 +54,7 @@
             <!-- 文章顶部 -->
             <div class="article-header">
               <span class="badge badge-pill badge-danger single-badge">
-                <nuxt-link to="/blog" style="text-decoration:none">
+                <nuxt-link to="/" style="text-decoration:none">
                   <i class="ri-article-line"></i>
                   {{ $t('lang.post.des') }}
                 </nuxt-link>
@@ -162,7 +162,7 @@
               <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
               <iframe
                 id="article-comments-iframe"
-                :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + this.$route.params.id"
+                :src="'https://blog.ouorz.com/nexment/?pageKey=' + this.$route.params.id"
                 style="width: 100%;"
                 frameborder="0"
                 :scrolling="scrollAble ? 'yes' : 'no'"
@@ -198,7 +198,6 @@ const highlightCode = ():void => {
 // 与 iframe 通信获取评论列表高度
 function getCommentsHeight():void {
   // 强制设置同源
-  document.domain = 'ouorz.com'
   var iframe:any = document.getElementById('article-comments-iframe')
   var iwindow:any = iframe.contentWindow
   var idoc:any = iwindow.document
@@ -322,7 +321,6 @@ export default class Posts extends Vue {
     var content_offtop = $('.article-content').offset().top
     var content_height = $('.article-content').innerHeight()
 
-    document.domain = 'ouorz.com'
     var click = 0
     var reading_p = 0
 

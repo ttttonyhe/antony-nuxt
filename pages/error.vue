@@ -2,13 +2,13 @@
   <div id="header_info">
     <nav class="header-nav reveal error-page">
       <nuxt-link
-        to="/blog"
+        to="/"
         style="text-decoration:none;"
         class="header-logo"
         title="404 Not Found"
       >404 :)</nuxt-link>
       <p class="lead" style="margin-top: 0px;display:block">抱歉，你请求的内容消失嘞</p>
-      <nuxt-link to="/blog">
+      <nuxt-link to="/">
         <b-button variant="primary" class="back-home">Back to Home | 返回首页</b-button>
       </nuxt-link>
     </nav>

@@ -7,10 +7,10 @@
           <nav class="header-nav reveal cate-top">
             <div class="cate-nav">
               <div>
-                <nuxt-link to="/blog" class="top1 header-logo cate-name">{{ $t('lang.music.title') }}</nuxt-link>
+                <nuxt-link to="/" class="top1 header-logo cate-name">{{ $t('lang.music.title') }}</nuxt-link>
               </div>
               <div>
-                <nuxt-link to="/blog">
+                <nuxt-link to="/">
                   <b-button variant="primary" class="cate-back">
                     <i class="ri-arrow-left-line"></i>
                     {{ $t('lang.cate.backHome') }}

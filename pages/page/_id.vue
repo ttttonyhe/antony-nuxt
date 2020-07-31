@@ -19,7 +19,7 @@
                 <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
                 <iframe
                   id="article-comments-iframe"
-                  :src="'https://blog.ouorz.com/wp-content/themes/peg/comm/index.html?id=' + $route.params.id"
+                  :src="'https://blog.ouorz.com/nexment/?pageKey=' + $route.params.id"
                   style="width: 100%;"
                   frameborder="0"
                   :scrolling="scrollAble ? 'yes' : 'no'"
@@ -39,7 +39,6 @@ import $ from 'jquery'
 
 // 与 iframe 通信获取评论列表高度
 function getCommentsHeight(): void {
-  document.domain = 'ouorz.com'
   var iframe: any = document.getElementById('article-comments-iframe')
   var iwindow: any = iframe.contentWindow
   var idoc: any = iwindow.document
@@ -107,7 +106,6 @@ export default class Page extends Vue {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/comment.html' + '?from=front')
 
-    document.domain = 'ouorz.com'
     var click = 0 //这回真的操作 10 次确保操作成功哈哈哈哈
     // 监听滑动，接近底部触发高度获取请求
     $(window).scroll(function() {
