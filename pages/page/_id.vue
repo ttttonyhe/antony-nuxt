@@ -10,20 +10,29 @@
                 <div class="article-list-footer page-footer">
                   <span class="article-list-date">{{ page.date }}</span>
                   <span class="article-list-divider">/</span>
-                  <span class="article-list-minutes">{{ page.views }}&nbsp;Views</span>
+                  <span class="article-list-minutes"
+                    >{{ page.views }}&nbsp;Views</span
+                  >
                 </div>
                 <div class="single-line"></div>
               </header>
               <div class="article-content" v-html="page.content"></div>
               <div class="article-comments" id="article-comments">
-                <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
-                <iframe
-                  id="article-comments-iframe"
-                  :src="'https://blog.ouorz.com/nexment/?pageKey=' + $route.params.id"
-                  style="width: 100%;"
-                  frameborder="0"
-                  :scrolling="scrollAble ? 'yes' : 'no'"
-                ></iframe>
+                <nexment-container
+                  :config="{
+                    pageKey: $route.params.id,
+                    enableLinkInput: true,
+                    leancloud: {
+                      appId: 'NM8cdTVi8wqCmbeLPmiKCu79-gzGzoHsz',
+                      appKey: 'p31o8YmzTfjBY68W2Y9gH3kb',
+                      serverURL: 'https://ouorz-nexment.ouorz.com'
+                    },
+                    admin: {
+                      name: 'TonyHe',
+                      email: 'he@holptech.com'
+                    }
+                  }"
+                ></nexment-container>
               </div>
             </div>
           </article>
@@ -36,14 +45,6 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import $ from 'jquery'
-
-// 与 iframe 通信获取评论列表高度
-function getCommentsHeight(): void {
-  var iframe: any = document.getElementById('article-comments-iframe')
-  var iwindow: any = iframe.contentWindow
-  var idoc: any = iwindow.document
-  iframe.style.height = idoc.body.offsetHeight + 'px'
-}
 
 interface pageData {
   posts: any[]
@@ -105,26 +106,12 @@ export default class Page extends Vue {
   mounted() {
     // 手动访问一遍以增加访问量 2333
     this.$axios.get('https://blog.ouorz.com/comment.html' + '?from=front')
-
-    var click = 0 //这回真的操作 10 次确保操作成功哈哈哈哈
-    // 监听滑动，接近底部触发高度获取请求
-    $(window).scroll(function() {
-      var scrollTop = $(window).scrollTop()
-      var scrollHeight = $('div.footer.reveal').offset().top - 1500
-      if (scrollTop >= scrollHeight) {
-        if (click <= 10) {
-          getCommentsHeight()
-          click++
-        }
-      }
-    })
   }
   controlScroll(): void {
     this.scrollAble = this.scrollAble ? false : true
     this.scrollAbleHtml = this.scrollAble
       ? '关闭列表滑动 <i class="ri-pause-line"></i>'
       : '加载全部评论 <i class="ri-play-line"></i>'
-    getCommentsHeight()
   }
 }
 </script>

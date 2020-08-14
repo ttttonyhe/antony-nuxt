@@ -54,6 +54,11 @@ module.exports = {
       src: '@/plugins/ga.js',
       ssr: false,
       mode: 'client'
+    },
+    {
+      src: '@/plugins/nexment.ts',
+      ssr: false,
+      mode: 'client'
     }
   ],
   /*

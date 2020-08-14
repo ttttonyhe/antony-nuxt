@@ -3,36 +3,62 @@
     <div class="grid grid-centered">
       <div class="grid-cell" id="grid-cell">
         <!-- 左侧区块 -->
-        <div class="single-left" :style="(exist_index ? '' : 'margin-top:-15px')" v-if="!loading">
+        <div
+          class="single-left"
+          :style="exist_index ? '' : 'margin-top:-15px'"
+          v-if="!loading"
+        >
           <articleIndex @exist_index="existIndex"></articleIndex>
           <div>
             <div
               class="index-div-next"
-              v-if="(!!post_prenext.prev && post_prenext.prev[0] !== null && post_prenext.prev[2] !== 2 && post_prenext.prev[2] !== 5 && post_prenext.prev[2] !== 58)"
+              v-if="
+                !!post_prenext.prev &&
+                  post_prenext.prev[0] !== null &&
+                  post_prenext.prev[2] !== 2 &&
+                  post_prenext.prev[2] !== 5 &&
+                  post_prenext.prev[2] !== 58
+              "
             >
               <h4>
                 <i class="czs-hande-vertical"></i>
                 {{ $t('lang.post.prev') }}
               </h4>
               <p>
-                <a :href="'/post/' + post_prenext.prev[0]" v-html="post_prenext.prev[1]"></a>
+                <a
+                  :href="'/post/' + post_prenext.prev[0]"
+                  v-html="post_prenext.prev[1]"
+                ></a>
               </p>
             </div>
             <div
               class="index-div-next"
-              v-if="(!!post_prenext.next && post_prenext.next[0] !== null && post_prenext.next[2] !== 2 && post_prenext.next[2] !== 5 && post_prenext.next[2] !== 58)"
+              v-if="
+                !!post_prenext.next &&
+                  post_prenext.next[0] !== null &&
+                  post_prenext.next[2] !== 2 &&
+                  post_prenext.next[2] !== 5 &&
+                  post_prenext.next[2] !== 58
+              "
             >
               <h4>
                 <i class="czs-hand-horizontal"></i>
                 {{ $t('lang.post.next') }}
               </h4>
               <p>
-                <a :href="'/post/' + post_prenext.next[0]" v-html="post_prenext.next[1]"></a>
+                <a
+                  :href="'/post/' + post_prenext.next[0]"
+                  v-html="post_prenext.next[1]"
+                ></a>
               </p>
             </div>
             <div
               class="index-div-next single-donate"
-              v-else-if="!!post_prenext.next && post_prenext.next[0] !== null && post_prenext.next[2] !== 74"
+              v-else-if="
+                !!post_prenext.next &&
+                  post_prenext.next[0] !== null &&
+                  post_prenext.next[2] !== 74
+              "
             >
               <nuxt-link class="single-donate-a" to="/donation">
                 {{ $t('lang.post.donation') }}
@@ -59,12 +85,13 @@
                   {{ $t('lang.post.des') }}
                 </nuxt-link>
               </span>
-              <span class="badge badge-pill badge-danger single-badge" style="margin-left: 10px;">
-                <nuxt-link
-                  :to="cate_url"
-                  class="post-header"
-                  v-html="cate"
-                >{{ $t('lang.post.cate') }}</nuxt-link>
+              <span
+                class="badge badge-pill badge-danger single-badge"
+                style="margin-left: 10px;"
+              >
+                <nuxt-link :to="cate_url" class="post-header" v-html="cate">{{
+                  $t('lang.post.cate')
+                }}</nuxt-link>
               </span>
               <span
                 class="badge badge-pill badge-danger single-badge"
@@ -76,7 +103,8 @@
                   :to="cate_url"
                   class="post-header"
                   v-html="posts.post_metas.reading.time_required + ' mins'"
-                >{{ $t('lang.post.readingTime') }}</nuxt-link>
+                  >{{ $t('lang.post.readingTime') }}</nuxt-link
+                >
               </span>
               <!-- 文章标题 -->
               <h2 class="single-h2" v-html="posts.post_metas.title"></h2>
@@ -86,11 +114,13 @@
               <div class="article-list-footer">
                 <span class="article-list-date">{{ posts.post_date }}</span>
                 <span class="article-list-divider">/</span>
-                <span class="article-list-minutes">{{ posts.post_metas.views }}&nbsp;Views</span>
+                <span class="article-list-minutes"
+                  >{{ posts.post_metas.views }}&nbsp;Views</span
+                >
                 <span class="article-list-divider">/</span>
-                <span
-                  class="article-list-minutes"
-                >{{ posts.post_metas.reading.word_count}} &nbsp;Words</span>
+                <span class="article-list-minutes"
+                  >{{ posts.post_metas.reading.word_count }} &nbsp;Words</span
+                >
               </div>
               <!-- 底部信息 -->
 
@@ -102,13 +132,29 @@
             <div class="article-content" v-html="posts.content.rendered"></div>
             <!-- 文章内容 -->
 
-            <template v-if="posts.post_categories[0].term_id == 4 && posts.post_metas.fineTool">
+            <template
+              v-if="
+                posts.post_categories[0].term_id == 4 &&
+                  posts.post_metas.fineTool
+              "
+            >
               <div>
-                <div class="buy-list-item" style="margin: 60px 10px -35px 10px;">
+                <div
+                  class="buy-list-item"
+                  style="margin: 60px 10px -35px 10px;"
+                >
                   <div
-                    :class="posts.post_metas.fineTool.itemImgBorder == 'border' ? 'buy-left-img' : 'buy-left-img-noborder'"
+                    :class="
+                      posts.post_metas.fineTool.itemImgBorder == 'border'
+                        ? 'buy-left-img'
+                        : 'buy-left-img-noborder'
+                    "
                   >
-                    <img :src="posts.post_img.url" loading="lazy" :alt="posts.post_metas.fineTool.itemName" />
+                    <img
+                      :src="posts.post_img.url"
+                      loading="lazy"
+                      :alt="posts.post_metas.fineTool.itemName"
+                    />
                   </div>
                   <div class="buy-right-info">
                     <div>
@@ -140,12 +186,13 @@
                 >
                   <a
                     style="background-color: #e7f3ff;color: #2f94fe;padding: 1px 12px 1px;border-radius: 4px;font-size: .9rem;"
-                  >{{ $t('lang.post.tag') }}</a>
+                    >{{ $t('lang.post.tag') }}</a
+                  >
                 </li>
                 <li
                   class="cat-real"
                   style="display: inline-block;"
-                  v-for="(tag,index) in post_tags"
+                  v-for="(tag, index) in post_tags"
                   :key="'postTag' + tag.id"
                 >
                   <nuxt-link
@@ -158,15 +205,26 @@
             </div>
             <!-- 文章标签 -->
             <!-- 文章评论 -->
-            <div class="article-comments" id="article-comments" style="margin-top:50px">
-              <div class="comments-scroll" @click="controlScroll()" v-html="scrollAbleHtml"></div>
-              <iframe
-                id="article-comments-iframe"
-                :src="'https://blog.ouorz.com/nexment/?pageKey=' + this.$route.params.id"
-                style="width: 100%;"
-                frameborder="0"
-                :scrolling="scrollAble ? 'yes' : 'no'"
-              ></iframe>
+            <div
+              class="article-comments"
+              id="article-comments"
+              style="margin-top:50px"
+            >
+              <nexment-container
+                :config="{
+                  pageKey: $route.params.id,
+                  enableLinkInput: true,
+                  leancloud: {
+                    appId: 'NM8cdTVi8wqCmbeLPmiKCu79-gzGzoHsz',
+                    appKey: 'p31o8YmzTfjBY68W2Y9gH3kb',
+                    serverURL: 'https://ouorz-nexment.ouorz.com'
+                  },
+                  admin: {
+                    name: 'TonyHe',
+                    email: 'he@holptech.com'
+                  }
+                }"
+              ></nexment-container>
             </div>
             <!-- 文章评论 -->
           </div>
@@ -188,20 +246,11 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/rainbow.css'
 
 // highlightjs 初始化函数
-const highlightCode = ():void => {
-  const preEl:any = document.querySelectorAll('pre')
-  preEl.forEach((el:any) => {
+const highlightCode = (): void => {
+  const preEl: any = document.querySelectorAll('pre')
+  preEl.forEach((el: any) => {
     hljs.highlightBlock(el)
   })
-}
-
-// 与 iframe 通信获取评论列表高度
-function getCommentsHeight():void {
-  // 强制设置同源
-  var iframe:any = document.getElementById('article-comments-iframe')
-  var iwindow:any = iframe.contentWindow
-  var idoc:any = iwindow.document
-  iframe.style.height = idoc.body.offsetHeight + 'px'
 }
 
 interface postData {
@@ -305,15 +354,9 @@ export default class Posts extends Vue {
     highlightCode()
 
     // 手动访问一遍以增加访问量 2333
-    this.$axios.get('https://blog.ouorz.com/post/' + this.$route.params.id + '?from=front')
-  }
-
-  controlScroll(): void {
-    this.scrollAble = this.scrollAble ? false : true
-    this.scrollAbleHtml = this.scrollAble
-      ? '关闭滑动 <i class="ri-pause-line"></i>'
-      : '开启滑动 <i class="ri-play-line"></i>'
-    getCommentsHeight()
+    this.$axios.get(
+      'https://blog.ouorz.com/post/' + this.$route.params.id + '?from=front'
+    )
   }
 
   createReadingBar(): void {
@@ -321,7 +364,6 @@ export default class Posts extends Vue {
     var content_offtop = $('.article-content').offset().top
     var content_height = $('.article-content').innerHeight()
 
-    var click = 0
     var reading_p = 0
 
     // 监听滑动
@@ -342,26 +384,6 @@ export default class Posts extends Vue {
         reading_p = 0
       }
       $('.reading-bar').css('width', reading_p + '%')
-
-      /* 
-          评论区监听事件
-          mounted 中执行会被在文章目录组件中对于监听的重置污染
-        */
-      // 监听滑动，接近底部触发高度获取请求
-      $(window).scroll(function() {
-        //仅在文章页监听
-        if (window.location.pathname.split('/')[1] == 'post') {
-          var scrollTop = $(window).scrollTop()
-          var scrollHeight = $('div.footer.reveal').offset().top - 1500
-          if (scrollTop >= scrollHeight) {
-            if (click == 0) {
-              getCommentsHeight()
-              click++
-            }
-          }
-        }
-      })
-      /* 评论区监听事件 */
     })
   }
 
@@ -376,6 +398,5 @@ export default class Posts extends Vue {
     // 页面内容变化时执行代码渲染
     highlightCode()
   }
-
 }
 </script>
