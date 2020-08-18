@@ -25,7 +25,7 @@
     "https-proxy-agent": "^2.2.3",
     "jquery": "^3.5.0",
     "minimist": "^1.2.3",
-    "nexment-vue": "^0.0.14",
+    "nexment-vue": "^0.0.143",
     "nprogress": "^0.2.0",
     "nuxt": "^2.0.0",
     "nuxt-precompress": "^0.4.1",
