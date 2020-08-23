@@ -6259,10 +6259,10 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha1-rCetpmFn+ohJpq3dg39rGJrSCBw=
 
-nexment-vue@^0.0.143:
-  version "0.0.143"
-  resolved "https://registry.npmjs.org/nexment-vue/-/nexment-vue-0.0.143.tgz#fb4167e6f75dc89199e90aaab22d5002c6617668"
-  integrity sha512-EiBprknmMPmmVLjD71BjiJUWLMTSn4CCglMQdsiiFAw/Imz1X20CyoSfS+gzx7w/Sm5X+TrmwSYGBGaOn28XaQ==
+nexment-vue@^0.0.144:
+  version "0.0.144"
+  resolved "https://registry.npmjs.org/nexment-vue/-/nexment-vue-0.0.144.tgz#f672f888a99844b8f5416b914dfd045c34219070"
+  integrity sha512-2GJc/4XaQzWsaC/E0tmuu19rJRMv6pEhvElpXaKm7b2AyGOLbhP4bK4OAocSt46x5iYwNDZFRNV12lejEdDGXA==
   dependencies:
     vue "^2.6.11"
 
