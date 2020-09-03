@@ -1,9 +1,22 @@
 /*
     name: 浅色样式表
     author: TonyHe
-    update: 22-2-2020
+    last update: 03-09-2020
 */
 
+// Global variables
+$content-font-family: Product Sans, -apple-system, BlinkMacSystemFont, Segoe UI,
+  Helvetica, Arial, pingfang sc, source han sans sc, noto sans cjk sc,
+  sarasa gothic sc, microsoft yahei, sans-serif, Apple Color Emoji,
+  Segoe UI Emoji;
+$title-font-family: Product Sans, open sans, -apple-system, BlinkMacSystemFont,
+  Segoe UI, Helvetica, Arial, pingfang sc, source han sans sc, noto sans cjk sc,
+  sarasa gothic sc, microsoft yahei, sans-serif, Apple Color Emoji,
+  Segoe UI Emoji;
+$monospace-font-family: 'Fira Code', SF Mono, Consolas, Monaco, 'Ubuntu Mono',
+  monospace;
+
+// Global font face
 @font-face {
   font-family: 'Product Sans';
   src: url('../../static/font/product-sans.ttf');
@@ -29,7 +42,7 @@
 }
 
 html {
-  font-family: 'Product Sans' !important;
+  font-family: $content-font-family;
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -129,8 +142,9 @@ hr {
 }
 
 pre {
-  font-family: 'Product Sans', monospace, monospace;
-  font-size: 1em;
+  font-family: $monospace-font-family;
+  letter-spacing: -0.5px;
+  font-size: 15px;
 }
 
 a {
@@ -162,7 +176,7 @@ strong {
 code,
 kbd,
 samp {
-  font-family: 'Product Sans', monospace, monospace;
+  font-family: $monospace-font-family;
   font-size: 1em;
 }
 
@@ -218,7 +232,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: 'Product Sans', sans-serif;
+  font-family: $content-font-family;
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
@@ -483,8 +497,7 @@ html {
 
 body {
   margin: 0 auto;
-  font-family: 'Product Sans', 'Hiragino Sans GB', 'Hiragino Sans GB W3',
-    'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif !important;
+  font-family: $content-font-family;
   -webkit-font-smoothing: antialiased;
   font-weight: 400;
   line-height: 1.8;
@@ -511,7 +524,7 @@ h5,
 h6 {
   margin: 0;
   line-height: 1.5;
-  font-family: 'Product Sans' !important;
+  font-family: $title-font-family;
   font-weight: 600 !important;
   letter-spacing: 0.5px;
 }
@@ -1176,16 +1189,81 @@ img {
   }
 
   blockquote {
+    background-repeat: no-repeat;
+    background-size: 8%;
+    background-position: 10px 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0H24V24H0z'/%3E%3Cpath d='M21 3c.552 0 1 .448 1 1v14c0 .552-.448 1-1 1H6.455L2 22.5V4c0-.552.448-1 1-1h18zm-1 2H4v13.385L5.763 17H20V5zm-9.485 2.412l.447.688c-1.668.903-1.639 2.352-1.639 2.664.155-.02.318-.024.48-.009.902.084 1.613.825 1.613 1.745 0 .966-.784 1.75-1.75 1.75-.537 0-1.05-.245-1.374-.59-.515-.546-.792-1.16-.792-2.155 0-1.75 1.228-3.318 3.015-4.093zm5 0l.447.688c-1.668.903-1.639 2.352-1.639 2.664.155-.02.318-.024.48-.009.902.084 1.613.825 1.613 1.745 0 .966-.784 1.75-1.75 1.75-.537 0-1.05-.245-1.374-.59-.515-.546-.792-1.16-.792-2.155 0-1.75 1.228-3.318 3.015-4.093z' fill='rgba(119,119,119,0.34)'/%3E%3C/svg%3E");
     display: block;
-    margin: 30px 0 30px 0;
+    margin: 20px 0px;
     width: 100%;
     height: auto;
-    border-left: 3px solid #eee;
-    color: #777;
     font-size: 16px;
     font-style: normal;
-    background: rgba(246, 247, 248, 0.64);
-    padding: 25px 20px;
+    padding: 20px 25px 16px 75px;
+    border-radius: 5px;
+    border: 2px solid #e9e9e9;
+    color: #777;
+    p {
+      margin: 0px;
+      color: #777 !important;
+    }
+  }
+
+  warning {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    font-style: normal;
+    padding: 20px 25px 17px 30px;
+    border-radius: 5px;
+    background: rgba(240, 95, 112, 10%);
+    color: #f05f70;
+    p {
+      margin: 0px;
+      color: #f05f70 !important;
+    }
+    b{
+      font-size: 22px;
+    }
+  }
+
+  info {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    font-style: normal;
+    padding: 20px 25px 17px 30px;
+    border-radius: 5px;
+    background: #eff5ff;
+    color: #0070f3;
+    p {
+      margin: 0px;
+      color: #0070f3 !important;
+    }
+    b{
+      font-size: 22px;
+    }
+  }
+
+  success {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    font-style: normal;
+    padding: 20px 25px 17px 30px;
+    border-radius: 5px;
+    background: rgba(195, 230, 203, 0.4);
+    color: #21af41;
+    p {
+      margin: 0px;
+      color: #21af41 !important;
+    }
+    b{
+      font-size: 22px;
+    }
   }
 
   ul {
@@ -1262,6 +1340,7 @@ img {
     overflow: hidden;
     overflow-x: auto;
     line-height: 1.6;
+    letter-spacing: 0.5px;
 
     // html 单独判断夜间模式，设定旧系统默认样式
     @media (prefers-color-scheme: dark) {
@@ -1277,16 +1356,12 @@ img {
     }
   }
 
-  img:hover {
-    border: 1px solid #eee;
-  }
-
   h2 {
     display: block;
     font-size: 34px;
     color: #333;
     font-weight: 700;
-    margin-top: 1.8em;
+    margin: 2.75rem 0 1rem;
     margin-bottom: 0.6em;
   }
 
@@ -1295,8 +1370,7 @@ img {
     font-size: 25px;
     color: #333;
     font-weight: 700;
-    margin-top: 1.8em;
-    margin-bottom: 0.6em;
+    margin: 2.75rem 0 1rem;
   }
 
   h4 {
@@ -1304,12 +1378,7 @@ img {
     font-size: 22px;
     color: #333;
     font-weight: 700;
-    margin-top: 1.8em;
-    margin-bottom: 0.6em;
-  }
-
-  blockquote p {
-    margin-bottom: 0;
+    margin: 2.75rem 0 1rem;
   }
 
   img.emoji {
@@ -1603,7 +1672,7 @@ img {
   color: rgba(0, 0, 0, 0.75);
   margin-right: 7px;
   font-size: 12px;
-  font-family: 'Product Sans';
+  font-family: $content-font-family;
   padding: 2.3px 7px;
   border-radius: 20px;
   border-width: 1px;
@@ -1662,7 +1731,7 @@ img {
 
 .comment-body .reply .comment-reply-link {
   color: #fff;
-  font-family: 'Product Sans', exoregular;
+  font-family: $content-font-family;
   display: inline-block;
   line-height: 1.3;
   border-radius: 15px;
@@ -2632,7 +2701,7 @@ table {
 
 .index-ul li {
   padding: 4px 0px 4px 23px;
-  color: #666;
+  color: #999;
   letter-spacing: 0.5px;
   transition: ease-in-out 0.1s;
   border-color: #e9e9e9;
@@ -2641,6 +2710,7 @@ table {
   white-space: nowrap;
   padding-right: 10px;
   cursor: pointer;
+  font-weight: 400;
 }
 
 .index-ul li:hover {
@@ -2794,7 +2864,8 @@ pre {
   padding: 10px 15px !important;
   border-radius: 5px !important;
   border: none !important;
-  letter-spacing: .5px;
+  letter-spacing: -0.5px;
+  font-size: 15px;
 }
 
 .status-lable {
@@ -3773,8 +3844,6 @@ input:focus {
 .intro {
   width: 100%;
   max-width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
   @media screen and(min-width:1280px) {
     max-width: 1280px;
     margin: 15px auto 35px auto;
@@ -4239,7 +4308,7 @@ input:focus {
 
 .nexment-comments-div .nexment-comments-title .nexment-comments-content p {
   line-height: 1.6;
-  font-family: sans-serif;
+  font-family: $content-font-family;
   color: #222 !important;
 }
 
