@@ -60,9 +60,9 @@ export const lang = {
     friend: 'Friends',
     rec: 'Resources',
     product: 'Projects',
-    bb: 'Daily',
-    code: 'Coding',
-    music: 'Music'
+    bb: 'AMA',
+    code: 'Codes',
+    dev: 'Diary'
   },
   music: {
     title: 'Music',

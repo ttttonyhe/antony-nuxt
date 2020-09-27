@@ -60,9 +60,9 @@ export const lang = {
     friend: '伙伴',
     rec: '利器',
     product: '项目',
-    bb: '琐碎',
-    code: '折腾',
-    music: '音乐'
+    bb: '提问',
+    code: '开发',
+    dev: '日志'
   },
   music: {
     title: '音乐推荐',
