@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Antony-Nuxt</h1>
-  <p>An Elegant Blog SPA Based on Nuxt.js + WordPress REST API</p>
+  <p>Codes that power <a href="https://www.ouorz.com" target="_blank">www.ouorz.com</a></p>
   <a href="https://github.com/HelipengTony/antony-nuxt">
     <img src="https://img.shields.io/github/forks/HelipengTony/antony-nuxt.svg" alt="forks">
   </a>
@@ -17,10 +17,6 @@
     <img src="https://travis-ci.com/HelipengTony/antony-nuxt.svg?branch=master" alt="license">
   </a>
 </div>
-
-<br/>
-
-> This project is WIP
 
 <br/>
 
@@ -74,13 +70,5 @@ yarn run start
 + Nuxt MarkDownit Module MD 支持
 + Nuxt BootStrap-Vue Module UI 框架
 + Highlight.js 代码高亮
-
-<br/>
-
-### Donate to me 赞助与列表
-Your name will be on the list [Donation](https://www.ouorz.com/donation)
-<br/>
-
-![Donate](https://i.loli.net/2019/02/18/5c6a80afd1e26.png)
 
 <br/>
