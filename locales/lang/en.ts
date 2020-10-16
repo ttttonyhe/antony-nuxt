@@ -18,7 +18,7 @@ export const lang = {
     index: 'Home',
     archive: 'Archive',
     comment: 'Comment',
-    donation: 'Donation',
+    donation: 'Sponsors',
     searchDiv: {
       title: 'Search',
       close: 'Close',
@@ -36,7 +36,7 @@ export const lang = {
     archive: 'Archive',
     archiveDes: 'All posts sorted by publish date',
     friends: 'Friends',
-    friendsDes: 'All the lovely ones...'
+    friendsDes: 'Some of My Friends from the Internet'
   },
   post: {
     index: 'Contents',

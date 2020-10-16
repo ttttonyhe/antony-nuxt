@@ -8,7 +8,7 @@ export const lang = {
     mood: '状态',
     moodGray: '黑白模式',
     noneMood: '无状态',
-    friendsLink: '欢迎前往留言板留言以交换友情链接 :)',
+    friendsLink: '友情链接申请请直接发送邮件 :)',
     goFriendsLink: '点击前往'
   },
   header: {
@@ -36,7 +36,7 @@ export const lang = {
     archive: '文章归档',
     archiveDes: '按照年月归档存放的全站文章',
     friends: '伙伴链接',
-    friendsDes: '和伙伴们交换网站链接，再高兴不过的事!'
+    friendsDes: 'Some of My Friends from the Internet'
   },
   post: {
     index: '文章引索',

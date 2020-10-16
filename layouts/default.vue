@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <!-- Menu -->
-    <div id="nav" v-if="$route.path !== '/bio'">
-      <template v-if="mobile">
-        <mobileNav />
-      </template>
-      <template v-else>
-        <computerNav />
-      </template>
-    </div>
-    <!-- Menu -->
-
-    <!-- Content -->
-    <nuxt />
-    <!-- Content -->
-
-    <!-- Footer -->
-    <siteFooter v-if="$route.path !== '/bio'"/>
-    <!-- Footer -->
+<div id="app">
+  <!-- Menu -->
+  <div id="nav" v-if="$route.path !== '/bio'">
+    <template v-if="mobile">
+      <mobileNav />
+    </template>
+    <template v-else>
+      <computerNav />
+    </template>
   </div>
+  <!-- Menu -->
+
+  <!-- Content -->
+  <nuxt />
+  <!-- Content -->
+
+  <!-- Footer -->
+  <siteFooter v-if="$route.path !== '/bio'" />
+  <!-- Footer -->
+</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import {
+  Component,
+  Vue
+} from 'nuxt-property-decorator'
 
 // PC & Mobile Navigation Menu Components
 import mobileNav from '~/components/headers/mobileNav.vue'
@@ -46,8 +49,7 @@ export default class layouts extends Vue {
       htmlAttrs: {
         lang: 'zh-cn'
       },
-      meta: [
-        {
+      meta: [{
           hid: 'msvalidate.01',
           name: 'msvalidate.01',
           content: '4D922B4BDF9F7A9398A7ECCF7B9F0365'
@@ -75,20 +77,6 @@ export default class layouts extends Vue {
     } else {
       this.mobile = false
     }
-
-    /* 百度统计(已弃用)
-    if (process.env.NODE_ENV === 'production') {
-      // Baidu analysis
-      var _hmt: any = _hmt || []
-      ;(function() {
-        var hm = document.createElement('script')
-        hm.src = 'https://hm.baidu.com/hm.js?20265c137ab04d39313561665f1ae7a1'
-        var s: any = document.getElementsByTagName('script')[0]
-        s.parentNode.insertBefore(hm, s)
-      })()
-    }
-    */
-
   }
 }
 </script>
