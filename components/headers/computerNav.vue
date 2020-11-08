@@ -22,9 +22,6 @@
       <a>
         <b-button variant="light" @click="openSearch">{{ $t('lang.header.search') }}</b-button>
       </a>
-      <a>
-        <b-button variant="light" @click="switchLang">{{ $t('lang.header.lang') }}</b-button>
-      </a>
     </div>
     <!-- Index Menu -->
 

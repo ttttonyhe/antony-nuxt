@@ -1,6 +1,5 @@
 module.exports = {
   loading: false,
-  mode: 'universal',
   /*
    ** Headers of the page
    */
