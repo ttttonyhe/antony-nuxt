@@ -33,6 +33,7 @@
     "remixicon": "^2.3.0",
     "ts-node": "^8.8.2",
     "typings": "^2.1.1",
+    "vue-content-loader": "^0.2.3",
     "vue-cookie": "^1.1.4",
     "vue-go-top-button": "^1.0.4",
     "vue-i18n": "^8.22.1",

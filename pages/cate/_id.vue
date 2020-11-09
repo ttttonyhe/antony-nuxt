@@ -306,13 +306,12 @@
               class="article-list-item reveal index-post-list bottom"
               v-if="!loading_end"
             >
-              <div class="skeleton">
-                <div class="skeleton-head"></div>
-                <div class="skeleton-body">
-                  <div class="skeleton-title"></div>
-                  <div class="skeleton-content"></div>
-                </div>
-              </div>
+              <ContentLoader height="94" width="600" speed="1">
+                <rect x="0" y="0" rx="3" ry="3" width="180" height="94" />
+                <rect x="205" y="0" rx="3" ry="3" width="600" height="40" />
+                <rect x="205" y="48" rx="3" ry="3" width="550" height="20" />
+                <rect x="205" y="80" rx="3" ry="3" width="500" height="15" />
+              </ContentLoader>
             </li>
           </mugen-scroll>
           <!-- 无限滚动占位内容 -->
@@ -333,11 +332,13 @@ import topInsideCate from '~/components/topInsideCate.vue'
 
 // import infinite loading feature
 import MugenScroll from 'vue-mugen-scroll'
+import { ContentLoader } from 'vue-content-loader'
 
 @Component({
   components: {
     topInsideCate,
-    MugenScroll
+    MugenScroll,
+    ContentLoader
   },
   filters: {
     link_page: function(cate_id: number) {
@@ -417,7 +418,7 @@ export default class Cates extends Vue {
     this.loading_first = false
     this.loading_end = false
     this.paged = 1
-    this.pagedLoading= false
+    this.pagedLoading = false
     this.listLoading = {}
 
     //获取顶置文章 IDs 以在获取其余文章时排除

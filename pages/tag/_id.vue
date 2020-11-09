@@ -259,11 +259,13 @@ import topInsideTag from "~/components/topInsideTag.vue";
 
 // import infinite loading feature
 import MugenScroll from "vue-mugen-scroll";
+import { ContentLoader } from "vue-content-loader";
 
 @Component({
   components: {
     topInsideTag,
-    MugenScroll
+    MugenScroll,
+    ContentLoader
   },
   filters: {
     link_page: function(cate_id: number): string {
